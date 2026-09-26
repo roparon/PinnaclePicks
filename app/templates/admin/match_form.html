@@ -1,0 +1,475 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title }} | PinnaclePicks{% endblock %}
+
+{% block head %}
+<style>
+    .match-form-page {
+        width: min(100%, 760px);
+        margin: 0 auto;
+        padding: 20px 12px 48px;
+    }
+
+    .form-header {
+        margin-bottom: 20px;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        margin-bottom: 12px;
+        color: #6c757d;
+        text-decoration: none;
+        font-weight: 750;
+    }
+
+    .back-link:hover {
+        color: #198754;
+    }
+
+    .form-eyebrow {
+        margin: 0 0 5px;
+        color: #198754;
+        font-size: .76rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: .08em;
+    }
+
+    .form-title {
+        margin: 0;
+        font-size: clamp(1.65rem, 7vw, 2.25rem);
+        font-weight: 900;
+        letter-spacing: -.03em;
+    }
+
+    .form-subtitle {
+        margin: 8px 0 0;
+        color: #6c757d;
+        line-height: 1.5;
+    }
+
+    .form-card {
+        padding: 18px;
+        border: 1px solid #e2e8e4;
+        border-radius: 16px;
+        background: #ffffff;
+    }
+
+    .form-section {
+        margin-bottom: 22px;
+    }
+
+    .form-section:last-of-type {
+        margin-bottom: 0;
+    }
+
+    .section-title {
+        margin: 0 0 12px;
+        font-size: .92rem;
+        font-weight: 900;
+    }
+
+    .form-grid {
+        display: grid;
+        gap: 13px;
+    }
+
+    .field label {
+        display: block;
+        margin-bottom: 6px;
+        font-size: .82rem;
+        font-weight: 800;
+    }
+
+    .field input,
+    .field select {
+        width: 100%;
+        min-height: 48px;
+        padding: 10px 12px;
+        border: 1px solid #d8e0db;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #17201b;
+        font: inherit;
+    }
+
+    .field input:focus,
+    .field select:focus {
+        outline: 3px solid rgba(25, 135, 84, .12);
+        border-color: #198754;
+    }
+
+    .field-help {
+        margin: 5px 0 0;
+        color: #6c757d;
+        font-size: .75rem;
+    }
+
+    .form-actions {
+        display: grid;
+        gap: 8px;
+        margin-top: 24px;
+    }
+
+    .submit-button,
+    .cancel-button {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 850;
+    }
+
+    .submit-button {
+        border: 0;
+        background: #198754;
+        color: #ffffff;
+    }
+
+    .submit-button:hover {
+        background: #146c43;
+        color: #ffffff;
+    }
+
+    .cancel-button {
+        border: 1px solid #dfe7e2;
+        background: #ffffff;
+        color: #17201b;
+    }
+
+    @media (min-width: 576px) {
+        .match-form-page {
+            padding: 30px 20px 56px;
+        }
+
+        .form-card {
+            padding: 26px;
+        }
+
+        .form-grid.two {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .form-actions {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="match-form-page">
+
+    <header class="form-header">
+
+        <a
+            href="{{ url_for('main.admin_dashboard') }}"
+            class="back-link"
+        >
+            ← Back to Dashboard
+        </a>
+
+        <p class="form-eyebrow">Match Management</p>
+
+        <h1 class="form-title">
+            {{ page_title }}
+        </h1>
+
+        <p class="form-subtitle">
+            Add accurate match information that will appear in the
+            PinnaclePicks public records.
+        </p>
+
+    </header>
+
+
+    <form
+        method="post"
+        class="form-card"
+    >
+
+        <section class="form-section">
+
+            <h2 class="section-title">
+                Teams & Competition
+            </h2>
+
+            <div class="form-grid two">
+
+                <div class="field">
+                    <label for="home_team">
+                        Home Team
+                    </label>
+
+                    <input
+                        id="home_team"
+                        name="home_team"
+                        type="text"
+                        maxlength="150"
+                        value="{{ match.home_team if match else '' }}"
+                        placeholder="e.g. Arsenal"
+                        required
+                    >
+                </div>
+
+                <div class="field">
+                    <label for="away_team">
+                        Away Team
+                    </label>
+
+                    <input
+                        id="away_team"
+                        name="away_team"
+                        type="text"
+                        maxlength="150"
+                        value="{{ match.away_team if match else '' }}"
+                        placeholder="e.g. Chelsea"
+                        required
+                    >
+                </div>
+
+            </div>
+
+
+            <div class="field" style="margin-top: 13px;">
+
+                <label for="league">
+                    League / Competition
+                </label>
+
+                <input
+                    id="league"
+                    name="league"
+                    type="text"
+                    maxlength="150"
+                    value="{{ match.league if match else '' }}"
+                    placeholder="e.g. Premier League"
+                    required
+                >
+
+            </div>
+
+        </section>
+
+
+        <section class="form-section">
+
+            <h2 class="section-title">
+                Match Details
+            </h2>
+
+            <div class="form-grid two">
+
+                <div class="field">
+
+                    <label for="kickoff_time">
+                        Kickoff
+                    </label>
+
+                    <input
+                        id="kickoff_time"
+                        name="kickoff_time"
+                        type="datetime-local"
+                        value="{{
+                            match.kickoff_time.strftime('%Y-%m-%dT%H:%M')
+                            if match and match.kickoff_time
+                            else ''
+                        }}"
+                        required
+                    >
+
+                    <p class="field-help">
+                        Enter the scheduled kickoff time.
+                    </p>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="status">
+                        Status
+                    </label>
+
+                    <select
+                        id="status"
+                        name="status"
+                        required
+                    >
+
+                        {% set current_status =
+                            match.status if match else 'upcoming'
+                        %}
+
+                        <option
+                            value="upcoming"
+                            {% if current_status == 'upcoming' %}
+                                selected
+                            {% endif %}
+                        >
+                            Upcoming
+                        </option>
+
+                        <option
+                            value="finished"
+                            {% if current_status == 'finished' %}
+                                selected
+                            {% endif %}
+                        >
+                            Finished
+                        </option>
+
+                        <option
+                            value="void"
+                            {% if current_status == 'void' %}
+                                selected
+                            {% endif %}
+                        >
+                            Void
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section class="form-section">
+
+            <h2 class="section-title">
+                Prediction
+            </h2>
+
+            <div class="form-grid two">
+
+                <div class="field">
+
+                    <label for="market_type">
+                        Market
+                    </label>
+
+                    <select
+                        id="market_type"
+                        name="market_type"
+                        required
+                    >
+
+                        {% set current_market =
+                            match.market_type if match else ''
+                        %}
+
+                        <option value="">
+                            Select market
+                        </option>
+
+                        <option
+                            value="1X2"
+                            {% if current_market == '1X2' %}
+                                selected
+                            {% endif %}
+                        >
+                            1X2
+                        </option>
+
+                        <option
+                            value="OVER_UNDER"
+                            {% if current_market == 'OVER_UNDER' %}
+                                selected
+                            {% endif %}
+                        >
+                            Over / Under
+                        </option>
+
+                        <option
+                            value="GG_NG"
+                            {% if current_market == 'GG_NG' %}
+                                selected
+                            {% endif %}
+                        >
+                            GG / NG
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="field">
+
+                    <label for="pick_selection">
+                        Selection
+                    </label>
+
+                    <input
+                        id="pick_selection"
+                        name="pick_selection"
+                        type="text"
+                        maxlength="100"
+                        value="{{ match.pick_selection if match else '' }}"
+                        placeholder="e.g. Arsenal"
+                        required
+                    >
+
+                </div>
+
+            </div>
+
+
+            <div
+                class="field"
+                style="margin-top: 13px;"
+            >
+
+                <label for="odds">
+                    Odds
+                </label>
+
+                <input
+                    id="odds"
+                    name="odds"
+                    type="number"
+                    min="0.01"
+                    step="0.001"
+                    value="{{ match.odds if match else '' }}"
+                    placeholder="e.g. 1.85"
+                    required
+                >
+
+            </div>
+
+        </section>
+
+
+        <div class="form-actions">
+
+            <a
+                href="{{ url_for('main.admin_dashboard') }}"
+                class="cancel-button"
+            >
+                Cancel
+            </a>
+
+            <button
+                type="submit"
+                class="submit-button"
+            >
+                {% if match %}
+                    Save Changes
+                {% else %}
+                    Create Match
+                {% endif %}
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

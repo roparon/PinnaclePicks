@@ -1,0 +1,1428 @@
+{# templates/index.html #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
+    >
+
+    <title>PinnaclePicks | Sports Analytics & Match History</title>
+
+    <meta
+        name="description"
+        content="PinnaclePicks sports analytics, historical match results, accumulator tickets and transparent community verification."
+    >
+
+    <meta
+        name="theme-color"
+        content="#080b10"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --pp-bg: #080b10;
+            --pp-surface: #10151d;
+            --pp-surface-2: #151c26;
+            --pp-border: rgba(255,255,255,.08);
+
+            --pp-text: #f5f7fa;
+            --pp-muted: #8f9baa;
+
+            --pp-green: #22c55e;
+            --pp-green-dark: #15803d;
+
+            --pp-red: #ef4444;
+            --pp-gold: #f5c451;
+            --pp-blue: #3b82f6;
+
+            --pp-radius: 16px;
+            --pp-touch: 46px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(34,197,94,.08),
+                    transparent 32rem
+                ),
+                var(--pp-bg);
+
+            color: var(--pp-text);
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            min-width: 320px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .pp-container {
+            width: min(
+                100% - 24px,
+                1180px
+            );
+
+            margin-inline: auto;
+        }
+
+        /* -------------------------------------------------------------
+           Navbar
+        ------------------------------------------------------------- */
+
+        .pp-navbar {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+
+            background: rgba(8,11,16,.92);
+            backdrop-filter: blur(14px);
+
+            border-bottom: 1px solid var(--pp-border);
+        }
+
+        .pp-navbar-inner {
+            min-height: 62px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 12px;
+        }
+
+        .pp-brand {
+            font-size: 1.05rem;
+            font-weight: 800;
+            letter-spacing: -.02em;
+        }
+
+        .pp-brand span {
+            color: var(--pp-green);
+        }
+
+        .pp-nav-link {
+            min-height: 40px;
+
+            display: inline-flex;
+            align-items: center;
+
+            padding: 0 12px;
+
+            border-radius: 10px;
+
+            color: var(--pp-muted);
+
+            font-size: .84rem;
+            font-weight: 700;
+        }
+
+        .pp-nav-link:hover {
+            background: var(--pp-surface);
+            color: var(--pp-text);
+        }
+
+        /* -------------------------------------------------------------
+           Hero
+        ------------------------------------------------------------- */
+
+        .pp-hero {
+            padding: 42px 0 26px;
+        }
+
+        .pp-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 10px;
+
+            border: 1px solid rgba(34,197,94,.2);
+            border-radius: 999px;
+
+            background: rgba(34,197,94,.08);
+
+            color: #86efac;
+
+            font-size: .72rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: .08em;
+        }
+
+        .pp-hero h1 {
+            margin: 16px 0 12px;
+
+            max-width: 760px;
+
+            font-size: clamp(
+                2rem,
+                8vw,
+                4rem
+            );
+
+            line-height: 1.02;
+            letter-spacing: -.045em;
+        }
+
+        .pp-hero p {
+            max-width: 650px;
+
+            margin: 0;
+
+            color: var(--pp-muted);
+
+            font-size: clamp(
+                .94rem,
+                2vw,
+                1.05rem
+            );
+
+            line-height: 1.65;
+        }
+
+        .pp-hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+        .pp-btn {
+            min-height: var(--pp-touch);
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 16px;
+
+            border-radius: 12px;
+
+            border: 1px solid transparent;
+
+            font-size: .85rem;
+            font-weight: 800;
+
+            transition:
+                transform .15s ease,
+                background .15s ease;
+        }
+
+        .pp-btn:active {
+            transform: scale(.98);
+        }
+
+        .pp-btn-primary {
+            background: var(--pp-green);
+            color: #031208;
+        }
+
+        .pp-btn-primary:hover {
+            background: #4ade80;
+            color: #031208;
+        }
+
+        .pp-btn-secondary {
+            background: var(--pp-surface);
+            border-color: var(--pp-border);
+            color: var(--pp-text);
+        }
+
+        /* -------------------------------------------------------------
+           Section
+        ------------------------------------------------------------- */
+
+        .pp-section {
+            padding: 28px 0;
+        }
+
+        .pp-section-header {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+
+            gap: 12px;
+
+            margin-bottom: 14px;
+        }
+
+        .pp-section-title {
+            margin: 0;
+
+            font-size: clamp(
+                1.15rem,
+                4vw,
+                1.5rem
+            );
+
+            font-weight: 850;
+            letter-spacing: -.025em;
+        }
+
+        .pp-section-description {
+            margin: 4px 0 0;
+
+            color: var(--pp-muted);
+
+            font-size: .78rem;
+        }
+
+        /* -------------------------------------------------------------
+           Match cards
+        ------------------------------------------------------------- */
+
+        .pp-match-list {
+            display: grid;
+            gap: 10px;
+        }
+
+        .pp-match-card {
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 15px;
+
+            border: 1px solid var(--pp-border);
+            border-radius: var(--pp-radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                );
+
+            box-shadow:
+                0 8px 28px rgba(0,0,0,.16);
+        }
+
+        .pp-match-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 8px;
+
+            margin-bottom: 12px;
+        }
+
+        .pp-league {
+            min-width: 0;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            color: var(--pp-muted);
+
+            font-size: .72rem;
+            font-weight: 700;
+        }
+
+        .pp-time {
+            flex-shrink: 0;
+
+            color: #d8dee7;
+
+            font-size: .72rem;
+            font-weight: 800;
+        }
+
+        .pp-teams {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .pp-team {
+            min-width: 0;
+
+            font-size: .94rem;
+            font-weight: 800;
+            line-height: 1.25;
+        }
+
+        .pp-team-away {
+            text-align: right;
+        }
+
+        .pp-vs {
+            color: var(--pp-muted);
+
+            font-size: .7rem;
+            font-weight: 800;
+        }
+
+        .pp-selection-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 10px;
+
+            margin-top: 14px;
+            padding-top: 12px;
+
+            border-top: 1px solid var(--pp-border);
+        }
+
+        .pp-selection {
+            min-width: 0;
+
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+
+            font-size: .8rem;
+            font-weight: 800;
+        }
+
+        .pp-tags {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+
+            gap: 6px;
+        }
+
+        .pp-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 27px;
+
+            padding: 0 8px;
+
+            border-radius: 8px;
+
+            font-size: .68rem;
+            font-weight: 850;
+        }
+
+        .pp-market {
+            background: rgba(59,130,246,.12);
+            color: #93c5fd;
+        }
+
+        .pp-odds {
+            background: rgba(245,196,81,.12);
+            color: var(--pp-gold);
+        }
+
+        /* -------------------------------------------------------------
+           History
+        ------------------------------------------------------------- */
+
+        .pp-history-scroll {
+            max-height: 560px;
+            overflow-y: auto;
+
+            padding-right: 2px;
+        }
+
+        .pp-history-item {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                auto;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px 0;
+
+            border-bottom: 1px solid var(--pp-border);
+        }
+
+        .pp-history-item:last-child {
+            border-bottom: 0;
+        }
+
+        .pp-history-teams {
+            min-width: 0;
+        }
+
+        .pp-history-league {
+            color: var(--pp-muted);
+
+            font-size: .67rem;
+            font-weight: 700;
+        }
+
+        .pp-history-team-names {
+            margin-top: 4px;
+
+            font-size: .82rem;
+            font-weight: 750;
+        }
+
+        .pp-history-score {
+            margin-top: 3px;
+
+            color: #fff;
+
+            font-size: .92rem;
+            font-weight: 900;
+        }
+
+        .pp-result {
+            min-width: 64px;
+            min-height: 30px;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 0 9px;
+
+            border-radius: 8px;
+
+            font-size: .68rem;
+            font-weight: 900;
+        }
+
+        .pp-result-won {
+            background: rgba(34,197,94,.12);
+            color: #86efac;
+        }
+
+        .pp-result-lost {
+            background: rgba(239,68,68,.12);
+            color: #fca5a5;
+        }
+
+        .pp-result-void {
+            background: rgba(148,163,184,.12);
+            color: #cbd5e1;
+        }
+
+        /* -------------------------------------------------------------
+           Combo cards
+        ------------------------------------------------------------- */
+
+        .pp-combo-grid {
+            display: grid;
+            gap: 12px;
+        }
+
+        .pp-combo-card {
+            padding: 17px;
+
+            border: 1px solid var(--pp-border);
+            border-radius: var(--pp-radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(245,196,81,.06),
+                    rgba(255,255,255,.015)
+                );
+        }
+
+        .pp-combo-card.premium {
+            border-color: rgba(245,196,81,.2);
+        }
+
+        .pp-combo-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+            gap: 10px;
+        }
+
+        .pp-combo-title {
+            margin: 0;
+
+            font-size: .98rem;
+            font-weight: 850;
+        }
+
+        .pp-premium-label {
+            flex-shrink: 0;
+
+            padding: 5px 8px;
+
+            border-radius: 7px;
+
+            background: rgba(245,196,81,.1);
+            color: var(--pp-gold);
+
+            font-size: .64rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        .pp-combo-meta {
+            display: flex;
+            flex-wrap: wrap;
+
+            gap: 8px;
+
+            margin-top: 14px;
+        }
+
+        .pp-meta-box {
+            flex: 1;
+            min-width: 80px;
+
+            padding: 10px;
+
+            border-radius: 10px;
+
+            background: rgba(255,255,255,.035);
+        }
+
+        .pp-meta-label {
+            display: block;
+
+            color: var(--pp-muted);
+
+            font-size: .62rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .pp-meta-value {
+            display: block;
+
+            margin-top: 3px;
+
+            font-size: .92rem;
+            font-weight: 900;
+        }
+
+        .pp-lock {
+            margin-top: 13px;
+
+            color: var(--pp-muted);
+
+            font-size: .76rem;
+            line-height: 1.5;
+        }
+
+        .pp-combo-button {
+            width: 100%;
+
+            margin-top: 13px;
+        }
+
+        /* -------------------------------------------------------------
+           Proof gallery
+        ------------------------------------------------------------- */
+
+        .pp-gallery {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 8px;
+        }
+
+        .pp-proof {
+            overflow: hidden;
+
+            position: relative;
+
+            aspect-ratio: 1 / 1;
+
+            border: 1px solid var(--pp-border);
+            border-radius: 12px;
+
+            background: var(--pp-surface);
+        }
+
+        .pp-proof img {
+            width: 100%;
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+
+            transition: transform .2s ease;
+        }
+
+        .pp-proof:hover img {
+            transform: scale(1.025);
+        }
+
+        .pp-proof-caption {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+
+            padding: 22px 8px 8px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,.85)
+                );
+
+            color: #fff;
+
+            font-size: .67rem;
+        }
+
+        /* -------------------------------------------------------------
+           Empty state
+        ------------------------------------------------------------- */
+
+        .pp-empty {
+            padding: 24px 16px;
+
+            border: 1px dashed var(--pp-border);
+            border-radius: var(--pp-radius);
+
+            color: var(--pp-muted);
+
+            text-align: center;
+
+            font-size: .82rem;
+        }
+
+        /* -------------------------------------------------------------
+           Footer
+        ------------------------------------------------------------- */
+
+        .pp-footer {
+            margin-top: 25px;
+            padding: 30px 0 45px;
+
+            border-top: 1px solid var(--pp-border);
+
+            color: var(--pp-muted);
+
+            font-size: .72rem;
+            line-height: 1.6;
+        }
+
+        /* -------------------------------------------------------------
+           Tablet
+        ------------------------------------------------------------- */
+
+        @media (min-width: 576px) {
+
+            .pp-container {
+                width: min(
+                    100% - 32px,
+                    1180px
+                );
+            }
+
+            .pp-gallery {
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+            }
+
+            .pp-combo-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+        /* -------------------------------------------------------------
+           Desktop
+        ------------------------------------------------------------- */
+
+        @media (min-width: 900px) {
+
+            .pp-hero {
+                padding: 70px 0 45px;
+            }
+
+            .pp-content-grid {
+                display: grid;
+
+                grid-template-columns:
+                    minmax(0, 1.45fr)
+                    minmax(280px, .85fr);
+
+                gap: 24px;
+
+                align-items: start;
+            }
+
+            .pp-sticky-column {
+                position: sticky;
+                top: 82px;
+            }
+
+            .pp-match-list {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .pp-gallery {
+                grid-template-columns:
+                    repeat(4, minmax(0, 1fr));
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- ================================================================
+     Navigation
+================================================================ -->
+
+<nav class="pp-navbar">
+
+    <div class="pp-container pp-navbar-inner">
+
+        <a
+            href="{{ url_for('main.index') }}"
+            class="pp-brand"
+            aria-label="PinnaclePicks home"
+        >
+            Pinnacle<span>Picks</span>
+        </a>
+
+        <div class="d-flex align-items-center gap-1">
+
+            <a
+                href="#history"
+                class="pp-nav-link"
+            >
+                History
+            </a>
+
+            <a
+                href="#combos"
+                class="pp-nav-link"
+            >
+                Combos
+            </a>
+
+            {% if current_user.is_authenticated %}
+                <a
+                    href="{{ url_for('main.subscription_page') }}"
+                    class="pp-nav-link"
+                >
+                    Account
+                </a>
+            {% else %}
+                <a
+                    href="{{ url_for('auth.login') }}"
+                    class="pp-nav-link"
+                >
+                    Login
+                </a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+<!-- ================================================================
+     Hero
+================================================================ -->
+
+<section class="pp-hero">
+
+    <div class="pp-container">
+
+        <span class="pp-eyebrow">
+            ● Live Sports Intelligence
+        </span>
+
+        <h1>
+            Sports data.
+            <br>
+            Historical insight.
+            <br>
+            <span style="color: var(--pp-green);">
+                Transparent records.
+            </span>
+        </h1>
+
+        <p>
+            Explore upcoming fixtures, documented historical results,
+            accumulator selections and community verification records
+            through one mobile-first analytics platform.
+        </p>
+
+        <div class="pp-hero-actions">
+
+            <a
+                href="#upcoming"
+                class="pp-btn pp-btn-primary"
+            >
+                Explore Matches
+            </a>
+
+            <a
+                href="#history"
+                class="pp-btn pp-btn-secondary"
+            >
+                View 30-Day History
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================================================================
+     Main content
+================================================================ -->
+
+<div class="pp-container">
+
+    <div class="pp-content-grid">
+
+        <div>
+
+            <!-- ========================================================
+                 Upcoming Matches
+            ========================================================= -->
+
+            <section
+                id="upcoming"
+                class="pp-section"
+            >
+
+                <div class="pp-section-header">
+
+                    <div>
+                        <h2 class="pp-section-title">
+                            Upcoming Matches
+                        </h2>
+
+                        <p class="pp-section-description">
+                            Scheduled selections and market information.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                {% if upcoming_matches %}
+
+                    <div class="pp-match-list">
+
+                        {% for match in upcoming_matches %}
+
+                            <article class="pp-match-card">
+
+                                <div class="pp-match-top">
+
+                                    <span class="pp-league">
+                                        {{ match.league }}
+                                    </span>
+
+                                    <time
+                                        class="pp-time"
+                                        datetime="{{ match.kickoff_time.isoformat() }}"
+                                    >
+                                        {{ match.kickoff_time.strftime('%d %b, %H:%M') }}
+                                    </time>
+
+                                </div>
+
+
+                                <div class="pp-teams">
+
+                                    <div class="pp-team">
+                                        {{ match.home_team }}
+                                    </div>
+
+                                    <div class="pp-vs">
+                                        VS
+                                    </div>
+
+                                    <div class="pp-team pp-team-away">
+                                        {{ match.away_team }}
+                                    </div>
+
+                                </div>
+
+
+                                <div class="pp-selection-row">
+
+                                    <div
+                                        class="pp-selection"
+                                        title="{{ match.pick_selection }}"
+                                    >
+                                        {{ match.pick_selection }}
+                                    </div>
+
+                                    <div class="pp-tags">
+
+                                        <span class="pp-badge pp-market">
+
+                                            {% if match.market_type == '1X2' %}
+                                                1X2
+                                            {% elif match.market_type in ['GG_NG', 'GG/NG'] %}
+                                                GG/NG
+                                            {% elif match.market_type in ['OVER_UNDER', 'Over/Under'] %}
+                                                Over/Under
+                                            {% else %}
+                                                {{ match.market_type }}
+                                            {% endif %}
+
+                                        </span>
+
+                                        <span class="pp-badge pp-odds">
+                                            {{ "%.2f"|format(match.odds|float) }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="pp-empty">
+                        No upcoming matches are currently available.
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- ========================================================
+                 History
+            ========================================================= -->
+
+            <section
+                id="history"
+                class="pp-section"
+            >
+
+                <div class="pp-section-header">
+
+                    <div>
+                        <h2 class="pp-section-title">
+                            Recent Match History
+                        </h2>
+
+                        <p class="pp-section-description">
+                            Finished matches from the previous 30 days.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                <div class="pp-match-card">
+
+                    {% if finished_matches %}
+
+                        <div class="pp-history-scroll">
+
+                            {% for match in finished_matches %}
+
+                                <article class="pp-history-item">
+
+                                    <div class="pp-history-teams">
+
+                                        <div class="pp-history-league">
+                                            {{ match.league }}
+                                            ·
+                                            {{ match.kickoff_time.strftime('%d %b %Y') }}
+                                        </div>
+
+                                        <div class="pp-history-team-names">
+                                            {{ match.home_team }}
+                                            <span style="color: var(--pp-muted);">
+                                                vs
+                                            </span>
+                                            {{ match.away_team }}
+                                        </div>
+
+                                        <div class="pp-history-score">
+                                            {{ match.score_display }}
+                                        </div>
+
+                                    </div>
+
+
+                                    <div>
+
+                                        {% if match.status == 'void' %}
+
+                                            <span class="pp-result pp-result-void">
+                                                Void
+                                            </span>
+
+                                        {% elif match.is_win is true %}
+
+                                            <span class="pp-result pp-result-won">
+                                                Won
+                                            </span>
+
+                                        {% else %}
+
+                                            <span class="pp-result pp-result-lost">
+                                                Lost
+                                            </span>
+
+                                        {% endif %}
+
+                                    </div>
+
+                                </article>
+
+                            {% endfor %}
+
+                        </div>
+
+                    {% else %}
+
+                        <div class="pp-empty">
+                            No completed matches have been recorded
+                            during the last 30 days.
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- ============================================================
+             Right / secondary column
+        ============================================================= -->
+
+        <aside class="pp-sticky-column">
+
+            <!-- ========================================================
+                 Combos
+            ========================================================= -->
+
+            <section
+                id="combos"
+                class="pp-section"
+            >
+
+                <div class="pp-section-header">
+
+                    <div>
+                        <h2 class="pp-section-title">
+                            Combos &amp; VIP
+                        </h2>
+
+                        <p class="pp-section-description">
+                            Multi-match accumulator tickets.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                {% if combo_tickets %}
+
+                    <div class="pp-combo-grid">
+
+                        {% for combo in combo_tickets %}
+
+                            <article
+                                class="pp-combo-card {% if combo.required_tier == 'premium' %}premium{% endif %}"
+                            >
+
+                                <div class="pp-combo-top">
+
+                                    <h3 class="pp-combo-title">
+                                        {{ combo.title }}
+                                    </h3>
+
+                                    {% if combo.required_tier == 'premium' %}
+
+                                        <span class="pp-premium-label">
+                                            Premium
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="pp-premium-label">
+                                            Free
+                                        </span>
+
+                                    {% endif %}
+
+                                </div>
+
+
+                                <div class="pp-combo-meta">
+
+                                    <div class="pp-meta-box">
+
+                                        <span class="pp-meta-label">
+                                            Total Odds
+                                        </span>
+
+                                        <span class="pp-meta-value">
+                                            {{ "%.2f"|format(combo.total_odds|float) }}
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="pp-meta-box">
+
+                                        <span class="pp-meta-label">
+                                            Selections
+                                        </span>
+
+                                        <span class="pp-meta-value">
+                                            {{ combo.selection_count }}
+                                        </span>
+
+                                    </div>
+
+
+                                    <div class="pp-meta-box">
+
+                                        <span class="pp-meta-label">
+                                            Status
+                                        </span>
+
+                                        <span class="pp-meta-value">
+                                            {{ combo.outcome_label }}
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+
+                                {% if combo.required_tier == 'premium' %}
+
+                                    <p class="pp-lock">
+                                        Premium selections require an active
+                                        weekly or monthly subscription.
+                                    </p>
+
+                                    {% if current_user.is_authenticated
+                                          and current_user.has_active_subscription %}
+
+                                        <a
+                                            href="{{ url_for(
+                                                'main.premium_combo',
+                                                combo_id=combo.id
+                                            ) }}"
+                                            class="pp-btn pp-btn-primary pp-combo-button"
+                                        >
+                                            View Premium Combo
+                                        </a>
+
+                                    {% else %}
+
+                                        <a
+                                            href="{{ url_for(
+                                                'main.subscription_page',
+                                                plan='monthly',
+                                                next=url_for(
+                                                    'main.premium_combo',
+                                                    combo_id=combo.id
+                                                )
+                                            ) }}"
+                                            class="pp-btn pp-btn-primary pp-combo-button"
+                                        >
+                                            Unlock Premium Combos
+                                        </a>
+
+                                    {% endif %}
+
+                                {% else %}
+
+                                    <a
+                                        href="{{ url_for(
+                                            'main.premium_combo',
+                                            combo_id=combo.id
+                                        ) }}"
+                                        class="pp-btn pp-btn-secondary pp-combo-button"
+                                    >
+                                        View Combo
+                                    </a>
+
+                                {% endif %}
+
+                            </article>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="pp-empty">
+                        No active combo tickets are currently available.
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+
+            <!-- ========================================================
+                 Transparency
+            ========================================================= -->
+
+            <section class="pp-section">
+
+                <div class="pp-section-header">
+
+                    <div>
+                        <h2 class="pp-section-title">
+                            Transparency
+                        </h2>
+
+                        <p class="pp-section-description">
+                            Community verification screenshots.
+                        </p>
+                    </div>
+
+                </div>
+
+
+                {% if media_proofs %}
+
+                    <div class="pp-gallery">
+
+                        {% for proof in media_proofs %}
+
+                            <a
+                                href="{{ url_for(
+                                    'static',
+                                    filename=proof.image_path
+                                ) }}"
+                                class="pp-proof"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                            >
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=proof.image_path
+                                    ) }}"
+                                    alt="{{ proof.caption or 'Community verification screenshot' }}"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+
+                                {% if proof.caption %}
+
+                                    <div class="pp-proof-caption">
+                                        {{ proof.caption }}
+                                    </div>
+
+                                {% endif %}
+
+                            </a>
+
+                        {% endfor %}
+
+                    </div>
+
+                {% else %}
+
+                    <div class="pp-empty">
+                        Transparency screenshots will appear here
+                        after they have been verified and uploaded.
+                    </div>
+
+                {% endif %}
+
+            </section>
+
+        </aside>
+
+    </div>
+
+</div>
+
+</main>
+
+
+<!-- ================================================================
+     Footer
+================================================================ -->
+
+<footer class="pp-footer">
+
+    <div class="pp-container">
+
+        <strong style="color: #fff;">
+            PinnaclePicks
+        </strong>
+
+        <div class="mt-2">
+            Educational sports analytics and historical match data.
+            Historical results are presented for informational and
+            analytical purposes.
+        </div>
+
+    </div>
+
+</footer>
+
+</body>
+</html>

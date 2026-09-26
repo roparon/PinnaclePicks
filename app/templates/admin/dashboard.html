@@ -1,0 +1,592 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard | PinnaclePicks{% endblock %}
+
+{% block head %}
+<style>
+    .admin-page {
+        width: min(100%, 1380px);
+        margin: 0 auto;
+        padding: 20px 12px 48px;
+    }
+
+    .admin-header {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-bottom: 20px;
+    }
+
+    .admin-eyebrow {
+        margin: 0 0 5px;
+        color: #198754;
+        font-size: .76rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: .09em;
+    }
+
+    .admin-title {
+        margin: 0;
+        font-size: clamp(1.65rem, 7vw, 2.35rem);
+        font-weight: 900;
+        letter-spacing: -.035em;
+    }
+
+    .admin-subtitle {
+        margin: 7px 0 0;
+        color: #6c757d;
+        line-height: 1.5;
+    }
+
+    .admin-actions {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .admin-action {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 15px;
+        border-radius: 11px;
+        text-decoration: none;
+        font-weight: 800;
+        border: 1px solid #dfe7e2;
+        background: #ffffff;
+        color: #17201b;
+    }
+
+    .admin-action.primary {
+        background: #198754;
+        border-color: #198754;
+        color: #ffffff;
+    }
+
+    .admin-action:hover {
+        color: inherit;
+    }
+
+    .admin-action.primary:hover {
+        color: #ffffff;
+        background: #146c43;
+    }
+
+    .stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+        margin-bottom: 24px;
+    }
+
+    .stat-card {
+        padding: 16px;
+        border: 1px solid #e2e8e4;
+        border-radius: 14px;
+        background: #ffffff;
+    }
+
+    .stat-label {
+        color: #6c757d;
+        font-size: .76rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .04em;
+    }
+
+    .stat-value {
+        margin-top: 5px;
+        font-size: 1.65rem;
+        font-weight: 900;
+        line-height: 1;
+    }
+
+    .section-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 12px;
+    }
+
+    .section-heading h2 {
+        margin: 0;
+        font-size: 1.15rem;
+        font-weight: 900;
+    }
+
+    .match-list {
+        display: grid;
+        gap: 10px;
+    }
+
+    .match-card {
+        padding: 16px;
+        border: 1px solid #e2e8e4;
+        border-radius: 15px;
+        background: #ffffff;
+    }
+
+    .match-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .league {
+        margin: 0;
+        color: #198754;
+        font-size: .75rem;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .match-date {
+        margin: 4px 0 0;
+        color: #6c757d;
+        font-size: .8rem;
+    }
+
+    .status {
+        flex: 0 0 auto;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: .7rem;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+
+    .status.upcoming {
+        background: #e8f5ee;
+        color: #146c43;
+    }
+
+    .status.finished {
+        background: #e9f0ff;
+        color: #315da8;
+    }
+
+    .status.void {
+        background: #f1f3f5;
+        color: #6c757d;
+    }
+
+    .teams {
+        margin: 15px 0;
+        font-size: 1rem;
+        font-weight: 900;
+        line-height: 1.35;
+    }
+
+    .match-meta {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+    }
+
+    .meta-box {
+        padding: 10px;
+        border-radius: 10px;
+        background: #f6f8f7;
+    }
+
+    .meta-label {
+        display: block;
+        color: #6c757d;
+        font-size: .68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+    }
+
+    .meta-value {
+        display: block;
+        margin-top: 3px;
+        font-size: .86rem;
+        font-weight: 800;
+    }
+
+    .match-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .small-button {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 10px;
+        border: 1px solid #dfe7e2;
+        border-radius: 10px;
+        background: #ffffff;
+        color: #17201b;
+        text-decoration: none;
+        font-size: .82rem;
+        font-weight: 800;
+    }
+
+    .small-button.danger {
+        border-color: #f0caca;
+        color: #b42318;
+        background: #fff7f7;
+    }
+
+    .result-form {
+        margin-top: 10px;
+        padding-top: 12px;
+        border-top: 1px solid #edf0ee;
+    }
+
+    .result-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+    }
+
+    .result-form input,
+    .result-form select {
+        width: 100%;
+        min-height: 44px;
+        padding: 8px 10px;
+        border: 1px solid #dfe7e2;
+        border-radius: 9px;
+        background: #ffffff;
+        font-size: .85rem;
+    }
+
+    .result-submit {
+        width: 100%;
+        min-height: 44px;
+        margin-top: 8px;
+        border: 0;
+        border-radius: 9px;
+        background: #17201b;
+        color: #ffffff;
+        font-weight: 800;
+    }
+
+    .empty-state {
+        padding: 30px 18px;
+        border: 1px dashed #cfd8d2;
+        border-radius: 15px;
+        text-align: center;
+        color: #6c757d;
+        background: #ffffff;
+    }
+
+    @media (min-width: 576px) {
+        .admin-page {
+            padding: 28px 20px 56px;
+        }
+
+        .admin-header {
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: space-between;
+        }
+
+        .admin-actions {
+            grid-template-columns: auto auto;
+        }
+
+        .stats {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+    @media (min-width: 992px) {
+        .admin-page {
+            padding-top: 36px;
+        }
+
+        .stats {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+        }
+
+        .match-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-page">
+
+    <header class="admin-header">
+
+        <div>
+            <p class="admin-eyebrow">Administration</p>
+
+            <h1 class="admin-title">
+                PinnaclePicks Dashboard
+            </h1>
+
+            <p class="admin-subtitle">
+                Manage matches, publish selections and record results.
+            </p>
+        </div>
+
+        <div class="admin-actions">
+
+            <a
+                href="{{ url_for('main.admin_create_match') }}"
+                class="admin-action primary"
+            >
+                + Create Match
+            </a>
+
+            <a
+                href="{{ url_for('main.upload_proof') }}"
+                class="admin-action"
+            >
+                Upload Proof
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <section class="stats" aria-label="Match statistics">
+
+        <div class="stat-card">
+            <div class="stat-label">Total</div>
+            <div class="stat-value">{{ total_matches }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Upcoming</div>
+            <div class="stat-value">{{ upcoming_count }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Finished</div>
+            <div class="stat-value">{{ finished_count }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Won</div>
+            <div class="stat-value">{{ won_count }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Lost</div>
+            <div class="stat-value">{{ lost_count }}</div>
+        </div>
+
+        <div class="stat-card">
+            <div class="stat-label">Void</div>
+            <div class="stat-value">{{ void_count }}</div>
+        </div>
+
+    </section>
+
+
+    <section>
+
+        <div class="section-heading">
+            <h2>Matches</h2>
+        </div>
+
+
+        {% if matches %}
+
+            <div class="match-list">
+
+                {% for match in matches %}
+
+                    <article class="match-card">
+
+                        <div class="match-top">
+
+                            <div>
+                                <p class="league">
+                                    {{ match.league }}
+                                </p>
+
+                                <p class="match-date">
+                                    {{ match.kickoff_time.strftime('%d %b %Y, %H:%M') }}
+                                </p>
+                            </div>
+
+                            <span class="status {{ match.status }}">
+                                {{ match.status }}
+                            </span>
+
+                        </div>
+
+
+                        <div class="teams">
+                            {{ match.home_team }}
+                            <span aria-hidden="true">vs</span>
+                            {{ match.away_team }}
+                        </div>
+
+
+                        <div class="match-meta">
+
+                            <div class="meta-box">
+                                <span class="meta-label">Market</span>
+                                <span class="meta-value">
+                                    {{ match.market_label }}
+                                </span>
+                            </div>
+
+                            <div class="meta-box">
+                                <span class="meta-label">Selection</span>
+                                <span class="meta-value">
+                                    {{ match.pick_selection }}
+                                </span>
+                            </div>
+
+                            <div class="meta-box">
+                                <span class="meta-label">Odds</span>
+                                <span class="meta-value">
+                                    {{ match.odds }}
+                                </span>
+                            </div>
+
+                            <div class="meta-box">
+                                <span class="meta-label">Score</span>
+                                <span class="meta-value">
+                                    {{ match.score_display }}
+                                </span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="match-actions">
+
+                            <a
+                                href="{{ url_for(
+                                    'main.admin_edit_match',
+                                    match_id=match.id
+                                ) }}"
+                                class="small-button"
+                            >
+                                Edit
+                            </a>
+
+                            <form
+                                method="post"
+                                action="{{ url_for(
+                                    'main.admin_delete_match',
+                                    match_id=match.id
+                                ) }}"
+                                onsubmit="return confirm(
+                                    'Delete this match permanently?'
+                                );"
+                            >
+                                <button
+                                    type="submit"
+                                    class="small-button danger w-100"
+                                >
+                                    Delete
+                                </button>
+                            </form>
+
+                        </div>
+
+
+                        {% if match.status != "void" %}
+
+                            <form
+                                method="post"
+                                class="result-form"
+                                action="{{ url_for(
+                                    'main.admin_update_match_result',
+                                    match_id=match.id
+                                ) }}"
+                            >
+
+                                <div class="result-grid">
+
+                                    <input
+                                        type="number"
+                                        name="home_score"
+                                        min="0"
+                                        step="1"
+                                        placeholder="Home score"
+                                        value="{{
+                                            match.home_score
+                                            if match.home_score is not none
+                                            else ''
+                                        }}"
+                                        required
+                                    >
+
+                                    <input
+                                        type="number"
+                                        name="away_score"
+                                        min="0"
+                                        step="1"
+                                        placeholder="Away score"
+                                        value="{{
+                                            match.away_score
+                                            if match.away_score is not none
+                                            else ''
+                                        }}"
+                                        required
+                                    >
+
+                                </div>
+
+                                <select
+                                    name="result"
+                                    required
+                                >
+                                    <option value="">
+                                        Select result
+                                    </option>
+
+                                    <option value="won">
+                                        Won
+                                    </option>
+
+                                    <option value="lost">
+                                        Lost
+                                    </option>
+
+                                    <option value="void">
+                                        Void
+                                    </option>
+                                </select>
+
+                                <button
+                                    type="submit"
+                                    class="result-submit"
+                                >
+                                    Save Result
+                                </button>
+
+                            </form>
+
+                        {% endif %}
+
+                    </article>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-state">
+                <strong>No matches yet.</strong>
+                <br>
+                Create your first match to start building the records.
+            </div>
+
+        {% endif %}
+
+    </section>
+
+</div>
+{% endblock %}

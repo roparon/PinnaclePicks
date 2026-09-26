@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% block title %}Login | PinnaclePicks{% endblock %}
+
+{% block content %}
+
+<style>
+    .auth-page {
+        min-height: calc(100vh - 120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px 40px;
+        background: #f6f8f7;
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 440px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+        border-radius: 18px;
+        padding: 28px 22px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 26px;
+    }
+
+    .auth-logo {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 14px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #198754;
+        color: #fff;
+        font-size: 26px;
+        font-weight: 800;
+    }
+
+    .auth-header h1 {
+        margin: 0;
+        font-size: clamp(24px, 6vw, 30px);
+        font-weight: 800;
+        color: #17201b;
+    }
+
+    .auth-header p {
+        margin: 8px 0 0;
+        color: #6c757d;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 17px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 700;
+        color: #27322c;
+    }
+
+    .form-control {
+        width: 100%;
+        min-height: 48px;
+        padding: 11px 13px;
+        border: 1px solid #d8dfdb;
+        border-radius: 11px;
+        background: #fff;
+        color: #17201b;
+        font-size: 16px;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.12);
+    }
+
+    .auth-button {
+        width: 100%;
+        min-height: 50px;
+        margin-top: 4px;
+        border: 0;
+        border-radius: 11px;
+        background: #198754;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .auth-button:hover {
+        background: #146c43;
+    }
+
+    .auth-footer {
+        margin-top: 22px;
+        padding-top: 20px;
+        border-top: 1px solid #edf0ee;
+        text-align: center;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .auth-footer a {
+        color: #198754;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    .auth-help {
+        margin-top: 5px;
+        font-size: 12px;
+        color: #7a847e;
+    }
+
+    @media (min-width: 576px) {
+        .auth-page {
+            padding: 40px 20px 60px;
+        }
+
+        .auth-card {
+            padding: 34px 32px;
+        }
+    }
+</style>
+
+<div class="auth-page">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <div class="auth-logo">P</div>
+
+            <h1>Welcome Back</h1>
+
+            <p>
+                Sign in to your PinnaclePicks account.
+            </p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.login') }}" class="auth-form">
+
+            {% if request.args.get('next') %}
+                <input
+                    type="hidden"
+                    name="next"
+                    value="{{ request.args.get('next') }}"
+                >
+            {% endif %}
+
+            <div class="form-group">
+                <label for="identifier">
+                    Username or Email
+                </label>
+
+                <input
+                    type="text"
+                    id="identifier"
+                    name="identifier"
+                    class="form-control"
+                    placeholder="Enter your username or email"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="auth-button">
+                Login
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            Don't have an account?
+            <a href="{{ url_for('auth.register') }}">Create one</a>
+
+            <div class="auth-help">
+                Create a free account to access PinnaclePicks.
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

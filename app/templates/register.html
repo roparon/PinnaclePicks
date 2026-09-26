@@ -1,0 +1,253 @@
+{% extends "base.html" %}
+
+{% block title %}Create Account | PinnaclePicks{% endblock %}
+
+{% block content %}
+
+<style>
+    .auth-page {
+        min-height: calc(100vh - 120px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px 40px;
+        background: #f6f8f7;
+    }
+
+    .auth-card {
+        width: 100%;
+        max-width: 460px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.07);
+        border-radius: 18px;
+        padding: 28px 22px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
+    }
+
+    .auth-header {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .auth-logo {
+        width: 58px;
+        height: 58px;
+        margin: 0 auto 14px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #198754;
+        color: #fff;
+        font-size: 26px;
+        font-weight: 800;
+    }
+
+    .auth-header h1 {
+        margin: 0;
+        font-size: clamp(24px, 6vw, 30px);
+        font-weight: 800;
+        color: #17201b;
+    }
+
+    .auth-header p {
+        margin: 8px 0 0;
+        color: #6c757d;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    .auth-form {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+    }
+
+    .form-group label {
+        font-size: 14px;
+        font-weight: 700;
+        color: #27322c;
+    }
+
+    .form-control {
+        width: 100%;
+        min-height: 48px;
+        padding: 11px 13px;
+        border: 1px solid #d8dfdb;
+        border-radius: 11px;
+        background: #fff;
+        color: #17201b;
+        font-size: 16px;
+        outline: none;
+        box-sizing: border-box;
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .form-control:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, 0.12);
+    }
+
+    .password-note {
+        margin-top: 1px;
+        font-size: 12px;
+        color: #7a847e;
+        line-height: 1.4;
+    }
+
+    .auth-button {
+        width: 100%;
+        min-height: 50px;
+        margin-top: 4px;
+        border: 0;
+        border-radius: 11px;
+        background: #198754;
+        color: #fff;
+        font-size: 16px;
+        font-weight: 800;
+        cursor: pointer;
+    }
+
+    .auth-button:hover {
+        background: #146c43;
+    }
+
+    .auth-footer {
+        margin-top: 22px;
+        padding-top: 20px;
+        border-top: 1px solid #edf0ee;
+        text-align: center;
+        font-size: 14px;
+        color: #6c757d;
+    }
+
+    .auth-footer a {
+        color: #198754;
+        font-weight: 800;
+        text-decoration: none;
+    }
+
+    .auth-footer a:hover {
+        text-decoration: underline;
+    }
+
+    @media (min-width: 576px) {
+        .auth-page {
+            padding: 40px 20px 60px;
+        }
+
+        .auth-card {
+            padding: 34px 32px;
+        }
+    }
+</style>
+
+<div class="auth-page">
+    <div class="auth-card">
+
+        <div class="auth-header">
+            <div class="auth-logo">P</div>
+
+            <h1>Create Account</h1>
+
+            <p>
+                Join PinnaclePicks and start exploring sports analytics.
+            </p>
+        </div>
+
+        <form method="POST" action="{{ url_for('auth.register') }}" class="auth-form">
+
+            <div class="form-group">
+                <label for="username">
+                    Username
+                </label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-control"
+                    placeholder="Choose a username"
+                    autocomplete="username"
+                    minlength="3"
+                    maxlength="80"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="email">
+                    Email Address
+                </label>
+
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    class="form-control"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    maxlength="255"
+                    required
+                >
+            </div>
+
+            <div class="form-group">
+                <label for="password">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Create a password"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+
+                <div class="password-note">
+                    Password must contain at least 8 characters.
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="confirm_password">
+                    Confirm Password
+                </label>
+
+                <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    class="form-control"
+                    placeholder="Enter your password again"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+            </div>
+
+            <button type="submit" class="auth-button">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="auth-footer">
+            Already have an account?
+            <a href="{{ url_for('auth.login') }}">Login</a>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

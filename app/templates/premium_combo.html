@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>
+        {{ combo.title }} | PinnaclePicks
+    </title>
+
+    <meta
+        name="theme-color"
+        content="#080b10"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <style>
+
+        :root {
+            --bg: #080b10;
+            --surface: #10151d;
+            --border: rgba(255,255,255,.08);
+            --text: #f5f7fa;
+            --muted: #8f9baa;
+            --green: #22c55e;
+            --gold: #f5c451;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-width: 320px;
+
+            background: var(--bg);
+            color: var(--text);
+
+            font-family:
+                Inter,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        .container-app {
+            width: min(
+                calc(100% - 24px),
+                850px
+            );
+
+            margin-inline: auto;
+        }
+
+        .topbar {
+            padding: 18px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .back {
+            color: var(--muted);
+
+            font-size: .8rem;
+            font-weight: 800;
+        }
+
+        .hero {
+            padding: 30px 0 20px;
+        }
+
+        .eyebrow {
+            display: inline-block;
+
+            padding: 6px 9px;
+
+            border-radius: 8px;
+
+            background: rgba(245,196,81,.1);
+            color: var(--gold);
+
+            font-size: .68rem;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 14px 0 8px;
+
+            font-size: clamp(
+                1.7rem,
+                7vw,
+                2.7rem
+            );
+
+            letter-spacing: -.04em;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: .84rem;
+        }
+
+        .summary {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+
+            margin: 20px 0;
+        }
+
+        .summary-box {
+            padding: 14px;
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            background: var(--surface);
+        }
+
+        .summary-label {
+            display: block;
+
+            color: var(--muted);
+
+            font-size: .65rem;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .summary-value {
+            display: block;
+
+            margin-top: 4px;
+
+            font-size: 1rem;
+            font-weight: 900;
+        }
+
+        .match {
+            padding: 15px;
+
+            margin-bottom: 9px;
+
+            border: 1px solid var(--border);
+            border-radius: 14px;
+
+            background: var(--surface);
+        }
+
+        .league {
+            color: var(--muted);
+
+            font-size: .67rem;
+            font-weight: 700;
+        }
+
+        .teams {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                auto
+                minmax(0, 1fr);
+
+            gap: 10px;
+
+            align-items: center;
+
+            margin-top: 9px;
+        }
+
+        .team {
+            font-size: .9rem;
+            font-weight: 850;
+        }
+
+        .away {
+            text-align: right;
+        }
+
+        .vs {
+            color: var(--muted);
+            font-size: .65rem;
+            font-weight: 900;
+        }
+
+        .selection {
+            margin-top: 12px;
+            padding-top: 11px;
+
+            border-top: 1px solid var(--border);
+
+            color: var(--green);
+
+            font-size: .8rem;
+            font-weight: 900;
+        }
+
+        .footer {
+            padding: 35px 0;
+            color: var(--muted);
+            font-size: .72rem;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container-app">
+
+    <header class="topbar">
+
+        <a
+            href="{{ url_for('main.index') }}"
+            class="back"
+        >
+            ← Back to PinnaclePicks
+        </a>
+
+    </header>
+
+
+    <section class="hero">
+
+        <span class="eyebrow">
+            Premium Combo
+        </span>
+
+        <h1>
+            {{ combo.title }}
+        </h1>
+
+        <div class="subtitle">
+            Complete accumulator selection.
+        </div>
+
+    </section>
+
+
+    <section class="summary">
+
+        <div class="summary-box">
+
+            <span class="summary-label">
+                Total Odds
+            </span>
+
+            <span class="summary-value">
+                {{ "%.2f"|format(combo.total_odds|float) }}
+            </span>
+
+        </div>
+
+
+        <div class="summary-box">
+
+            <span class="summary-label">
+                Selections
+            </span>
+
+            <span class="summary-value">
+                {{ combo.selection_count }}
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <section>
+
+        {% for match in combo.matches %}
+
+            <article class="match">
+
+                <div class="league">
+                    {{ match.league }}
+                    ·
+                    {{ match.kickoff_time.strftime('%d %b %Y, %H:%M') }}
+                </div>
+
+                <div class="teams">
+
+                    <div class="team">
+                        {{ match.home_team }}
+                    </div>
+
+                    <div class="vs">
+                        VS
+                    </div>
+
+                    <div class="team away">
+                        {{ match.away_team }}
+                    </div>
+
+                </div>
+
+                <div class="selection">
+
+                    {{ match.market_label }}
+
+                    ·
+
+                    {{ match.pick_selection }}
+
+                    ·
+
+                    {{ "%.2f"|format(match.odds|float) }}
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </section>
+
+
+    <footer class="footer">
+
+        PinnaclePicks premium analytics.
+
+    </footer>
+
+</div>
+
+</body>
+</html>
