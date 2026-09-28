@@ -107,6 +107,13 @@
         font-size: .75rem;
     }
 
+    .field-error {
+        margin: 5px 0 0;
+        color: #b42318;
+        font-size: .75rem;
+        font-weight: 700;
+    }
+
     .form-actions {
         display: grid;
         gap: 8px;
@@ -128,6 +135,7 @@
         border: 0;
         background: #198754;
         color: #ffffff;
+        cursor: pointer;
     }
 
     .submit-button:hover {
@@ -195,7 +203,7 @@
         <section class="form-section">
 
             <h2 class="section-title">
-                Teams & Competition
+                Teams &amp; Competition
             </h2>
 
             <div class="form-grid two">
@@ -355,48 +363,44 @@
                         Market
                     </label>
 
+                    {#
+                        The dropdown is generated from the MARKETS
+                        dictionary defined in models.py. Add a new
+                        market there and it appears here automatically.
+                    #}
+
+                    {% set current_market =
+                        match.market_type if match else '1X2'
+                    %}
+
                     <select
                         id="market_type"
                         name="market_type"
                         required
                     >
 
-                        {% set current_market =
-                            match.market_type if match else ''
-                        %}
-
-                        <option value="">
+                        <option value="" disabled>
                             Select market
                         </option>
 
-                        <option
-                            value="1X2"
-                            {% if current_market == '1X2' %}
-                                selected
-                            {% endif %}
-                        >
-                            1X2
-                        </option>
+                        {% for key, label in markets.items() %}
 
-                        <option
-                            value="OVER_UNDER"
-                            {% if current_market == 'OVER_UNDER' %}
-                                selected
-                            {% endif %}
-                        >
-                            Over / Under
-                        </option>
+                            <option
+                                value="{{ key }}"
+                                {% if current_market == key %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ label }}
+                            </option>
 
-                        <option
-                            value="GG_NG"
-                            {% if current_market == 'GG_NG' %}
-                                selected
-                            {% endif %}
-                        >
-                            GG / NG
-                        </option>
+                        {% endfor %}
 
                     </select>
+
+                    <p class="field-help">
+                        Choose the betting market for this prediction.
+                    </p>
 
                 </div>
 
@@ -416,6 +420,10 @@
                         placeholder="e.g. Arsenal"
                         required
                     >
+
+                    <p class="field-help">
+                        The exact pick inside the chosen market.
+                    </p>
 
                 </div>
 
@@ -442,6 +450,10 @@
                     required
                 >
 
+                <p class="field-help">
+                    Decimal odds — for example 1.85 or 2.50.
+                </p>
+
             </div>
 
         </section>
@@ -466,9 +478,7 @@
                     Create Match
                 {% endif %}
             </button>
-
         </div>
-
     </form>
 
 </div>

@@ -1,6 +1,8 @@
 <!doctype html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8">
 
     <meta
@@ -10,311 +12,1159 @@
 
     <meta
         name="description"
-        content="PinnaclePicks - Educational Sports Analytics and Historical Match Data"
+        content="PinnaclePicks - Educational Sports Analytics, Historical Match Data and Statistical Insights"
+    >
+
+    <meta
+        name="theme-color"
+        content="#198754"
+    >
+
+    <meta
+        name="robots"
+        content="index, follow"
     >
 
     <title>
         {% block title %}PinnaclePicks{% endblock %}
     </title>
 
-    <!-- Bootstrap -->
+    <!-- =========================================================
+         BOOTSTRAP 5.3.3
+    ========================================================== -->
+
     <link
         href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
         rel="stylesheet"
     >
 
+    <!-- =========================================================
+         BOOTSTRAP ICONS
+    ========================================================== -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <!-- =========================================================
+         GLOBAL DESIGN SYSTEM
+    ========================================================== -->
+
     <style>
+
+        /* =========================================================
+           ROOT VARIABLES
+        ========================================================= */
+
         :root {
+
             --pp-green: #198754;
             --pp-dark-green: #146c43;
-            --pp-bg: #f6f8f7;
+            --pp-light-green: #eaf6ef;
+
+            --pp-bg: #030d08;
+            --pp-white: #ffffff;
+
             --pp-text: #17201b;
+            --pp-text-soft: #39443e;
             --pp-muted: #6c757d;
+
             --pp-border: #e2e8e4;
+
+            --pp-footer-bg: #111814;
+            --pp-footer-text: #dce5df;
+            --pp-footer-muted: #9faca5;
+
             --pp-touch: 48px;
+
+            --pp-radius-sm: 9px;
+            --pp-radius-md: 12px;
+            --pp-radius-lg: 16px;
+
+            --pp-container: 1380px;
+
+            --pp-shadow-sm:
+                0 2px 8px rgba(23, 32, 27, 0.05);
+
+            --pp-shadow-md:
+                0 8px 24px rgba(23, 32, 27, 0.08);
         }
 
-        * {
+
+        /* =========================================================
+           GLOBAL RESET
+        ========================================================== */
+
+        *,
+        *::before,
+        *::after {
             box-sizing: border-box;
         }
 
+
         html {
             scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
         }
 
+
         body {
+
             margin: 0;
+
             min-height: 100vh;
+
             background: var(--pp-bg);
+
             color: var(--pp-text);
+
             font-family:
                 system-ui,
                 -apple-system,
                 BlinkMacSystemFont,
                 "Segoe UI",
                 sans-serif;
+
             -webkit-font-smoothing: antialiased;
+
+            text-rendering: optimizeLegibility;
+
+            overflow-x: hidden;
         }
 
+
+        img {
+
+            display: block;
+
+            max-width: 100%;
+
+            height: auto;
+        }
+
+
         a {
+
             color: inherit;
         }
 
-        /* ---------------------------------------------------------
-           NAVIGATION
-        --------------------------------------------------------- */
 
-        .pp-navbar {
-            background: #ffffff;
-            border-bottom: 1px solid var(--pp-border);
-            position: sticky;
-            top: 0;
-            z-index: 1030;
+        button,
+        input,
+        textarea,
+        select {
+
+            font: inherit;
         }
 
+
+        button,
+        a {
+
+            -webkit-tap-highlight-color: transparent;
+        }
+
+
+        /* =========================================================
+           ACCESSIBILITY
+        ========================================================== */
+
+        :focus-visible {
+
+            outline: 3px solid rgba(25, 135, 84, 0.30);
+
+            outline-offset: 3px;
+        }
+
+
+        .pp-sr-only {
+
+            position: absolute;
+
+            width: 1px;
+
+            height: 1px;
+
+            padding: 0;
+
+            margin: -1px;
+
+            overflow: hidden;
+
+            clip: rect(0, 0, 0, 0);
+
+            white-space: nowrap;
+
+            border: 0;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================== */
+
+        .pp-navbar {
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1030;
+
+            width: 100%;
+
+            background: rgba(241, 244, 241, 0.97);
+
+            border-bottom: 1px solid var(--pp-border);
+
+            backdrop-filter: blur(12px);
+
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+
         .pp-nav-inner {
+
             min-height: 64px;
         }
 
+
+        /* =========================================================
+           BRAND
+        ========================================================== */
+
         .pp-brand {
+
             display: inline-flex;
+
             align-items: center;
+
             gap: 10px;
-            text-decoration: none;
-            font-weight: 850;
-            font-size: 20px;
+
+            min-height: var(--pp-touch);
+
             color: var(--pp-text);
+
+            text-decoration: none;
+
             white-space: nowrap;
+
+            font-size: 20px;
+
+            font-weight: 850;
+
+            letter-spacing: -0.025em;
         }
 
-        .pp-brand-mark {
-            width: 40px;
-            height: 40px;
-            border-radius: 11px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--pp-green);
-            color: #ffffff;
-            font-size: 18px;
-            font-weight: 900;
-            flex: 0 0 auto;
-        }
 
         .pp-brand:hover {
+
             color: var(--pp-dark-green);
         }
+
+
+        .pp-brand-mark {
+
+            width: 40px;
+
+            height: 40px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex: 0 0 40px;
+
+            border-radius: 11px;
+
+            background: var(--pp-green);
+
+            color: var(--pp-white);
+
+            font-size: 18px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 4px 10px rgba(25, 135, 84, 0.18);
+        }
+
+
+        /* =========================================================
+           NAVIGATION LINKS
+        ========================================================== */
 
         .pp-nav-links {
+
             display: flex;
+
             align-items: center;
-            gap: 4px;
+
+            gap: 5px;
         }
+
 
         .pp-nav-link {
+
             min-height: 44px;
+
             display: inline-flex;
+
             align-items: center;
+
             justify-content: center;
-            padding: 8px 12px;
-            border-radius: 9px;
+
+            gap: 7px;
+
+            padding: 8px 13px;
+
+            border-radius: var(--pp-radius-sm);
+
+            color: var(--pp-text-soft);
+
             text-decoration: none;
-            color: #39443e;
+
             font-size: 14px;
+
             font-weight: 650;
+
+            white-space: nowrap;
+
             transition:
                 background-color 0.15s ease,
-                color 0.15s ease;
+                color 0.15s ease,
+                transform 0.15s ease;
         }
 
+
         .pp-nav-link:hover {
-            background: #eef5f1;
+
+            background: var(--pp-light-green);
+
             color: var(--pp-dark-green);
         }
 
+
         .pp-nav-link.pp-primary {
+
             background: var(--pp-green);
-            color: #ffffff;
+
+            color: var(--pp-white);
+
+            box-shadow:
+                0 3px 8px rgba(25, 135, 84, 0.16);
         }
+
 
         .pp-nav-link.pp-primary:hover {
+
             background: var(--pp-dark-green);
-            color: #ffffff;
+
+            color: var(--pp-white);
+
+            transform: translateY(-1px);
         }
+
+
+        /* =========================================================
+           NAVIGATION TOGGLE
+        ========================================================== */
 
         .pp-nav-toggle {
-            min-width: 48px;
-            min-height: 48px;
+
+            width: var(--pp-touch);
+
+            min-width: var(--pp-touch);
+
+            height: var(--pp-touch);
+
+            min-height: var(--pp-touch);
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 0;
+
             border: 1px solid var(--pp-border);
+
             border-radius: 10px;
-            background: #ffffff;
+
+            background: var(--pp-white);
+
+            box-shadow: none;
         }
 
-        /* ---------------------------------------------------------
+
+        .pp-nav-toggle:hover {
+
+            background: #f7faf8;
+
+            border-color: #d5ded9;
+        }
+
+
+        .pp-nav-toggle:focus {
+
+            box-shadow: none;
+        }
+
+
+        .pp-nav-toggle .navbar-toggler-icon {
+
+            width: 21px;
+
+            height: 21px;
+        }
+
+
+        /* =========================================================
            FLASH MESSAGES
-        --------------------------------------------------------- */
+        ========================================================== */
 
         .pp-flash-area {
+
             width: 100%;
-            max-width: 1380px;
+
+            max-width: var(--pp-container);
+
             margin: 0 auto;
+
             padding: 12px 16px 0;
         }
 
+
         .pp-flash {
-            border-radius: 12px;
+
             margin-bottom: 10px;
+
+            border-radius: var(--pp-radius-md);
+
             font-size: 14px;
+
             font-weight: 600;
+
+            box-shadow: var(--pp-shadow-sm);
         }
 
-        /* ---------------------------------------------------------
-           MAIN
-        --------------------------------------------------------- */
+
+        /* =========================================================
+           MAIN CONTENT
+        ========================================================== */
 
         .pp-main {
+
+            width: 100%;
+
             min-height: calc(100vh - 64px);
         }
 
-        /* ---------------------------------------------------------
-           FOOTER
-        --------------------------------------------------------- */
+
+        /* =========================================================
+           PROFESSIONAL FOOTER
+        ========================================================== */
 
         .pp-footer {
-            margin-top: 48px;
-            background: #17201b;
-            color: #d9e1dc;
+
+            margin-top: 56px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #17201b 0%,
+                    var(--pp-footer-bg) 100%
+                );
+
+            color: var(--pp-footer-text);
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.06);
         }
+
 
         .pp-footer-inner {
-            max-width: 1380px;
+
+            width: 100%;
+
+            max-width: var(--pp-container);
+
             margin: 0 auto;
-            padding: 32px 16px;
+
+            padding:
+                50px
+                16px
+                22px;
         }
+
+
+        /* =========================================================
+           FOOTER GRID
+        ========================================================== */
+
+        .pp-footer-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr;
+
+            gap: 34px;
+        }
+
+
+        /* =========================================================
+           FOOTER BRAND
+        ========================================================== */
+
+        .pp-footer-brand-block {
+
+            max-width: 460px;
+        }
+
+
+        .pp-footer-brand-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 14px;
+        }
+
+
+        .pp-footer-brand-mark {
+
+            width: 42px;
+
+            height: 42px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            flex: 0 0 42px;
+
+            border-radius: 12px;
+
+            background: var(--pp-green);
+
+            color: var(--pp-white);
+
+            font-size: 20px;
+
+            font-weight: 900;
+
+            box-shadow:
+                0 5px 12px rgba(25, 135, 84, 0.18);
+        }
+
 
         .pp-footer-brand {
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 18px;
-            margin-bottom: 8px;
+
+            margin: 0;
+
+            color: var(--pp-white);
+
+            font-size: 20px;
+
+            font-weight: 850;
+
+            letter-spacing: -0.025em;
         }
 
-        .pp-footer-text {
-            max-width: 650px;
+
+        .pp-footer-tagline {
+
             margin: 0;
-            color: #aeb9b2;
-            font-size: 13px;
-            line-height: 1.6;
+
+            color: #aebbb3;
+
+            font-size: 14px;
+
+            line-height: 1.75;
         }
+
+
+        /* =========================================================
+           FOOTER HEADINGS
+        ========================================================== */
+
+        .pp-footer-heading {
+
+            margin: 0 0 14px;
+
+            color: var(--pp-white);
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.10em;
+        }
+
+
+        /* =========================================================
+           FOOTER LINKS
+        ========================================================== */
+
+        .pp-footer-links {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 5px;
+
+            margin: 0;
+
+            padding: 0;
+
+            list-style: none;
+        }
+
+
+        .pp-footer-links a {
+
+            width: fit-content;
+
+            min-height: 36px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            color: #aebbb3;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            line-height: 1.4;
+
+            transition:
+                color 0.18s ease,
+                transform 0.18s ease;
+        }
+
+
+        .pp-footer-links a:hover {
+
+            color: var(--pp-white);
+
+            transform: translateX(2px);
+        }
+
+
+        .pp-footer-links a i {
+
+            flex: 0 0 auto;
+        }
+
+
+        /* =========================================================
+           SOCIAL LINKS
+        ========================================================== */
+
+        .pp-footer-socials {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 9px;
+        }
+
+
+        .pp-footer-social {
+
+            width: 44px;
+
+            height: 44px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.10);
+
+            border-radius: 11px;
+
+            background:
+                rgba(255, 255, 255, 0.045);
+
+            color: var(--pp-footer-text);
+
+            text-decoration: none;
+
+            font-size: 17px;
+
+            line-height: 1;
+
+            transition:
+                background-color 0.18s ease,
+                border-color 0.18s ease,
+                color 0.18s ease,
+                transform 0.18s ease;
+        }
+
+
+        .pp-footer-social:hover {
+
+            background: var(--pp-green);
+
+            border-color: var(--pp-green);
+
+            color: var(--pp-white);
+
+            transform: translateY(-2px);
+        }
+
+
+        .pp-footer-social:active {
+
+            transform: translateY(0);
+        }
+
+
+        /* =========================================================
+           EDUCATIONAL NOTICE
+        ========================================================== */
+
+        .pp-footer-note {
+
+            margin-top: 34px;
+
+            padding: 17px;
+
+            border:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            border-radius: 13px;
+
+            background:
+                rgba(255, 255, 255, 0.035);
+        }
+
+
+        .pp-footer-note-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin: 0 0 7px;
+
+            color: var(--pp-white);
+
+            font-size: 13px;
+
+            font-weight: 800;
+        }
+
+
+        .pp-footer-note-title i {
+
+            color: #82c99f;
+
+            font-size: 15px;
+        }
+
+
+        .pp-footer-note-text {
+
+            margin: 0;
+
+            color: var(--pp-footer-muted);
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        /* =========================================================
+           FOOTER BOTTOM BAR
+        ========================================================== */
 
         .pp-footer-bottom {
-            margin-top: 24px;
-            padding-top: 18px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            color: #9da8a1;
-            font-size: 12px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 18px;
+
+            margin-top: 28px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.09);
         }
 
-        /* ---------------------------------------------------------
+
+        .pp-footer-copyright {
+
+            margin: 0;
+
+            color: #89968e;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+        }
+
+
+        .pp-footer-legal {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+
+            gap: 14px;
+        }
+
+
+        .pp-footer-legal a {
+
+            color: #9daaa2;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            transition: color 0.15s ease;
+        }
+
+
+        .pp-footer-legal a:hover {
+
+            color: var(--pp-white);
+        }
+
+
+        /* =========================================================
            MOBILE
-        --------------------------------------------------------- */
+        ========================================================== */
 
         @media (max-width: 575.98px) {
 
             .pp-navbar .container-fluid {
+
                 padding-left: 12px;
+
                 padding-right: 12px;
             }
 
-            .pp-brand {
-                font-size: 18px;
+
+            .pp-nav-inner {
+
+                min-height: 62px;
             }
+
+
+            .pp-brand {
+
+                font-size: 18px;
+
+                gap: 9px;
+            }
+
 
             .pp-brand-mark {
+
                 width: 38px;
+
                 height: 38px;
+
+                flex-basis: 38px;
+
+                border-radius: 10px;
+
+                font-size: 17px;
             }
+
 
             .pp-nav-links {
-                padding: 10px 0 14px;
+
                 display: grid;
-                grid-template-columns: 1fr 1fr;
-                gap: 6px;
+
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+
+                gap: 7px;
+
+                padding:
+                    10px
+                    0
+                    14px;
             }
+
 
             .pp-nav-link {
+
                 width: 100%;
+
                 min-height: 46px;
+
+                padding:
+                    8px
+                    9px;
+
                 background: #f6f8f7;
+
+                font-size: 13px;
             }
 
+
             .pp-nav-link.pp-primary {
+
                 background: var(--pp-green);
             }
 
+
             .pp-flash-area {
-                padding-left: 12px;
-                padding-right: 12px;
+
+                padding:
+                    10px
+                    12px
+                    0;
             }
 
+
             .pp-footer {
-                margin-top: 32px;
+
+                margin-top: 34px;
+            }
+
+
+            .pp-footer-inner {
+
+                padding:
+                    40px
+                    14px
+                    calc(
+                        22px +
+                        env(safe-area-inset-bottom)
+                    );
+            }
+
+
+            .pp-footer-grid {
+
+                gap: 29px;
+            }
+
+
+            .pp-footer-brand-block {
+
+                max-width: none;
+            }
+
+
+            .pp-footer-tagline {
+
+                font-size: 13px;
+
+                line-height: 1.7;
+            }
+
+
+            .pp-footer-social {
+
+                width: 44px;
+
+                height: 44px;
+            }
+
+
+            .pp-footer-bottom {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+
+                gap: 12px;
+            }
+
+
+            .pp-footer-legal {
+
+                justify-content: flex-start;
+
+                gap:
+                    9px 17px;
             }
         }
 
-        /* ---------------------------------------------------------
-           TABLET / DESKTOP
-        --------------------------------------------------------- */
+
+        /* =========================================================
+           VERY SMALL DEVICES
+        ========================================================== */
+
+        @media (max-width: 360px) {
+
+            .pp-brand {
+
+                font-size: 17px;
+            }
+
+
+            .pp-brand-mark {
+
+                width: 36px;
+
+                height: 36px;
+
+                flex-basis: 36px;
+            }
+
+
+            .pp-nav-link {
+
+                font-size: 12px;
+
+                padding-left: 6px;
+
+                padding-right: 6px;
+            }
+
+
+            .pp-footer-inner {
+
+                padding-left: 12px;
+
+                padding-right: 12px;
+            }
+        }
+
+
+        /* =========================================================
+           TABLET
+        ========================================================== */
 
         @media (min-width: 576px) {
 
             .pp-flash-area {
+
                 padding-left: 20px;
+
                 padding-right: 20px;
             }
 
+
             .pp-footer-inner {
+
                 padding-left: 20px;
+
                 padding-right: 20px;
             }
+
+
+            .pp-footer-grid {
+
+                grid-template-columns:
+                    minmax(240px, 1.7fr)
+                    repeat(2, minmax(130px, 1fr))
+                    minmax(180px, 1fr);
+
+                gap: 28px;
+            }
         }
+
+
+        /* =========================================================
+           DESKTOP
+        ========================================================== */
 
         @media (min-width: 992px) {
 
             .pp-nav-links {
+
                 display: flex !important;
             }
 
+
             .pp-nav-toggle {
+
                 display: none;
             }
+
+
+            .pp-footer-inner {
+
+                padding-top: 58px;
+            }
+
+
+            .pp-footer-grid {
+
+                gap: 44px;
+            }
         }
 
-        /* ---------------------------------------------------------
-           ACCESSIBILITY
-        --------------------------------------------------------- */
 
-        :focus-visible {
-            outline: 3px solid rgba(25, 135, 84, 0.28);
-            outline-offset: 2px;
+        /* =========================================================
+           LARGE DESKTOP
+        ========================================================== */
+
+        @media (min-width: 1200px) {
+
+            .pp-navbar .container-fluid {
+
+                padding-left: 28px;
+
+                padding-right: 28px;
+            }
         }
+
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================== */
 
         @media (prefers-reduced-motion: reduce) {
+
             html {
+
                 scroll-behavior: auto;
             }
+
 
             *,
             *::before,
             *::after {
+
                 transition: none !important;
+
                 animation: none !important;
             }
         }
+
     </style>
 
     {% block head %}{% endblock %}
+
 </head>
+
 
 <body>
 
@@ -322,25 +1172,43 @@
          NAVIGATION
     ========================================================== -->
 
-    <nav class="pp-navbar navbar navbar-expand-lg">
+    <nav
+        class="pp-navbar navbar navbar-expand-lg"
+        aria-label="Primary navigation"
+    >
+
         <div class="container-fluid px-3 px-lg-4">
 
             <div
                 class="pp-nav-inner w-100 d-flex align-items-center justify-content-between"
             >
 
+                <!-- Brand -->
+
                 <a
                     href="{{ url_for('main.index') }}"
                     class="pp-brand"
                     aria-label="PinnaclePicks Home"
                 >
-                    <span class="pp-brand-mark">P</span>
-                    <span>PinnaclePicks</span>
+
+                    <span
+                        class="pp-brand-mark"
+                        aria-hidden="true"
+                    >
+                        P
+                    </span>
+
+                    <span>
+                        PinnaclePicks
+                    </span>
+
                 </a>
 
+
                 <!-- Mobile menu button -->
+
                 <button
-                    class="pp-nav-toggle d-lg-none"
+                    class="pp-nav-toggle d-lg-none navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#ppNavigation"
@@ -348,79 +1216,156 @@
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
+
                     <span class="navbar-toggler-icon"></span>
+
                 </button>
 
-                <!-- Navigation -->
+
+                <!-- Navigation links -->
+
                 <div
                     class="collapse navbar-collapse justify-content-end"
                     id="ppNavigation"
                 >
+
                     <div class="pp-nav-links">
+
+                        <!-- Home -->
 
                         <a
                             href="{{ url_for('main.index') }}"
                             class="pp-nav-link"
                         >
-                            Home
+
+                            <i
+                                class="bi bi-house-door"
+                                aria-hidden="true"
+                            ></i>
+
+                            <span>Home</span>
+
                         </a>
+
+
+                        <!-- Premium -->
 
                         <a
                             href="{{ url_for('main.subscription_page') }}"
                             class="pp-nav-link"
                         >
-                            Premium
+
+                            <i
+                                class="bi bi-stars"
+                                aria-hidden="true"
+                            ></i>
+
+                            <span>Premium</span>
+
                         </a>
 
+
                         {% if current_user.is_authenticated %}
+
+                            <!-- Account -->
 
                             <a
                                 href="{{ url_for('auth.account') }}"
                                 class="pp-nav-link"
                             >
-                                Account
+
+                                <i
+                                    class="bi bi-person-circle"
+                                    aria-hidden="true"
+                                ></i>
+
+                                <span>Account</span>
+
                             </a>
 
+
                             {% if current_user.is_admin %}
+
+                                <!-- Admin -->
+
                                 <a
                                     href="{{ url_for('main.admin_dashboard') }}"
                                     class="pp-nav-link"
                                 >
-                                    Admin
+
+                                    <i
+                                        class="bi bi-speedometer2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    <span>Admin</span>
+
                                 </a>
+
                             {% endif %}
+
+
+                            <!-- Logout -->
 
                             <a
                                 href="{{ url_for('auth.logout') }}"
                                 class="pp-nav-link pp-primary"
                             >
-                                Logout
+
+                                <i
+                                    class="bi bi-box-arrow-right"
+                                    aria-hidden="true"
+                                ></i>
+
+                                <span>Logout</span>
+
                             </a>
 
                         {% else %}
+
+                            <!-- Login -->
 
                             <a
                                 href="{{ url_for('auth.login') }}"
                                 class="pp-nav-link"
                             >
-                                Login
+
+                                <i
+                                    class="bi bi-box-arrow-in-right"
+                                    aria-hidden="true"
+                                ></i>
+
+                                <span>Login</span>
+
                             </a>
+
+
+                            <!-- Register -->
 
                             <a
                                 href="{{ url_for('auth.register') }}"
                                 class="pp-nav-link pp-primary"
                             >
-                                Create Account
+
+                                <i
+                                    class="bi bi-person-plus"
+                                    aria-hidden="true"
+                                ></i>
+
+                                <span>Create Account</span>
+
                             </a>
 
                         {% endif %}
 
                     </div>
+
                 </div>
 
             </div>
 
         </div>
+
     </nav>
 
 
@@ -438,19 +1383,28 @@
 
                     {% set alert_class = 'alert-info' %}
 
-                    {% if category in ['success'] %}
+                    {% if category == 'success' %}
+
                         {% set alert_class = 'alert-success' %}
+
                     {% elif category in ['error', 'danger'] %}
+
                         {% set alert_class = 'alert-danger' %}
-                    {% elif category in ['warning'] %}
+
+                    {% elif category == 'warning' %}
+
                         {% set alert_class = 'alert-warning' %}
+
                     {% endif %}
+
 
                     <div
                         class="alert {{ alert_class }} pp-flash"
                         role="alert"
                     >
+
                         {{ message }}
+
                     </div>
 
                 {% endfor %}
@@ -463,35 +1417,427 @@
 
 
     <!-- =========================================================
-         PAGE CONTENT
+         MAIN PAGE CONTENT
     ========================================================== -->
 
     <main class="pp-main">
+
         {% block content %}{% endblock %}
+
     </main>
 
 
     <!-- =========================================================
-         FOOTER
+         PROFESSIONAL FOOTER
     ========================================================== -->
 
     <footer class="pp-footer">
 
         <div class="pp-footer-inner">
 
-            <div class="pp-footer-brand">
-                PinnaclePicks
+            <div class="pp-footer-grid">
+
+
+                <!-- =================================================
+                     BRAND
+                ================================================== -->
+
+                <section class="pp-footer-brand-block">
+
+                    <div class="pp-footer-brand-row">
+
+                        <span
+                            class="pp-footer-brand-mark"
+                            aria-hidden="true"
+                        >
+                            P
+                        </span>
+
+                        <p class="pp-footer-brand">
+                            PinnaclePicks
+                        </p>
+
+                    </div>
+
+
+                    <p class="pp-footer-tagline">
+
+                        Educational sports analytics, historical match
+                        data, statistical insights, and structured sports
+                        information — presented through a clear,
+                        accessible, and data-focused platform.
+
+                    </p>
+
+                </section>
+
+
+                <!-- =================================================
+                     EXPLORE
+                ================================================== -->
+
+                <section>
+
+                    <h2 class="pp-footer-heading">
+                        Explore
+                    </h2>
+
+
+                    <ul class="pp-footer-links">
+
+                        <li>
+
+                            <a href="{{ url_for('main.index') }}">
+
+                                <i
+                                    class="bi bi-house-door me-2"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Home
+
+                            </a>
+
+                        </li>
+
+
+                        <li>
+
+                            <a
+                                href="{{ url_for('main.subscription_page') }}"
+                            >
+
+                                <i
+                                    class="bi bi-stars me-2"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Premium
+
+                            </a>
+
+                        </li>
+
+
+                        {% if current_user.is_authenticated %}
+
+                            <li>
+
+                                <a
+                                    href="{{ url_for('auth.account') }}"
+                                >
+
+                                    <i
+                                        class="bi bi-person me-2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    My Account
+
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </section>
+
+
+                <!-- =================================================
+                     ACCOUNT
+                ================================================== -->
+
+                <section>
+
+                    <h2 class="pp-footer-heading">
+                        Account
+                    </h2>
+
+
+                    <ul class="pp-footer-links">
+
+                        {% if current_user.is_authenticated %}
+
+                            <li>
+
+                                <a
+                                    href="{{ url_for('auth.account') }}"
+                                >
+
+                                    <i
+                                        class="bi bi-person-circle me-2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Account
+
+                                </a>
+
+                            </li>
+
+
+                            <li>
+
+                                <a
+                                    href="{{ url_for('main.subscription_page') }}"
+                                >
+
+                                    <i
+                                        class="bi bi-credit-card me-2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Subscription
+
+                                </a>
+
+                            </li>
+
+
+                            <li>
+
+                                <a
+                                    href="{{ url_for('auth.logout') }}"
+                                >
+
+                                    <i
+                                        class="bi bi-box-arrow-right me-2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Logout
+
+                                </a>
+
+                            </li>
+
+                        {% else %}
+
+                            <li>
+
+                                <a
+                                    href="{{ url_for('auth.login') }}"
+                                >
+
+                                    <i
+                                        class="bi bi-box-arrow-in-right me-2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Login
+
+                                </a>
+
+                            </li>
+
+
+                            <li>
+
+                                <a
+                                    href="{{ url_for('auth.register') }}"
+                                >
+
+                                    <i
+                                        class="bi bi-person-plus me-2"
+                                        aria-hidden="true"
+                                    ></i>
+
+                                    Create Account
+
+                                </a>
+
+                            </li>
+
+                        {% endif %}
+
+                    </ul>
+
+                </section>
+
+
+                <!-- =================================================
+                     CONNECT
+                ================================================== -->
+
+                <section>
+
+                    <h2 class="pp-footer-heading">
+                        Connect
+                    </h2>
+
+
+                    <div class="pp-footer-socials">
+
+                        <!-- Replace # with your real social URLs -->
+
+                        <a
+                            href="#"
+                            class="pp-footer-social"
+                            aria-label="Facebook"
+                            title="Facebook"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i
+                                class="bi bi-facebook"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="pp-footer-social"
+                            aria-label="Instagram"
+                            title="Instagram"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i
+                                class="bi bi-instagram"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="pp-footer-social"
+                            aria-label="X"
+                            title="X"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i
+                                class="bi bi-twitter-x"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+
+                        <a
+                            href="#"
+                            class="pp-footer-social"
+                            aria-label="YouTube"
+                            title="YouTube"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+
+                            <i
+                                class="bi bi-youtube"
+                                aria-hidden="true"
+                            ></i>
+
+                        </a>
+
+                    </div>
+
+
+                    <ul class="pp-footer-links mt-3">
+
+                        <li>
+
+                            <a
+                                href="mailto:your-email@example.com"
+                            >
+
+                                <i
+                                    class="bi bi-envelope me-2"
+                                    aria-hidden="true"
+                                ></i>
+
+                                Contact Support
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </section>
+
             </div>
 
-            <p class="pp-footer-text">
-                Educational sports analytics, historical match data,
-                and statistical insights designed to help users
-                understand sports data.
-            </p>
+
+            <!-- =====================================================
+                 EDUCATIONAL NOTICE
+            ====================================================== -->
+
+            <div class="pp-footer-note">
+
+                <p class="pp-footer-note-title">
+
+                    <i
+                        class="bi bi-info-circle"
+                        aria-hidden="true"
+                    ></i>
+
+                    Educational &amp; Informational Use
+
+                </p>
+
+
+                <p class="pp-footer-note-text">
+
+                    PinnaclePicks provides sports data, historical
+                    information, statistics, selections, and analytical
+                    content for educational and informational purposes.
+                    Sports outcomes are inherently uncertain, and no
+                    information presented on this platform should be
+                    considered a guarantee of future results.
+
+                </p>
+
+            </div>
+
+
+            <!-- =====================================================
+                 FOOTER BOTTOM BAR
+            ====================================================== -->
 
             <div class="pp-footer-bottom">
-                © {{ now().year if now is defined else 2026 }}
-                PinnaclePicks. All rights reserved.
+
+                <p class="pp-footer-copyright">
+
+                    &copy;
+
+                    {{ now().year if now is defined else 2026 }}
+
+                    PinnaclePicks.
+
+                    All rights reserved.
+
+                </p>
+
+
+                <nav
+                    class="pp-footer-legal"
+                    aria-label="Legal navigation"
+                >
+
+                    <a href="#">
+                        Privacy
+                    </a>
+
+                    <a href="#">
+                        Terms
+                    </a>
+
+                    <a href="#">
+                        Responsible Use
+                    </a>
+
+                </nav>
+
             </div>
 
         </div>
@@ -499,12 +1845,17 @@
     </footer>
 
 
-    <!-- Bootstrap JavaScript -->
+    <!-- =========================================================
+         BOOTSTRAP JAVASCRIPT
+    ========================================================== -->
+
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
 
+
     {% block scripts %}{% endblock %}
 
 </body>
+
 </html>

@@ -21,111 +21,687 @@
 
     <style>
 
+        :root {
+            --pp-bg: #080b10;
+            --pp-surface: #10151d;
+            --pp-surface-2: #151c26;
+            --pp-border: rgba(255,255,255,.08);
+            --pp-border-strong: rgba(255,255,255,.13);
+
+            --pp-text: #f5f7fa;
+            --pp-muted: #8f9baa;
+
+            --pp-green: #22c55e;
+            --pp-green-light: #86efac;
+
+            --pp-red: #ef4444;
+            --pp-red-light: #fca5a5;
+
+            --pp-radius: 16px;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            min-width: 320px;
+        }
+
+
         body {
             min-width: 320px;
 
             margin: 0;
 
-            background: #080b10;
-            color: #f5f7fa;
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(34,197,94,.07),
+                    transparent 28rem
+                ),
+                var(--pp-bg);
+
+            color: var(--pp-text);
 
             font-family:
                 Inter,
                 system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
                 sans-serif;
         }
 
+
         .page {
+
             width: min(
                 calc(100% - 24px),
-                650px
+                900px
             );
 
             margin: auto;
 
-            padding: 35px 0;
+            padding: 35px 0 60px;
         }
+
+
+        .back-link {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            min-height: 42px;
+
+            color: var(--pp-muted);
+
+            font-size: .78rem;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        .back-link:hover {
+
+            color: var(--pp-green-light);
+
+        }
+
+
+        .page-title {
+
+            margin: 18px 0 7px;
+
+            color: var(--pp-text);
+
+            font-size: clamp(
+                1.65rem,
+                6vw,
+                2.2rem
+            );
+
+            font-weight: 900;
+
+            letter-spacing: -.035em;
+        }
+
+
+        .page-description {
+
+            margin: 0 0 22px;
+
+            color: var(--pp-muted);
+
+            font-size: .82rem;
+
+            line-height: 1.6;
+        }
+
+
+        /* =========================================================
+           FLASH MESSAGES
+        ========================================================= */
+
+        .flash-message {
+
+            margin-bottom: 16px;
+
+            border-radius: 11px;
+
+            font-size: .82rem;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================================================
+           MAIN CARDS
+        ========================================================= */
 
         .card {
+
             padding: 20px;
 
-            border: 1px solid rgba(255,255,255,.08);
-            border-radius: 16px;
+            border: 1px solid var(--pp-border);
 
-            background: #10151d;
+            border-radius: var(--pp-radius);
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,.035),
+                    rgba(255,255,255,.012)
+                );
+
+            box-shadow:
+                0 12px 35px rgba(0,0,0,.18);
         }
 
+
+        .upload-card {
+
+            margin-bottom: 28px;
+        }
+
+
+        .section-title {
+
+            margin: 0 0 5px;
+
+            color: var(--pp-text);
+
+            font-size: 1.05rem;
+
+            font-weight: 900;
+        }
+
+
+        .section-description {
+
+            margin: 0 0 18px;
+
+            color: var(--pp-muted);
+
+            font-size: .75rem;
+
+            line-height: 1.55;
+        }
+
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
         label {
+
             display: block;
 
             margin-bottom: 7px;
 
+            color: var(--pp-text);
+
             font-size: .78rem;
+
             font-weight: 800;
         }
 
+
         input,
         textarea {
+
             width: 100%;
 
             padding: 12px;
 
             border: 1px solid rgba(255,255,255,.1);
+
             border-radius: 10px;
 
+            outline: none;
+
             background: #080b10;
+
             color: #fff;
+
+            font-family: inherit;
+
+            font-size: .86rem;
         }
+
+
+        input[type="file"] {
+
+            padding: 10px;
+
+            cursor: pointer;
+        }
+
+
+        input::file-selector-button {
+
+            margin-right: 10px;
+
+            padding: 7px 10px;
+
+            border: 0;
+
+            border-radius: 7px;
+
+            background: rgba(34,197,94,.12);
+
+            color: var(--pp-green-light);
+
+            font-size: .72rem;
+
+            font-weight: 800;
+
+            cursor: pointer;
+        }
+
 
         input:focus,
         textarea:focus {
-            outline: 2px solid rgba(34,197,94,.4);
-            border-color: #22c55e;
+
+            outline: 2px solid rgba(34,197,94,.3);
+
+            border-color: var(--pp-green);
         }
 
+
         .field {
+
             margin-bottom: 16px;
         }
 
-        button {
+
+        .muted {
+
+            color: var(--pp-muted);
+
+            font-size: .76rem;
+        }
+
+
+        .upload-button {
+
             width: 100%;
 
             min-height: 48px;
 
             border: 0;
+
             border-radius: 11px;
 
-            background: #22c55e;
+            background: var(--pp-green);
+
             color: #031208;
 
             font-weight: 900;
+
+            transition:
+                transform .15s ease,
+                background .15s ease;
         }
 
-        .muted {
-            color: #8f9baa;
+
+        .upload-button:hover {
+
+            background: #4ade80;
+
+        }
+
+
+        .upload-button:active {
+
+            transform: scale(.985);
+
+        }
+
+
+        /* =========================================================
+           EXISTING PROOFS
+        ========================================================= */
+
+        .proofs-section {
+
+            margin-top: 8px;
+        }
+
+
+        .proof-count {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 28px;
+
+            min-height: 24px;
+
+            margin-left: 5px;
+
+            padding: 0 7px;
+
+            border-radius: 7px;
+
+            background: rgba(34,197,94,.1);
+
+            color: var(--pp-green-light);
+
+            font-size: .68rem;
+
+            font-weight: 900;
+
+        }
+
+
+        .proof-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 10px;
+
+        }
+
+
+        .proof-item {
+
+            min-width: 0;
+
+            overflow: hidden;
+
+            border: 1px solid var(--pp-border);
+
+            border-radius: 13px;
+
+            background: var(--pp-surface);
+        }
+
+
+        .proof-image-wrap {
+
+            position: relative;
+
+            overflow: hidden;
+
+            aspect-ratio: 1 / 1;
+
+            background: #05070a;
+        }
+
+
+        .proof-image {
+
+            width: 100%;
+
+            height: 100%;
+
+            display: block;
+
+            object-fit: cover;
+        }
+
+
+        .proof-body {
+
+            padding: 12px;
+        }
+
+
+        .proof-caption {
+
+            margin: 0 0 8px;
+
+            color: var(--pp-text);
+
             font-size: .76rem;
+
+            font-weight: 700;
+
+            line-height: 1.45;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .proof-date {
+
+            margin: 0 0 11px;
+
+            color: var(--pp-muted);
+
+            font-size: .65rem;
+
+            line-height: 1.4;
+        }
+
+
+        .proof-actions {
+
+            display: flex;
+
+            gap: 7px;
+        }
+
+
+        .proof-view-button,
+        .proof-delete-button {
+
+            min-height: 40px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            font-size: .7rem;
+
+            font-weight: 850;
+
+            text-decoration: none;
+
+            cursor: pointer;
+        }
+
+
+        .proof-view-button {
+
+            flex: 1;
+
+            padding: 0 10px;
+
+            border: 1px solid var(--pp-border);
+
+            background: rgba(255,255,255,.035);
+
+            color: var(--pp-text);
+        }
+
+
+        .proof-view-button:hover {
+
+            background: var(--pp-surface-2);
+
+            color: #fff;
+        }
+
+
+        .proof-delete-button {
+
+            flex: 1;
+
+            padding: 0 10px;
+
+            border: 1px solid rgba(239,68,68,.22);
+
+            background: rgba(239,68,68,.1);
+
+            color: var(--pp-red-light);
+        }
+
+
+        .proof-delete-button:hover {
+
+            background: rgba(239,68,68,.18);
+
+            color: #fecaca;
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-proofs {
+
+            padding: 25px 16px;
+
+            border: 1px dashed var(--pp-border-strong);
+
+            border-radius: 13px;
+
+            color: var(--pp-muted);
+
+            text-align: center;
+
+            font-size: .78rem;
+
+            line-height: 1.55;
+        }
+
+
+        /* =========================================================
+           TABLET / DESKTOP
+        ========================================================= */
+
+        @media (min-width: 576px) {
+
+            .page {
+
+                width: min(
+                    calc(100% - 32px),
+                    900px
+                );
+
+                padding-top: 45px;
+            }
+
+
+            .proof-grid {
+
+                grid-template-columns:
+                    repeat(3, minmax(0, 1fr));
+
+                gap: 13px;
+            }
+
+        }
+
+
+        @media (min-width: 850px) {
+
+            .proof-grid {
+
+                grid-template-columns:
+                    repeat(4, minmax(0, 1fr));
+
+            }
+
+        }
+
+
+        /* =========================================================
+           SMALL MOBILE
+        ========================================================= */
+
+        @media (max-width: 400px) {
+
+            .page {
+
+                width: min(
+                    calc(100% - 20px),
+                    900px
+                );
+
+                padding-top: 25px;
+            }
+
+
+            .card {
+
+                padding: 15px;
+
+                border-radius: 14px;
+            }
+
+
+            .proof-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .proof-image-wrap {
+
+                aspect-ratio: 16 / 10;
+            }
+
+        }
+
+
+        /* =========================================================
+           REDUCED MOTION
+        ========================================================= */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            *,
+            *::before,
+            *::after {
+
+                transition: none !important;
+
+                animation: none !important;
+            }
+
         }
 
     </style>
 
 </head>
 
+
 <body>
+
 
 <div class="page">
 
+
+    <!-- =========================================================
+         BACK LINK
+    ========================================================== -->
+
     <a
         href="{{ url_for('main.index') }}"
-        class="muted"
+        class="back-link"
     >
         ← Back to PinnaclePicks
     </a>
 
 
-    <h1 class="mt-4 mb-3">
+    <!-- =========================================================
+         PAGE HEADER
+    ========================================================== -->
+
+    <h1 class="page-title">
         Upload Transparency Proof
     </h1>
 
+
+    <p class="page-description">
+        Upload verified transparency screenshots for display
+        on the PinnaclePicks homepage.
+    </p>
+
+
+    <!-- =========================================================
+         FLASH MESSAGES
+    ========================================================== -->
 
     {% with messages = get_flashed_messages(with_categories=true) %}
 
@@ -133,7 +709,9 @@
 
             {% for category, message in messages %}
 
-                <div class="alert alert-{{ category }}">
+                <div
+                    class="alert alert-{{ category }} flash-message"
+                >
                     {{ message }}
                 </div>
 
@@ -144,7 +722,21 @@
     {% endwith %}
 
 
-    <div class="card">
+    <!-- =========================================================
+         UPLOAD CARD
+    ========================================================== -->
+
+    <div class="card upload-card">
+
+        <h2 class="section-title">
+            Add New Proof
+        </h2>
+
+        <p class="section-description">
+            Upload a JPG, JPEG, PNG, WEBP or GIF screenshot.
+            Maximum file size is 8 MB.
+        </p>
+
 
         <form
             method="POST"
@@ -199,7 +791,10 @@
             </div>
 
 
-            <button type="submit">
+            <button
+                type="submit"
+                class="upload-button"
+            >
                 Upload Proof
             </button>
 
@@ -207,7 +802,170 @@
 
     </div>
 
+
+    <!-- =========================================================
+         EXISTING UPLOADED PROOFS
+    ========================================================== -->
+
+    <section class="proofs-section">
+
+        <div class="card">
+
+            <div class="d-flex align-items-center justify-content-between gap-2 mb-3">
+
+                <div>
+
+                    <h2 class="section-title mb-1">
+                        Uploaded Proofs
+
+                        {% if proofs %}
+                            <span class="proof-count">
+                                {{ proofs|length }}
+                            </span>
+                        {% endif %}
+
+                    </h2>
+
+                    <p class="section-description mb-0">
+                        Review your transparency screenshots.
+                        Delete any proof that was uploaded by mistake.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            {% if proofs %}
+
+                <div class="proof-grid">
+
+                    {% for proof in proofs %}
+
+                        <article class="proof-item">
+
+                            <!-- IMAGE -->
+
+                            <div class="proof-image-wrap">
+
+                                <img
+                                    src="{{ url_for(
+                                        'static',
+                                        filename=proof.image_path
+                                    ) }}"
+                                    alt="{{ proof.caption or 'Transparency proof' }}"
+                                    class="proof-image"
+                                    loading="lazy"
+                                    decoding="async"
+                                >
+
+                            </div>
+
+
+                            <!-- DETAILS -->
+
+                            <div class="proof-body">
+
+                                {% if proof.caption %}
+
+                                    <p class="proof-caption">
+                                        {{ proof.caption }}
+                                    </p>
+
+                                {% else %}
+
+                                    <p class="proof-caption">
+                                        Transparency proof
+                                    </p>
+
+                                {% endif %}
+
+
+                                {% if proof.uploaded_at %}
+
+                                    <p class="proof-date">
+
+                                        Uploaded:
+
+                                        {{ proof.uploaded_at.strftime(
+                                            '%d %b %Y, %H:%M'
+                                        ) }}
+
+                                    </p>
+
+                                {% endif %}
+
+
+                                <!-- ACTIONS -->
+
+                                <div class="proof-actions">
+
+                                    <a
+                                        href="{{ url_for(
+                                            'static',
+                                            filename=proof.image_path
+                                        ) }}"
+                                        class="proof-view-button"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        View
+                                    </a>
+
+
+                                    <form
+                                        method="POST"
+                                        action="{{ url_for(
+                                            'main.delete_proof',
+                                            proof_id=proof.id
+                                        ) }}"
+                                        style="flex: 1; margin: 0;"
+                                        onsubmit="return confirm(
+                                            'Are you sure you want to permanently delete this transparency proof? This action cannot be undone.'
+                                        );"
+                                    >
+
+                                        <button
+                                            type="submit"
+                                            class="proof-delete-button"
+                                        >
+                                            Delete
+                                        </button>
+
+                                    </form>
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-proofs">
+
+                    No transparency proofs have been uploaded yet.
+
+                    <br>
+
+                    Upload your first verified screenshot using
+                    the form above.
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </section>
+
+
 </div>
+
 
 </body>
 

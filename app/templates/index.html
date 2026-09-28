@@ -1,1142 +1,1753 @@
-{# templates/index.html #}
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
+{% block title %}
+PinnaclePicks | Sports Analytics & Match History
+{% endblock %}
 
-    <meta charset="UTF-8">
+{% block head %}
+<meta
+    name="description"
+    content="PinnaclePicks sports analytics, historical match results, accumulator tickets and transparent community verification."
+>
+<meta name="theme-color" content="#080b10">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="format-detection" content="telephone=no">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1, viewport-fit=cover"
-    >
+<style>
 
-    <title>PinnaclePicks | Sports Analytics & Match History</title>
+    /* =========================================================
+       PINNACLEPICKS HOMEPAGE — MOBILE FIRST
+    ========================================================= */
 
-    <meta
-        name="description"
-        content="PinnaclePicks sports analytics, historical match results, accumulator tickets and transparent community verification."
-    >
+    :root {
+        --pp-home-bg: #080b10;
+        --pp-home-surface: #10151d;
+        --pp-home-surface-2: #151c26;
+        --pp-home-border: rgba(255, 255, 255, 0.08);
+        --pp-home-border-strong: rgba(255, 255, 255, 0.16);
+        --pp-home-text: #f5f7fa;
+        --pp-home-muted: #8f9baa;
+        --pp-home-muted-2: #6b7686;
 
-    <meta
-        name="theme-color"
-        content="#080b10"
-    >
+        --pp-home-green: #22c55e;
+        --pp-home-green-soft: #4ade80;
+        --pp-home-green-dark: #15803d;
+        --pp-home-red: #ef4444;
+        --pp-home-gold: #f5c451;
+        --pp-home-blue: #3b82f6;
 
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    >
+        --pp-home-radius: 14px;
+        --pp-home-radius-lg: 18px;
+        --pp-home-touch: 48px;
+        --pp-home-touch-sm: 44px;
 
-    <style>
+        --pp-home-gutter: 16px;
+        --pp-home-max: 1180px;
+
+        /* Table palette */
+        --pp-tt-header:   #2eb350;
+        --pp-tt-row-odd:  #2a2a2a;
+        --pp-tt-row-even: #333333;
+        --pp-tt-row-hover:#3a3a3a;
+        --pp-tt-border:   rgba(255, 255, 255, 0.08);
+    }
+
+
+    /* =========================================================
+       HOMEPAGE BASE
+    ========================================================= */
+
+    .pp-home {
+        min-width: 320px;
+        width: 100%;
+
+        background:
+            radial-gradient(
+                circle at top,
+                rgba(34, 197, 94, 0.08),
+                transparent 32rem
+            ),
+            var(--pp-home-bg);
+
+        color: var(--pp-home-text);
+
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pp-home a {
+        color: inherit;
+        text-decoration: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pp-home *,
+    .pp-home *::before,
+    .pp-home *::after {
+        box-sizing: border-box;
+    }
+
+    .pp-home img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .pp-home-container {
+        width: 100%;
+        max-width: var(--pp-home-max);
+        margin-inline: auto;
+        padding-inline: var(--pp-home-gutter);
+    }
+
+
+    /* =========================================================
+       HERO
+    ========================================================= */
+
+    .pp-home-hero {
+        padding: 32px 0 22px;
+    }
+
+    .pp-home-eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+
+        padding: 7px 11px;
+
+        border: 1px solid rgba(34, 197, 94, 0.24);
+        border-radius: 999px;
+
+        background: rgba(34, 197, 94, 0.08);
+        color: #86efac;
+
+        font-size: 0.7rem;
+        font-weight: 800;
+        line-height: 1.2;
+
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .pp-home-hero h1 {
+        margin: 14px 0 10px;
+
+        max-width: 760px;
+
+        color: var(--pp-home-text);
+
+        font-size: clamp(1.75rem, 8.5vw, 3.6rem);
+        font-weight: 800;
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+
+        overflow-wrap: break-word;
+    }
+
+    .pp-home-hero-description {
+        max-width: 950px;
+        margin: 0;
+
+        color: var(--pp-home-muted);
+
+        font-size: clamp(0.92rem, 3.8vw, 1.02rem);
+        line-height: 1.6;
+    }
+
+    .pp-home-hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+    }
+
+    .pp-home-hero-actions .pp-home-btn {
+        flex: 1 1 auto;
+        min-width: 0;
+    }
+
+
+    /* =========================================================
+       BUTTONS
+    ========================================================= */
+
+    .pp-home-btn {
+        min-height: var(--pp-home-touch);
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 12px 18px;
+
+        border: 1px solid transparent;
+        border-radius: 12px;
+
+        font-size: 0.88rem;
+        font-weight: 800;
+        line-height: 1.2;
+        text-align: center;
+
+        cursor: pointer;
+
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+
+        transition:
+            transform 0.15s ease,
+            background 0.15s ease,
+            border-color 0.15s ease,
+            color 0.15s ease;
+    }
+
+    .pp-home-btn:hover {
+        text-decoration: none;
+    }
+
+    .pp-home-btn:active {
+        transform: scale(0.97);
+    }
+
+    .pp-home-btn:focus-visible {
+        outline: 2px solid var(--pp-home-green);
+        outline-offset: 2px;
+    }
+
+    .pp-home-btn-primary {
+        background: var(--pp-home-green);
+        color: #031208;
+    }
+
+    .pp-home-btn-primary:hover {
+        background: var(--pp-home-green-soft);
+        color: #031208;
+    }
+
+    .pp-home-btn-secondary {
+        background: var(--pp-home-surface);
+        border-color: var(--pp-home-border);
+        color: var(--pp-home-text);
+    }
+
+    .pp-home-btn-secondary:hover {
+        background: var(--pp-home-surface-2);
+        border-color: var(--pp-home-border-strong);
+        color: var(--pp-home-text);
+    }
+
+
+    /* =========================================================
+       SECTIONS
+    ========================================================= */
+
+    .pp-home-section {
+        padding: 24px 0;
+    }
+
+    .pp-home-section-header {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+    }
+
+    .pp-home-section-title {
+        margin: 0;
+
+        color: var(--pp-home-text);
+
+        font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+        font-weight: 850;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+    }
+
+    .pp-home-section-description {
+        margin: 4px 0 0;
+        color: var(--pp-home-muted);
+        font-size: 0.8rem;
+        line-height: 1.4;
+    }
+
+
+    /* =========================================================
+       UPCOMING MATCHES — PREMIUM CARDS
+    ========================================================= */
+
+    .pp-upcoming-list {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .pp-upcoming-card {
+        position: relative;
+        overflow: hidden;
+
+        padding: 16px;
+
+        border: 1px solid var(--pp-home-border);
+        border-radius: var(--pp-home-radius-lg);
+
+        background:
+            linear-gradient(
+                150deg,
+                rgba(34, 197, 94, 0.055),
+                rgba(255, 255, 255, 0.02) 40%,
+                rgba(255, 255, 255, 0.01)
+            );
+
+        box-shadow:
+            0 10px 30px rgba(0, 0, 0, 0.28),
+            inset 0 1px 0 rgba(255, 255, 255, 0.04);
+
+        transition:
+            transform 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    /* Green accent line on top */
+    .pp-upcoming-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 2px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--pp-home-green),
+            transparent
+        );
+        opacity: 0.55;
+    }
+
+    .pp-upcoming-card:hover {
+        transform: translateY(-2px);
+        border-color: rgba(34, 197, 94, 0.35);
+        box-shadow:
+            0 14px 38px rgba(0, 0, 0, 0.35),
+            0 0 0 1px rgba(34, 197, 94, 0.15);
+    }
+
+
+    /* ---------- Top row: league + time ---------- */
+
+    .pp-upcoming-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+
+        margin-bottom: 14px;
+        padding-bottom: 12px;
+
+        border-bottom: 1px solid var(--pp-home-border);
+    }
+
+    .pp-upcoming-league {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        min-width: 0;
+        padding: 5px 10px;
+
+        border: 1px solid rgba(59, 130, 246, 0.22);
+        border-radius: 999px;
+
+        background: rgba(59, 130, 246, 0.08);
+        color: #93c5fd;
+
+        font-size: 0.68rem;
+        font-weight: 800;
+        line-height: 1;
+
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .pp-upcoming-time {
+        flex-shrink: 0;
+
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        color: #d8dee7;
+        font-size: 0.74rem;
+        font-weight: 800;
+
+        white-space: nowrap;
+    }
+
+    .pp-upcoming-time::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--pp-home-green);
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
+    }
+
+
+    /* ---------- Teams block ---------- */
+
+    .pp-upcoming-teams {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        gap: 12px;
+
+        padding: 4px 0 16px;
+    }
+
+    .pp-upcoming-team {
+        min-width: 0;
+
+        color: var(--pp-home-text);
+
+        font-size: clamp(0.92rem, 3.6vw, 1.02rem);
+        font-weight: 850;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+
+        overflow-wrap: anywhere;
+    }
+
+    .pp-upcoming-team-away {
+        text-align: right;
+    }
+
+    .pp-upcoming-vs {
+        flex-shrink: 0;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 34px;
+        height: 34px;
+
+        border: 1px solid var(--pp-home-border-strong);
+        border-radius: 50%;
+
+        background: rgba(255, 255, 255, 0.035);
+
+        color: var(--pp-home-muted);
+
+        font-size: 0.62rem;
+        font-weight: 900;
+        line-height: 1;
+
+        letter-spacing: 0.05em;
+    }
+
+
+    /* ---------- Prediction block ---------- */
+
+    .pp-upcoming-prediction {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+
+        padding: 12px 14px;
+
+        border: 1px solid rgba(34, 197, 94, 0.18);
+        border-radius: 12px;
+
+        background:
+            linear-gradient(
+                135deg,
+                rgba(34, 197, 94, 0.09),
+                rgba(34, 197, 94, 0.03)
+            );
+    }
+
+    .pp-upcoming-prediction-label {
+        display: block;
+        margin-bottom: 3px;
+
+        color: #86efac;
+
+        font-size: 0.62rem;
+        font-weight: 900;
+
+        text-transform: uppercase;
+        letter-spacing: 0.09em;
+    }
+
+    .pp-upcoming-pick {
+        min-width: 0;
+
+        color: #ffffff;
+
+        font-size: 0.94rem;
+        font-weight: 900;
+        line-height: 1.25;
+
+        overflow-wrap: anywhere;
+    }
+
+    .pp-upcoming-meta {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 6px;
+        flex-shrink: 0;
+    }
+
+    .pp-upcoming-market {
+        min-height: 28px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 4px 10px;
+
+        border: 1px solid rgba(59, 130, 246, 0.24);
+        border-radius: 8px;
+
+        background: rgba(59, 130, 246, 0.1);
+        color: #93c5fd;
+
+        font-size: 0.68rem;
+        font-weight: 850;
+        line-height: 1;
+
+        white-space: nowrap;
+    }
+
+    .pp-upcoming-odds {
+        min-height: 28px;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 4px 12px;
+
+        border: 1px solid rgba(245, 196, 81, 0.24);
+        border-radius: 8px;
+
+        background: rgba(245, 196, 81, 0.1);
+        color: var(--pp-home-gold);
+
+        font-size: 0.76rem;
+        font-weight: 900;
+        line-height: 1;
+
+        letter-spacing: 0.02em;
+        white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       CONCLUDED GAMES & ARCHIVE — SHARED TABLE
+    ========================================================= */
+
+    .pp-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+
+        border-radius: 12px;
+        border: 1px solid var(--pp-home-border);
+        background: #1c1c1c;
+    }
+
+    .pp-table {
+        width: 100%;
+        min-width: 620px;
+        border-collapse: collapse;
+        font-size: 0.82rem;
+    }
+
+    .pp-table thead th {
+        padding: 13px 10px;
+
+        background: var(--pp-tt-header);
+        color: #ffffff;
+
+        font-size: 0.74rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        text-align: center;
+
+        white-space: nowrap;
+
+        border-right: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .pp-table thead th:last-child {
+        border-right: 0;
+    }
+
+    .pp-table tbody tr {
+        background: var(--pp-tt-row-even);
+        color: #ffffff;
+    }
+
+    .pp-table tbody tr:nth-child(odd) {
+        background: var(--pp-tt-row-odd);
+    }
+
+    .pp-table tbody tr:hover {
+        background: var(--pp-tt-row-hover);
+    }
+
+    .pp-table tbody td {
+        padding: 12px 10px;
+        text-align: center;
+        vertical-align: middle;
+
+        border-top: 1px solid var(--pp-tt-border);
+        border-right: 1px solid var(--pp-tt-border);
+
+        white-space: nowrap;
+    }
+
+    .pp-table tbody td:last-child {
+        border-right: 0;
+    }
+
+    .pp-td-date {
+        color: #ffffff;
+        font-weight: 700;
+        font-style: italic;
+    }
+
+    .pp-td-match {
+        color: #ffffff;
+        font-weight: 600;
+        white-space: normal;
+        min-width: 220px;
+    }
+
+    .pp-td-tip,
+    .pp-td-odds {
+        color: #ffffff;
+        font-style: italic;
+        font-weight: 600;
+    }
+
+    .pp-td-result {
+        font-style: italic;
+        font-weight: 800;
+    }
+
+    .pp-td-result-won     { color: #22c55e; }
+    .pp-td-result-lost    { color: #ef4444; }
+    .pp-td-result-void    { color: #cbd5e1; }
+    .pp-td-result-pending { color: #f5c451; }
+
+
+    /* =========================================================
+       ARCHIVE SUMMARY
+    ========================================================= */
+
+    .pp-history-embed { margin-top: 6px; }
+
+    .pp-history-summary {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .pp-history-stat {
+        padding: 13px 14px;
+        border: 1px solid var(--pp-home-border);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .pp-history-stat-label {
+        display: block;
+        margin-bottom: 3px;
+        color: var(--pp-home-muted);
+        font-size: 0.68rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .pp-history-stat-value {
+        display: block;
+        color: var(--pp-home-text);
+        font-size: 1.18rem;
+        font-weight: 900;
+        line-height: 1.1;
+    }
+
+
+    /* =========================================================
+       PAGINATION
+    ========================================================= */
+
+    .pp-history-pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+
+        gap: 6px;
+
+        margin-top: 18px;
+    }
+
+    .pp-history-page-link {
+        min-width: var(--pp-home-touch-sm);
+        min-height: var(--pp-home-touch-sm);
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 8px 12px;
+
+        border: 1px solid var(--pp-home-border);
+        border-radius: 10px;
+
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--pp-home-text);
+
+        text-decoration: none;
+
+        font-size: 0.84rem;
+        font-weight: 850;
+        line-height: 1;
+
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+
+        transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    }
+
+    .pp-history-page-link:hover {
+        border-color: var(--pp-home-green);
+        color: var(--pp-home-green);
+    }
+
+    .pp-history-page-link:focus-visible {
+        outline: 2px solid var(--pp-home-green);
+        outline-offset: 2px;
+    }
+
+    .pp-history-page-link-active {
+        border-color: var(--pp-home-green);
+        background: var(--pp-home-green);
+        color: #031208;
+    }
+
+    .pp-history-page-link-active:hover {
+        color: #031208;
+    }
+
+    .pp-history-page-link-disabled {
+        opacity: 0.45;
+        pointer-events: none;
+    }
+
+    .pp-history-page-info {
+        width: 100%;
+        margin-top: 6px;
+        color: var(--pp-home-muted);
+        font-size: 0.76rem;
+        text-align: center;
+    }
+
+
+    /* =========================================================
+       COMBO CARDS
+    ========================================================= */
+
+    .pp-home-combo-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .pp-home-combo-card {
+        padding: 16px;
+
+        border: 1px solid var(--pp-home-border);
+        border-radius: var(--pp-home-radius);
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(245, 196, 81, 0.06),
+                rgba(255, 255, 255, 0.015)
+            );
+    }
+
+    .pp-home-combo-card.premium {
+        border-color: rgba(245, 196, 81, 0.2);
+    }
+
+    .pp-home-combo-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .pp-home-combo-title {
+        margin: 0;
+        color: var(--pp-home-text);
+        font-size: 0.96rem;
+        font-weight: 850;
+        line-height: 1.3;
+        overflow-wrap: anywhere;
+    }
+
+    .pp-home-premium-label {
+        flex-shrink: 0;
+        padding: 5px 8px;
+        border-radius: 7px;
+        background: rgba(245, 196, 81, 0.1);
+        color: var(--pp-home-gold);
+        font-size: 0.64rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .pp-home-combo-meta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+        margin-top: 14px;
+    }
+
+    .pp-home-combo-meta .pp-home-meta-box:nth-child(3) {
+        grid-column: 1 / -1;
+    }
+
+    .pp-home-meta-box {
+        min-width: 0;
+        padding: 10px;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.035);
+    }
+
+    .pp-home-meta-label {
+        display: block;
+        color: var(--pp-home-muted);
+        font-size: 0.62rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+
+    .pp-home-meta-value {
+        display: block;
+        margin-top: 3px;
+        color: var(--pp-home-text);
+        font-size: 0.92rem;
+        font-weight: 900;
+        line-height: 1.2;
+        overflow-wrap: anywhere;
+    }
+
+    .pp-home-lock {
+        margin: 13px 0 0;
+        color: var(--pp-home-muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+    }
+
+    .pp-home-combo-button {
+        width: 100%;
+        margin-top: 13px;
+    }
+
+
+    /* =========================================================
+       TRANSPARENCY GALLERY
+    ========================================================= */
+
+    .pp-home-gallery {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .pp-home-proof {
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 1 / 1;
+        border: 1px solid var(--pp-home-border);
+        border-radius: 12px;
+        background: var(--pp-home-surface);
+        display: block;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .pp-home-proof img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.25s ease;
+    }
+
+    .pp-home-proof:hover img,
+    .pp-home-proof:active img {
+        transform: scale(1.03);
+    }
+
+    .pp-home-proof-caption {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        padding: 22px 8px 8px;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
+        color: #ffffff;
+        font-size: 0.68rem;
+        line-height: 1.3;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+
+
+    /* =========================================================
+       EMPTY STATES
+    ========================================================= */
+
+    .pp-home-empty {
+        padding: 22px 16px;
+        border: 1px dashed var(--pp-home-border);
+        border-radius: var(--pp-home-radius);
+        color: var(--pp-home-muted);
+        text-align: center;
+        font-size: 0.82rem;
+        line-height: 1.5;
+    }
+
+
+    /* =========================================================
+       EXTRA SECTIONS
+    ========================================================= */
+
+    .pp-extra-sections {
+        margin-top: 8px;
+        padding: 12px 0 32px;
+    }
+
+    .pp-extra-section {
+        padding: 22px 0;
+    }
+
+    .pp-extra-card {
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--pp-home-radius-lg);
+        background: linear-gradient(145deg, rgba(16, 21, 29, 0.96), rgba(9, 13, 19, 0.96));
+        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+    }
+
+    .pp-offer-card { padding: 16px; }
+
+    .pp-extra-title {
+        margin: 0;
+        color: #ffffff;
+        font-size: clamp(1.05rem, 4.5vw, 1.45rem);
+        font-weight: 850;
+        line-height: 1.25;
+        letter-spacing: -0.02em;
+    }
+
+    .pp-extra-subtitle {
+        margin: 5px 0 0;
+        color: var(--pp-home-muted);
+        font-size: 0.8rem;
+        line-height: 1.5;
+    }
+
+    .pp-offer-list {
+        display: grid;
+        gap: 10px;
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .pp-offer-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 13px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.025);
+    }
+
+    .pp-offer-dot {
+        flex: 0 0 8px;
+        width: 8px;
+        height: 8px;
+        margin-top: 7px;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 10px rgba(16, 185, 129, 0.75);
+    }
+
+    .pp-offer-copy {
+        min-width: 0;
+        color: #f5f7fa;
+        font-size: 0.85rem;
+        line-height: 1.55;
+        overflow-wrap: anywhere;
+    }
+
+    .pp-offer-copy strong { font-weight: 850; }
+
+    .pp-offer-link {
+        display: inline-flex;
+        align-items: center;
+        min-height: 34px;
+        margin: 2px 4px;
+        padding: 0 10px;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 8px;
+        background: rgba(16, 185, 129, 0.08);
+        color: #34d399 !important;
+        font-weight: 850;
+        font-size: 0.84rem;
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+
+    .pp-offer-link:hover,
+    .pp-offer-link:active {
+        background: rgba(16, 185, 129, 0.15);
+        color: #6ee7b7 !important;
+    }
+
+    .pp-support-card {
+        padding: 20px 16px;
+        text-align: center;
+    }
+
+    .pp-support-heading {
+        margin: 0 0 12px;
+        color: #ffffff;
+        font-size: 1rem;
+        font-weight: 850;
+    }
+
+    .pp-support-contact {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        color: #dbe3ec;
+        font-size: 0.85rem;
+        line-height: 1.6;
+    }
+
+    .pp-support-contact > span[aria-hidden="true"] {
+        display: none;
+    }
+
+    .pp-support-contact a {
+        color: #34d399 !important;
+        font-weight: 800;
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .pp-warning {
+        margin: 16px auto 0;
+        max-width: 900px;
+        padding: 12px 13px;
+        border: 1px solid rgba(239, 68, 68, 0.3);
+        border-radius: 11px;
+        background: rgba(127, 29, 29, 0.24);
+        color: #fecaca;
+        font-size: 0.78rem;
+        font-weight: 750;
+        line-height: 1.55;
+        text-align: left;
+    }
+
+    .pp-testimonials-header { margin-bottom: 14px; }
+
+    .pp-testimonials-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .pp-testimonial-card {
+        padding: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: var(--pp-home-radius-lg);
+        background: linear-gradient(145deg, rgba(16, 21, 29, 0.96), rgba(9, 13, 19, 0.96));
+    }
+
+    .pp-testimonial-person {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+    }
+
+    .pp-testimonial-avatar {
+        width: 44px;
+        height: 44px;
+        flex: 0 0 44px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        border-radius: 50%;
+        background: rgba(16, 185, 129, 0.1);
+        color: #34d399;
+        font-size: 0.82rem;
+        font-weight: 900;
+    }
+
+    .pp-testimonial-name {
+        color: #ffffff;
+        font-size: 0.86rem;
+        font-weight: 850;
+        line-height: 1.2;
+    }
+
+    .pp-testimonial-location {
+        margin-top: 2px;
+        color: var(--pp-home-muted);
+        font-size: 0.72rem;
+    }
+
+    .pp-testimonial-stars {
+        margin-top: 13px;
+        color: var(--pp-home-gold);
+        font-size: 0.82rem;
+        letter-spacing: 0.1em;
+    }
+
+    .pp-testimonial-quote {
+        margin: 9px 0 0;
+        color: #dce2e9;
+        font-size: 0.82rem;
+        line-height: 1.65;
+    }
+
+    .pp-meta-card {
+        padding: 16px;
+        text-align: center;
+    }
+
+    .pp-meta-updated {
+        margin: 0;
+        color: var(--pp-home-muted);
+        font-size: 0.74rem;
+        font-weight: 700;
+        line-height: 1.5;
+    }
+
+    .pp-meta-tags {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+        margin-top: 12px;
+    }
+
+    .pp-meta-tag {
+        display: inline-flex;
+        align-items: center;
+        min-height: 30px;
+        padding: 0 10px;
+        border: 1px solid rgba(16, 185, 129, 0.16);
+        border-radius: 999px;
+        background: rgba(16, 185, 129, 0.055);
+        color: #9eeac9;
+        font-size: 0.68rem;
+        font-weight: 750;
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+
+    /* =========================================================
+       TABLET (≥ 576px)
+    ========================================================= */
+
+    @media (min-width: 576px) {
 
         :root {
-            --pp-bg: #080b10;
-            --pp-surface: #10151d;
-            --pp-surface-2: #151c26;
-            --pp-border: rgba(255,255,255,.08);
-
-            --pp-text: #f5f7fa;
-            --pp-muted: #8f9baa;
-
-            --pp-green: #22c55e;
-            --pp-green-dark: #15803d;
-
-            --pp-red: #ef4444;
-            --pp-gold: #f5c451;
-            --pp-blue: #3b82f6;
-
-            --pp-radius: 16px;
-            --pp-touch: 46px;
+            --pp-home-gutter: 20px;
         }
 
-        * {
-            box-sizing: border-box;
+        .pp-home-hero {
+            padding: 48px 0 30px;
         }
 
-        html {
-            scroll-behavior: smooth;
+        .pp-home-gallery {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
-        body {
-            margin: 0;
-            background:
-                radial-gradient(
-                    circle at top,
-                    rgba(34,197,94,.08),
-                    transparent 32rem
-                ),
-                var(--pp-bg);
-
-            color: var(--pp-text);
-
-            font-family:
-                Inter,
-                system-ui,
-                -apple-system,
-                BlinkMacSystemFont,
-                "Segoe UI",
-                sans-serif;
-
-            min-width: 320px;
+        .pp-home-combo-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        a {
-            color: inherit;
-            text-decoration: none;
+        .pp-home-combo-meta {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
-        .pp-container {
-            width: min(
-                100% - 24px,
-                1180px
-            );
-
-            margin-inline: auto;
+        .pp-home-combo-meta .pp-home-meta-box:nth-child(3) {
+            grid-column: auto;
         }
 
-        /* -------------------------------------------------------------
-           Navbar
-        ------------------------------------------------------------- */
+        .pp-history-summary {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
 
-        .pp-navbar {
+        .pp-history-page-info {
+            width: auto;
+            margin-top: 0;
+            margin-inline: 8px;
+        }
+
+        .pp-offer-card { padding: 22px; }
+        .pp-support-card { padding: 24px; }
+        .pp-support-contact { flex-direction: row; flex-wrap: wrap; }
+        .pp-support-contact > span[aria-hidden="true"] { display: inline; }
+
+        .pp-testimonials-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+    }
+
+
+    /* =========================================================
+       DESKTOP (≥ 900px)
+    ========================================================= */
+
+    @media (min-width: 900px) {
+
+        .pp-home-hero {
+            padding: 70px 0 45px;
+        }
+
+        .pp-home-content-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
+            gap: 24px;
+            align-items: start;
+        }
+
+        .pp-home-sticky-column {
             position: sticky;
-            top: 0;
-            z-index: 1000;
-
-            background: rgba(8,11,16,.92);
-            backdrop-filter: blur(14px);
-
-            border-bottom: 1px solid var(--pp-border);
+            top: 82px;
         }
 
-        .pp-navbar-inner {
-            min-height: 62px;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 12px;
+        .pp-upcoming-list {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        .pp-brand {
-            font-size: 1.05rem;
-            font-weight: 800;
-            letter-spacing: -.02em;
+        .pp-home-gallery {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
-        .pp-brand span {
-            color: var(--pp-green);
+        .pp-extra-section { padding: 30px 0; }
+
+        .pp-testimonials-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+    }
+
+
+    /* =========================================================
+       VERY SMALL MOBILE (≤ 360px)
+    ========================================================= */
+
+    @media (max-width: 360px) {
+
+        :root {
+            --pp-home-gutter: 12px;
         }
 
-        .pp-nav-link {
-            min-height: 40px;
-
-            display: inline-flex;
-            align-items: center;
-
-            padding: 0 12px;
-
-            border-radius: 10px;
-
-            color: var(--pp-muted);
-
-            font-size: .84rem;
-            font-weight: 700;
+        .pp-home-hero h1 {
+            font-size: clamp(1.6rem, 9vw, 2rem);
         }
 
-        .pp-nav-link:hover {
-            background: var(--pp-surface);
-            color: var(--pp-text);
+        .pp-home-hero-actions {
+            flex-direction: column;
         }
 
-        /* -------------------------------------------------------------
-           Hero
-        ------------------------------------------------------------- */
-
-        .pp-hero {
-            padding: 42px 0 26px;
-        }
-
-        .pp-eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-
-            padding: 7px 10px;
-
-            border: 1px solid rgba(34,197,94,.2);
-            border-radius: 999px;
-
-            background: rgba(34,197,94,.08);
-
-            color: #86efac;
-
-            font-size: .72rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .08em;
-        }
-
-        .pp-hero h1 {
-            margin: 16px 0 12px;
-
-            max-width: 760px;
-
-            font-size: clamp(
-                2rem,
-                8vw,
-                4rem
-            );
-
-            line-height: 1.02;
-            letter-spacing: -.045em;
-        }
-
-        .pp-hero p {
-            max-width: 650px;
-
-            margin: 0;
-
-            color: var(--pp-muted);
-
-            font-size: clamp(
-                .94rem,
-                2vw,
-                1.05rem
-            );
-
-            line-height: 1.65;
-        }
-
-        .pp-hero-actions {
-            display: flex;
-            flex-wrap: wrap;
-
-            gap: 10px;
-
-            margin-top: 22px;
-        }
-
-        .pp-btn {
-            min-height: var(--pp-touch);
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0 16px;
-
-            border-radius: 12px;
-
-            border: 1px solid transparent;
-
-            font-size: .85rem;
-            font-weight: 800;
-
-            transition:
-                transform .15s ease,
-                background .15s ease;
-        }
-
-        .pp-btn:active {
-            transform: scale(.98);
-        }
-
-        .pp-btn-primary {
-            background: var(--pp-green);
-            color: #031208;
-        }
-
-        .pp-btn-primary:hover {
-            background: #4ade80;
-            color: #031208;
-        }
-
-        .pp-btn-secondary {
-            background: var(--pp-surface);
-            border-color: var(--pp-border);
-            color: var(--pp-text);
-        }
-
-        /* -------------------------------------------------------------
-           Section
-        ------------------------------------------------------------- */
-
-        .pp-section {
-            padding: 28px 0;
-        }
-
-        .pp-section-header {
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-between;
-
-            gap: 12px;
-
-            margin-bottom: 14px;
-        }
-
-        .pp-section-title {
-            margin: 0;
-
-            font-size: clamp(
-                1.15rem,
-                4vw,
-                1.5rem
-            );
-
-            font-weight: 850;
-            letter-spacing: -.025em;
-        }
-
-        .pp-section-description {
-            margin: 4px 0 0;
-
-            color: var(--pp-muted);
-
-            font-size: .78rem;
-        }
-
-        /* -------------------------------------------------------------
-           Match cards
-        ------------------------------------------------------------- */
-
-        .pp-match-list {
-            display: grid;
-            gap: 10px;
-        }
-
-        .pp-match-card {
-            position: relative;
-
-            overflow: hidden;
-
-            padding: 15px;
-
-            border: 1px solid var(--pp-border);
-            border-radius: var(--pp-radius);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(255,255,255,.035),
-                    rgba(255,255,255,.012)
-                );
-
-            box-shadow:
-                0 8px 28px rgba(0,0,0,.16);
-        }
-
-        .pp-match-top {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 8px;
-
-            margin-bottom: 12px;
-        }
-
-        .pp-league {
-            min-width: 0;
-
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-
-            color: var(--pp-muted);
-
-            font-size: .72rem;
-            font-weight: 700;
-        }
-
-        .pp-time {
-            flex-shrink: 0;
-
-            color: #d8dee7;
-
-            font-size: .72rem;
-            font-weight: 800;
-        }
-
-        .pp-teams {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
-
-            align-items: center;
-
-            gap: 10px;
-        }
-
-        .pp-team {
-            min-width: 0;
-
-            font-size: .94rem;
-            font-weight: 800;
-            line-height: 1.25;
-        }
-
-        .pp-team-away {
-            text-align: right;
-        }
-
-        .pp-vs {
-            color: var(--pp-muted);
-
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .pp-selection-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            gap: 10px;
-
-            margin-top: 14px;
-            padding-top: 12px;
-
-            border-top: 1px solid var(--pp-border);
-        }
-
-        .pp-selection {
-            min-width: 0;
-
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-
-            font-size: .8rem;
-            font-weight: 800;
-        }
-
-        .pp-tags {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: flex-end;
-
-            gap: 6px;
-        }
-
-        .pp-badge {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            min-height: 27px;
-
-            padding: 0 8px;
-
-            border-radius: 8px;
-
-            font-size: .68rem;
-            font-weight: 850;
-        }
-
-        .pp-market {
-            background: rgba(59,130,246,.12);
-            color: #93c5fd;
-        }
-
-        .pp-odds {
-            background: rgba(245,196,81,.12);
-            color: var(--pp-gold);
-        }
-
-        /* -------------------------------------------------------------
-           History
-        ------------------------------------------------------------- */
-
-        .pp-history-scroll {
-            max-height: 560px;
-            overflow-y: auto;
-
-            padding-right: 2px;
-        }
-
-        .pp-history-item {
-            display: grid;
-
-            grid-template-columns:
-                minmax(0, 1fr)
-                auto;
-
-            align-items: center;
-
-            gap: 12px;
-
-            padding: 13px 0;
-
-            border-bottom: 1px solid var(--pp-border);
-        }
-
-        .pp-history-item:last-child {
-            border-bottom: 0;
-        }
-
-        .pp-history-teams {
-            min-width: 0;
-        }
-
-        .pp-history-league {
-            color: var(--pp-muted);
-
-            font-size: .67rem;
-            font-weight: 700;
-        }
-
-        .pp-history-team-names {
-            margin-top: 4px;
-
-            font-size: .82rem;
-            font-weight: 750;
-        }
-
-        .pp-history-score {
-            margin-top: 3px;
-
-            color: #fff;
-
-            font-size: .92rem;
-            font-weight: 900;
-        }
-
-        .pp-result {
-            min-width: 64px;
-            min-height: 30px;
-
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-
-            padding: 0 9px;
-
-            border-radius: 8px;
-
-            font-size: .68rem;
-            font-weight: 900;
-        }
-
-        .pp-result-won {
-            background: rgba(34,197,94,.12);
-            color: #86efac;
-        }
-
-        .pp-result-lost {
-            background: rgba(239,68,68,.12);
-            color: #fca5a5;
-        }
-
-        .pp-result-void {
-            background: rgba(148,163,184,.12);
-            color: #cbd5e1;
-        }
-
-        /* -------------------------------------------------------------
-           Combo cards
-        ------------------------------------------------------------- */
-
-        .pp-combo-grid {
-            display: grid;
-            gap: 12px;
-        }
-
-        .pp-combo-card {
-            padding: 17px;
-
-            border: 1px solid var(--pp-border);
-            border-radius: var(--pp-radius);
-
-            background:
-                linear-gradient(
-                    145deg,
-                    rgba(245,196,81,.06),
-                    rgba(255,255,255,.015)
-                );
-        }
-
-        .pp-combo-card.premium {
-            border-color: rgba(245,196,81,.2);
-        }
-
-        .pp-combo-top {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-
-            gap: 10px;
-        }
-
-        .pp-combo-title {
-            margin: 0;
-
-            font-size: .98rem;
-            font-weight: 850;
-        }
-
-        .pp-premium-label {
-            flex-shrink: 0;
-
-            padding: 5px 8px;
-
-            border-radius: 7px;
-
-            background: rgba(245,196,81,.1);
-            color: var(--pp-gold);
-
-            font-size: .64rem;
-            font-weight: 900;
-            text-transform: uppercase;
-        }
-
-        .pp-combo-meta {
-            display: flex;
-            flex-wrap: wrap;
-
-            gap: 8px;
-
-            margin-top: 14px;
-        }
-
-        .pp-meta-box {
-            flex: 1;
-            min-width: 80px;
-
-            padding: 10px;
-
-            border-radius: 10px;
-
-            background: rgba(255,255,255,.035);
-        }
-
-        .pp-meta-label {
-            display: block;
-
-            color: var(--pp-muted);
-
-            font-size: .62rem;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        .pp-meta-value {
-            display: block;
-
-            margin-top: 3px;
-
-            font-size: .92rem;
-            font-weight: 900;
-        }
-
-        .pp-lock {
-            margin-top: 13px;
-
-            color: var(--pp-muted);
-
-            font-size: .76rem;
-            line-height: 1.5;
-        }
-
-        .pp-combo-button {
+        .pp-home-hero-actions .pp-home-btn {
             width: 100%;
-
-            margin-top: 13px;
         }
 
-        /* -------------------------------------------------------------
-           Proof gallery
-        ------------------------------------------------------------- */
-
-        .pp-gallery {
-            display: grid;
-
-            grid-template-columns:
-                repeat(2, minmax(0, 1fr));
-
-            gap: 8px;
+        .pp-upcoming-team {
+            font-size: 0.86rem;
         }
 
-        .pp-proof {
-            overflow: hidden;
-
-            position: relative;
-
-            aspect-ratio: 1 / 1;
-
-            border: 1px solid var(--pp-border);
-            border-radius: 12px;
-
-            background: var(--pp-surface);
+        .pp-upcoming-vs {
+            width: 30px;
+            height: 30px;
+            font-size: 0.58rem;
         }
 
-        .pp-proof img {
-            width: 100%;
-            height: 100%;
-
-            display: block;
-
-            object-fit: cover;
-
-            transition: transform .2s ease;
+        .pp-upcoming-prediction {
+            flex-direction: column;
+            align-items: stretch;
         }
 
-        .pp-proof:hover img {
-            transform: scale(1.025);
+        .pp-upcoming-meta {
+            justify-content: flex-start;
         }
 
-        .pp-proof-caption {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-
-            padding: 22px 8px 8px;
-
-            background:
-                linear-gradient(
-                    transparent,
-                    rgba(0,0,0,.85)
-                );
-
-            color: #fff;
-
-            font-size: .67rem;
+        .pp-home-gallery {
+            grid-template-columns: 1fr;
         }
 
-        /* -------------------------------------------------------------
-           Empty state
-        ------------------------------------------------------------- */
-
-        .pp-empty {
-            padding: 24px 16px;
-
-            border: 1px dashed var(--pp-border);
-            border-radius: var(--pp-radius);
-
-            color: var(--pp-muted);
-
-            text-align: center;
-
-            font-size: .82rem;
+        .pp-home-combo-meta {
+            grid-template-columns: 1fr;
         }
 
-        /* -------------------------------------------------------------
-           Footer
-        ------------------------------------------------------------- */
-
-        .pp-footer {
-            margin-top: 25px;
-            padding: 30px 0 45px;
-
-            border-top: 1px solid var(--pp-border);
-
-            color: var(--pp-muted);
-
-            font-size: .72rem;
-            line-height: 1.6;
+        .pp-table {
+            min-width: 520px;
+            font-size: 0.76rem;
         }
 
-        /* -------------------------------------------------------------
-           Tablet
-        ------------------------------------------------------------- */
-
-        @media (min-width: 576px) {
-
-            .pp-container {
-                width: min(
-                    100% - 32px,
-                    1180px
-                );
-            }
-
-            .pp-gallery {
-                grid-template-columns:
-                    repeat(3, minmax(0, 1fr));
-            }
-
-            .pp-combo-grid {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
-
+        .pp-table thead th {
+            padding: 10px 6px;
+            font-size: 0.68rem;
+            letter-spacing: 0.05em;
         }
 
-        /* -------------------------------------------------------------
-           Desktop
-        ------------------------------------------------------------- */
-
-        @media (min-width: 900px) {
-
-            .pp-hero {
-                padding: 70px 0 45px;
-            }
-
-            .pp-content-grid {
-                display: grid;
-
-                grid-template-columns:
-                    minmax(0, 1.45fr)
-                    minmax(280px, .85fr);
-
-                gap: 24px;
-
-                align-items: start;
-            }
-
-            .pp-sticky-column {
-                position: sticky;
-                top: 82px;
-            }
-
-            .pp-match-list {
-                grid-template-columns:
-                    repeat(2, minmax(0, 1fr));
-            }
-
-            .pp-gallery {
-                grid-template-columns:
-                    repeat(4, minmax(0, 1fr));
-            }
-
+        .pp-table tbody td {
+            padding: 10px 6px;
         }
 
-    </style>
-
-</head>
-
-<body>
-
-<!-- ================================================================
-     Navigation
-================================================================ -->
-
-<nav class="pp-navbar">
-
-    <div class="pp-container pp-navbar-inner">
-
-        <a
-            href="{{ url_for('main.index') }}"
-            class="pp-brand"
-            aria-label="PinnaclePicks home"
-        >
-            Pinnacle<span>Picks</span>
-        </a>
-
-        <div class="d-flex align-items-center gap-1">
-
-            <a
-                href="#history"
-                class="pp-nav-link"
-            >
-                History
-            </a>
-
-            <a
-                href="#combos"
-                class="pp-nav-link"
-            >
-                Combos
-            </a>
-
-            {% if current_user.is_authenticated %}
-                <a
-                    href="{{ url_for('main.subscription_page') }}"
-                    class="pp-nav-link"
-                >
-                    Account
-                </a>
-            {% else %}
-                <a
-                    href="{{ url_for('auth.login') }}"
-                    class="pp-nav-link"
-                >
-                    Login
-                </a>
-            {% endif %}
-
-        </div>
-
-    </div>
-
-</nav>
+        .pp-td-match {
+            min-width: 160px;
+        }
+    }
 
 
-<main>
+    /* =========================================================
+       LANDSCAPE PHONE
+    ========================================================= */
 
-<!-- ================================================================
-     Hero
-================================================================ -->
+    @media (max-height: 480px) and (orientation: landscape) {
 
-<section class="pp-hero">
+        .pp-home-hero {
+            padding: 24px 0 16px;
+        }
+    }
 
-    <div class="pp-container">
 
-        <span class="pp-eyebrow">
+    /* =========================================================
+       REDUCED MOTION
+    ========================================================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .pp-home *,
+        .pp-home *::before,
+        .pp-home *::after {
+            transition: none !important;
+            animation: none !important;
+        }
+    }
+
+
+    /* =========================================================
+       HIGH CONTRAST
+    ========================================================= */
+
+    @media (prefers-contrast: more) {
+
+        .pp-home {
+            --pp-home-muted: #c7d0db;
+            --pp-home-border: rgba(255, 255, 255, 0.18);
+        }
+    }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="pp-home">
+
+<!-- HERO -->
+<section class="pp-home-hero">
+    <div class="pp-home-container">
+
+        <span class="pp-home-eyebrow">
             ● Live Sports Intelligence
         </span>
 
         <h1>
-            Sports data.
-            <br>
-            Historical insight.
-            <br>
-            <span style="color: var(--pp-green);">
+            Sports data.<br>
+            Historical insight.<br>
+            <span style="color: var(--pp-home-green);">
                 Transparent records.
             </span>
         </h1>
 
-        <p>
+        <p class="pp-home-hero-description">
             Explore upcoming fixtures, documented historical results,
             accumulator selections and community verification records
             through one mobile-first analytics platform.
         </p>
 
-        <div class="pp-hero-actions">
-
-            <a
-                href="#upcoming"
-                class="pp-btn pp-btn-primary"
-            >
+        <div class="pp-home-hero-actions">
+            <a href="#upcoming" class="pp-home-btn pp-home-btn-primary">
                 Explore Matches
             </a>
-
-            <a
-                href="#history"
-                class="pp-btn pp-btn-secondary"
-            >
-                View 30-Day History
+            <a href="#history" class="pp-home-btn pp-home-btn-secondary">
+                View Match History
             </a>
-
         </div>
 
     </div>
-
 </section>
 
 
-<!-- ================================================================
-     Main content
-================================================================ -->
+<!-- MAIN CONTENT -->
+<div class="pp-home-container">
+    <div class="pp-home-content-grid">
 
-<div class="pp-container">
-
-    <div class="pp-content-grid">
-
+        <!-- PRIMARY COLUMN -->
         <div>
 
-            <!-- ========================================================
-                 Upcoming Matches
-            ========================================================= -->
+            <!-- UPCOMING MATCHES — PREMIUM CARDS -->
+            <section id="upcoming" class="pp-home-section">
 
-            <section
-                id="upcoming"
-                class="pp-section"
-            >
-
-                <div class="pp-section-header">
-
+                <div class="pp-home-section-header">
                     <div>
-                        <h2 class="pp-section-title">
+                        <h2 class="pp-home-section-title">
                             Upcoming Matches
                         </h2>
-
-                        <p class="pp-section-description">
+                        <p class="pp-home-section-description">
                             Scheduled selections and market information.
                         </p>
                     </div>
-
                 </div>
 
-
                 {% if upcoming_matches %}
-
-                    <div class="pp-match-list">
-
+                    <div class="pp-upcoming-list">
                         {% for match in upcoming_matches %}
+                            <article class="pp-upcoming-card">
 
-                            <article class="pp-match-card">
-
-                                <div class="pp-match-top">
-
-                                    <span class="pp-league">
+                                <div class="pp-upcoming-top">
+                                    <span class="pp-upcoming-league">
                                         {{ match.league }}
                                     </span>
-
                                     <time
-                                        class="pp-time"
+                                        class="pp-upcoming-time"
                                         datetime="{{ match.kickoff_time.isoformat() }}"
                                     >
                                         {{ match.kickoff_time.strftime('%d %b, %H:%M') }}
                                     </time>
-
                                 </div>
 
-
-                                <div class="pp-teams">
-
-                                    <div class="pp-team">
+                                <div class="pp-upcoming-teams">
+                                    <div class="pp-upcoming-team">
                                         {{ match.home_team }}
                                     </div>
-
-                                    <div class="pp-vs">
-                                        VS
-                                    </div>
-
-                                    <div class="pp-team pp-team-away">
+                                    <div class="pp-upcoming-vs">VS</div>
+                                    <div class="pp-upcoming-team pp-upcoming-team-away">
                                         {{ match.away_team }}
                                     </div>
-
                                 </div>
 
-
-                                <div class="pp-selection-row">
-
-                                    <div
-                                        class="pp-selection"
-                                        title="{{ match.pick_selection }}"
-                                    >
-                                        {{ match.pick_selection }}
+                                <div class="pp-upcoming-prediction">
+                                    <div>
+                                        <span class="pp-upcoming-prediction-label">
+                                            Prediction
+                                        </span>
+                                        <div class="pp-upcoming-pick">
+                                            {{ match.pick_selection }}
+                                        </div>
                                     </div>
 
-                                    <div class="pp-tags">
-
-                                        <span class="pp-badge pp-market">
-
-                                            {% if match.market_type == '1X2' %}
-                                                1X2
-                                            {% elif match.market_type in ['GG_NG', 'GG/NG'] %}
-                                                GG/NG
-                                            {% elif match.market_type in ['OVER_UNDER', 'Over/Under'] %}
-                                                Over/Under
-                                            {% else %}
-                                                {{ match.market_type }}
-                                            {% endif %}
-
+                                    <div class="pp-upcoming-meta">
+                                        <span class="pp-upcoming-market">
+                                            {{ match.market_label or match.market_type }}
                                         </span>
-
-                                        <span class="pp-badge pp-odds">
+                                        <span class="pp-upcoming-odds">
                                             {{ "%.2f"|format(match.odds|float) }}
                                         </span>
-
                                     </div>
-
                                 </div>
 
                             </article>
-
                         {% endfor %}
-
                     </div>
-
                 {% else %}
-
-                    <div class="pp-empty">
+                    <div class="pp-home-empty">
                         No upcoming matches are currently available.
                     </div>
-
                 {% endif %}
 
             </section>
 
 
-            <!-- ========================================================
-                 History
-            ========================================================= -->
+            <!-- PREVIOUS CONCLUDED GAMES — TABLE -->
+            <section id="history" class="pp-home-section">
 
-            <section
-                id="history"
-                class="pp-section"
-            >
-
-                <div class="pp-section-header">
-
+                <div class="pp-home-section-header">
                     <div>
-                        <h2 class="pp-section-title">
-                            Recent Match History
+                        <h2 class="pp-home-section-title">
+                            Previous Concluded Games
                         </h2>
-
-                        <p class="pp-section-description">
-                            Finished matches from the previous 30 days.
+                        <p class="pp-home-section-description">
+                            Completed matches with final scores and results.
                         </p>
                     </div>
-
                 </div>
 
+                {% if weekly_finished_matches %}
+                    <div class="pp-table-wrap">
+                        <table class="pp-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Match</th>
+                                    <th scope="col">Tip</th>
+                                    <th scope="col">Odds</th>
+                                    <th scope="col">Result</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for match in weekly_finished_matches %}
+                                    <tr>
+                                        <td class="pp-td-date">
+                                            {{ match.kickoff_time.strftime('%d.%m.%Y') }}
+                                        </td>
 
-                <div class="pp-match-card">
+                                        <td class="pp-td-match">
+                                            {{ match.home_team }} – {{ match.away_team }}
+                                        </td>
 
-                    {% if finished_matches %}
+                                        <td class="pp-td-tip">
+                                            {{ match.pick_selection }}
+                                        </td>
 
-                        <div class="pp-history-scroll">
+                                        <td class="pp-td-odds">
+                                            {{ "%.2f"|format(match.odds|float) }}
+                                        </td>
 
-                            {% for match in finished_matches %}
+                                        <td class="pp-td-result">
+                                            {% if match.status == 'void' %}
+                                                <span class="pp-td-result-void">VOID</span>
+                                            {% elif match.is_win is true %}
+                                                <span class="pp-td-result-won">
+                                                    {{ match.score_display }} WON
+                                                </span>
+                                            {% elif match.is_win is false %}
+                                                <span class="pp-td-result-lost">
+                                                    {{ match.score_display }} LOST
+                                                </span>
+                                            {% else %}
+                                                <span class="pp-td-result-pending">
+                                                    {{ match.score_display }} PENDING
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="pp-home-empty">
+                        No concluded matches have been recorded
+                        during the last 7 days.
+                    </div>
+                {% endif %}
 
-                                <article class="pp-history-item">
-
-                                    <div class="pp-history-teams">
-
-                                        <div class="pp-history-league">
-                                            {{ match.league }}
-                                            ·
-                                            {{ match.kickoff_time.strftime('%d %b %Y') }}
-                                        </div>
-
-                                        <div class="pp-history-team-names">
-                                            {{ match.home_team }}
-                                            <span style="color: var(--pp-muted);">
-                                                vs
-                                            </span>
-                                            {{ match.away_team }}
-                                        </div>
-
-                                        <div class="pp-history-score">
-                                            {{ match.score_display }}
-                                        </div>
-
-                                    </div>
+            </section>
 
 
-                                    <div>
+            <!-- HISTORICAL MATCH ARCHIVE — SAME TABLE -->
+            <section id="historical-archive" class="pp-home-section">
 
-                                        {% if match.status == 'void' %}
+                <div class="pp-home-section-header">
+                    <div>
+                        <h2 class="pp-home-section-title">
+                            Historical Match Archive
+                        </h2>
+                        <p class="pp-home-section-description">
+                            Browse the full record of concluded matches
+                            across previous weeks and months.
+                        </p>
+                    </div>
+                </div>
 
-                                            <span class="pp-result pp-result-void">
-                                                Void
-                                            </span>
+                <div class="pp-history-embed">
 
-                                        {% elif match.is_win is true %}
+                    {% if archive is defined %}
+                        <div class="pp-history-summary" aria-label="Archive summary">
+                            <div class="pp-history-stat">
+                                <span class="pp-history-stat-label">Archived Matches</span>
+                                <span class="pp-history-stat-value">{{ archive.total }}</span>
+                            </div>
+                            <div class="pp-history-stat">
+                                <span class="pp-history-stat-label">Current Page</span>
+                                <span class="pp-history-stat-value">{{ archive.page }}</span>
+                            </div>
+                            <div class="pp-history-stat">
+                                <span class="pp-history-stat-label">Total Pages</span>
+                                <span class="pp-history-stat-value">{{ archive.pages }}</span>
+                            </div>
+                        </div>
+                    {% endif %}
 
-                                            <span class="pp-result pp-result-won">
-                                                Won
-                                            </span>
+                    {% if historical_matches %}
+                        <div class="pp-table-wrap">
+                            <table class="pp-table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Match</th>
+                                        <th scope="col">Tip</th>
+                                        <th scope="col">Odds</th>
+                                        <th scope="col">Result</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for match in historical_matches %}
+                                        <tr>
+                                            <td class="pp-td-date">
+                                                {{ match.kickoff_time.strftime('%d.%m.%Y') }}
+                                            </td>
 
-                                        {% else %}
+                                            <td class="pp-td-match">
+                                                {{ match.home_team }} – {{ match.away_team }}
+                                            </td>
 
-                                            <span class="pp-result pp-result-lost">
-                                                Lost
-                                            </span>
+                                            <td class="pp-td-tip">
+                                                {{ match.pick_selection }}
+                                            </td>
 
-                                        {% endif %}
+                                            <td class="pp-td-odds">
+                                                {{ "%.2f"|format(match.odds|float) }}
+                                            </td>
 
-                                    </div>
+                                            <td class="pp-td-result">
+                                                {% if match.status == 'void' %}
+                                                    <span class="pp-td-result-void">VOID</span>
+                                                {% elif match.is_win is true %}
+                                                    <span class="pp-td-result-won">
+                                                        {{ match.score_display }} WON
+                                                    </span>
+                                                {% elif match.is_win is false %}
+                                                    <span class="pp-td-result-lost">
+                                                        {{ match.score_display }} LOST
+                                                    </span>
+                                                {% else %}
+                                                    <span class="pp-td-result-pending">
+                                                        {{ match.score_display }} PENDING
+                                                    </span>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="pp-home-empty">
+                            No concluded matches have been recorded yet.
+                        </div>
+                    {% endif %}
 
-                                </article>
+                    {% if archive is defined and archive.pages > 1 %}
+                        <nav class="pp-history-pagination" aria-label="Match history pagination">
 
+                            {% if archive.has_prev %}
+                                <a
+                                    href="{{ url_for('main.index', page=archive.page - 1, per_page=archive.per_page) }}#historical-archive"
+                                    class="pp-history-page-link"
+                                    aria-label="Previous page"
+                                >←</a>
+                            {% else %}
+                                <span class="pp-history-page-link pp-history-page-link-disabled" aria-hidden="true">←</span>
+                            {% endif %}
+
+                            {% set start_page = [1, archive.page - 2]|max %}
+                            {% set end_page = [archive.pages, archive.page + 2]|min %}
+
+                            {% if start_page > 1 %}
+                                <a
+                                    href="{{ url_for('main.index', page=1, per_page=archive.per_page) }}#historical-archive"
+                                    class="pp-history-page-link"
+                                >1</a>
+                                {% if start_page > 2 %}
+                                    <span class="pp-history-page-link pp-history-page-link-disabled">…</span>
+                                {% endif %}
+                            {% endif %}
+
+                            {% for page_number in range(start_page, end_page + 1) %}
+                                {% if page_number == archive.page %}
+                                    <span class="pp-history-page-link pp-history-page-link-active" aria-current="page">
+                                        {{ page_number }}
+                                    </span>
+                                {% else %}
+                                    <a
+                                        href="{{ url_for('main.index', page=page_number, per_page=archive.per_page) }}#historical-archive"
+                                        class="pp-history-page-link"
+                                    >{{ page_number }}</a>
+                                {% endif %}
                             {% endfor %}
 
-                        </div>
+                            {% if end_page < archive.pages %}
+                                {% if end_page < archive.pages - 1 %}
+                                    <span class="pp-history-page-link pp-history-page-link-disabled">…</span>
+                                {% endif %}
+                                <a
+                                    href="{{ url_for('main.index', page=archive.pages, per_page=archive.per_page) }}#historical-archive"
+                                    class="pp-history-page-link"
+                                >{{ archive.pages }}</a>
+                            {% endif %}
 
-                    {% else %}
+                            {% if archive.has_next %}
+                                <a
+                                    href="{{ url_for('main.index', page=archive.page + 1, per_page=archive.per_page) }}#historical-archive"
+                                    class="pp-history-page-link"
+                                    aria-label="Next page"
+                                >→</a>
+                            {% else %}
+                                <span class="pp-history-page-link pp-history-page-link-disabled" aria-hidden="true">→</span>
+                            {% endif %}
 
-                        <div class="pp-empty">
-                            No completed matches have been recorded
-                            during the last 30 days.
-                        </div>
+                            <span class="pp-history-page-info">
+                                Page {{ archive.page }} of {{ archive.pages }}
+                            </span>
 
+                        </nav>
                     {% endif %}
 
                 </div>
@@ -1146,249 +1757,134 @@
         </div>
 
 
-        <!-- ============================================================
-             Right / secondary column
-        ============================================================= -->
+        <!-- SECONDARY COLUMN -->
+        <aside class="pp-home-sticky-column">
 
-        <aside class="pp-sticky-column">
+            <!-- COMBOS -->
+            <section id="combos" class="pp-home-section">
 
-            <!-- ========================================================
-                 Combos
-            ========================================================= -->
-
-            <section
-                id="combos"
-                class="pp-section"
-            >
-
-                <div class="pp-section-header">
-
+                <div class="pp-home-section-header">
                     <div>
-                        <h2 class="pp-section-title">
+                        <h2 class="pp-home-section-title">
                             Combos &amp; VIP
                         </h2>
-
-                        <p class="pp-section-description">
+                        <p class="pp-home-section-description">
                             Multi-match accumulator tickets.
                         </p>
                     </div>
-
                 </div>
 
-
                 {% if combo_tickets %}
-
-                    <div class="pp-combo-grid">
-
+                    <div class="pp-home-combo-grid">
                         {% for combo in combo_tickets %}
+                            <article class="pp-home-combo-card {% if combo.required_tier == 'premium' %}premium{% endif %}">
 
-                            <article
-                                class="pp-combo-card {% if combo.required_tier == 'premium' %}premium{% endif %}"
-                            >
-
-                                <div class="pp-combo-top">
-
-                                    <h3 class="pp-combo-title">
-                                        {{ combo.title }}
-                                    </h3>
-
+                                <div class="pp-home-combo-top">
+                                    <h3 class="pp-home-combo-title">{{ combo.title }}</h3>
                                     {% if combo.required_tier == 'premium' %}
-
-                                        <span class="pp-premium-label">
-                                            Premium
-                                        </span>
-
+                                        <span class="pp-home-premium-label">Premium</span>
                                     {% else %}
-
-                                        <span class="pp-premium-label">
-                                            Free
-                                        </span>
-
+                                        <span class="pp-home-premium-label">Free</span>
                                     {% endif %}
-
                                 </div>
 
-
-                                <div class="pp-combo-meta">
-
-                                    <div class="pp-meta-box">
-
-                                        <span class="pp-meta-label">
-                                            Total Odds
-                                        </span>
-
-                                        <span class="pp-meta-value">
+                                <div class="pp-home-combo-meta">
+                                    <div class="pp-home-meta-box">
+                                        <span class="pp-home-meta-label">Total Odds</span>
+                                        <span class="pp-home-meta-value">
                                             {{ "%.2f"|format(combo.total_odds|float) }}
                                         </span>
-
                                     </div>
-
-
-                                    <div class="pp-meta-box">
-
-                                        <span class="pp-meta-label">
-                                            Selections
-                                        </span>
-
-                                        <span class="pp-meta-value">
-                                            {{ combo.selection_count }}
-                                        </span>
-
+                                    <div class="pp-home-meta-box">
+                                        <span class="pp-home-meta-label">Selections</span>
+                                        <span class="pp-home-meta-value">{{ combo.selection_count }}</span>
                                     </div>
-
-
-                                    <div class="pp-meta-box">
-
-                                        <span class="pp-meta-label">
-                                            Status
-                                        </span>
-
-                                        <span class="pp-meta-value">
-                                            {{ combo.outcome_label }}
-                                        </span>
-
+                                    <div class="pp-home-meta-box">
+                                        <span class="pp-home-meta-label">Status</span>
+                                        <span class="pp-home-meta-value">{{ combo.outcome_label }}</span>
                                     </div>
-
                                 </div>
 
-
                                 {% if combo.required_tier == 'premium' %}
-
-                                    <p class="pp-lock">
+                                    <p class="pp-home-lock">
                                         Premium selections require an active
                                         weekly or monthly subscription.
                                     </p>
-
                                     {% if current_user.is_authenticated
                                           and current_user.has_active_subscription %}
-
                                         <a
-                                            href="{{ url_for(
-                                                'main.premium_combo',
-                                                combo_id=combo.id
-                                            ) }}"
-                                            class="pp-btn pp-btn-primary pp-combo-button"
-                                        >
-                                            View Premium Combo
-                                        </a>
-
+                                            href="{{ url_for('main.premium_combo', combo_id=combo.id) }}"
+                                            class="pp-home-btn pp-home-btn-primary pp-home-combo-button"
+                                        >View Premium Combo</a>
                                     {% else %}
-
                                         <a
                                             href="{{ url_for(
                                                 'main.subscription_page',
                                                 plan='monthly',
-                                                next=url_for(
-                                                    'main.premium_combo',
-                                                    combo_id=combo.id
-                                                )
+                                                next=url_for('main.premium_combo', combo_id=combo.id)
                                             ) }}"
-                                            class="pp-btn pp-btn-primary pp-combo-button"
-                                        >
-                                            Unlock Premium Combos
-                                        </a>
-
+                                            class="pp-home-btn pp-home-btn-primary pp-home-combo-button"
+                                        >Unlock Premium Combos</a>
                                     {% endif %}
-
                                 {% else %}
-
                                     <a
-                                        href="{{ url_for(
-                                            'main.premium_combo',
-                                            combo_id=combo.id
-                                        ) }}"
-                                        class="pp-btn pp-btn-secondary pp-combo-button"
-                                    >
-                                        View Combo
-                                    </a>
-
+                                        href="{{ url_for('main.premium_combo', combo_id=combo.id) }}"
+                                        class="pp-home-btn pp-home-btn-secondary pp-home-combo-button"
+                                    >View Combo</a>
                                 {% endif %}
 
                             </article>
-
                         {% endfor %}
-
                     </div>
-
                 {% else %}
-
-                    <div class="pp-empty">
+                    <div class="pp-home-empty">
                         No active combo tickets are currently available.
                     </div>
-
                 {% endif %}
 
             </section>
 
 
-            <!-- ========================================================
-                 Transparency
-            ========================================================= -->
+            <!-- TRANSPARENCY / PROOF -->
+            <section class="pp-home-section">
 
-            <section class="pp-section">
-
-                <div class="pp-section-header">
-
+                <div class="pp-home-section-header">
                     <div>
-                        <h2 class="pp-section-title">
-                            Transparency
-                        </h2>
-
-                        <p class="pp-section-description">
-                            Community verification screenshots.
+                        <h2 class="pp-home-section-title">Check Proof</h2>
+                        <p class="pp-home-section-description">
+                            Beneficiaries verification screenshots from previous fixed matches.
                         </p>
                     </div>
-
                 </div>
 
-
                 {% if media_proofs %}
-
-                    <div class="pp-gallery">
-
+                    <div class="pp-home-gallery">
                         {% for proof in media_proofs %}
-
                             <a
-                                href="{{ url_for(
-                                    'static',
-                                    filename=proof.image_path
-                                ) }}"
-                                class="pp-proof"
+                                href="{{ url_for('static', filename=proof.image_path) }}"
+                                class="pp-home-proof"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
-
                                 <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=proof.image_path
-                                    ) }}"
+                                    src="{{ url_for('static', filename=proof.image_path) }}"
                                     alt="{{ proof.caption or 'Community verification screenshot' }}"
                                     loading="lazy"
                                     decoding="async"
                                 >
-
                                 {% if proof.caption %}
-
-                                    <div class="pp-proof-caption">
+                                    <div class="pp-home-proof-caption">
                                         {{ proof.caption }}
                                     </div>
-
                                 {% endif %}
-
                             </a>
-
                         {% endfor %}
-
                     </div>
-
                 {% else %}
-
-                    <div class="pp-empty">
+                    <div class="pp-home-empty">
                         Transparency screenshots will appear here
                         after they have been verified and uploaded.
                     </div>
-
                 {% endif %}
 
             </section>
@@ -1396,33 +1892,161 @@
         </aside>
 
     </div>
+</div>
+
+
+<!-- ADDITIONAL SECTIONS -->
+<section class="pp-extra-sections">
+    <div class="pp-home-container">
+
+        <!-- OFFERS -->
+        <section class="pp-extra-section" id="offers">
+            <div class="pp-extra-card pp-offer-card">
+                <h2 class="pp-extra-title">Check below which one offer you want</h2>
+                <p class="pp-extra-subtitle">
+                    Choose the offer you want to explore.
+                </p>
+
+                <ul class="pp-offer-list">
+                    <li class="pp-offer-item">
+                        <span class="pp-offer-dot" aria-hidden="true"></span>
+                        <div class="pp-offer-copy">
+                            <strong>Fixed Matches</strong> —
+                            <a href="#" class="pp-offer-link">Click Here</a>
+                            <span>(100% Correct Score Fixed Tips)</span>
+                        </div>
+                    </li>
+                    <li class="pp-offer-item">
+                        <span class="pp-offer-dot" aria-hidden="true"></span>
+                        <div class="pp-offer-copy">
+                            <strong>Free Predictions</strong> —
+                            <a href="#" class="pp-offer-link">Click Here</a>
+                            <span>(Only analyzed match every day for free)</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- SUPPORT -->
+        <section class="pp-extra-section" id="support">
+            <div class="pp-extra-card pp-support-card">
+                <h2 class="pp-support-heading">Support Contact Here:</h2>
+
+                <div class="pp-support-contact">
+                    <span>
+                        E-Mail:
+                        <a href="mailto:correctscorefixed365@gmail.com">
+                            correctscorefixed365@gmail.com
+                        </a>
+                    </span>
+                    <span aria-hidden="true">|</span>
+                    <span>
+                        WhatsApp:
+                        <a
+                            href="https://wa.me/38971302586"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            +389 71 302 586
+                        </a>
+                    </span>
+                </div>
+
+                <div class="pp-warning" role="note">
+                    IMPORTANT: Don't send messages for free fixed matches, payment after win
+                    or match for trust! All messages will be rejected!
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIALS -->
+        <section class="pp-extra-section" id="testimonials">
+            <div class="pp-testimonials-header">
+                <h2 class="pp-extra-title">Comments about our subscriptions</h2>
+                <p class="pp-extra-subtitle">
+                    Comments displayed as provided by the site owner.
+                </p>
+            </div>
+
+            <div class="pp-testimonials-grid">
+                <article class="pp-testimonial-card">
+                    <div class="pp-testimonial-person">
+                        <div class="pp-testimonial-avatar" aria-hidden="true">OA</div>
+                        <div>
+                            <div class="pp-testimonial-name">Oscar Ardun</div>
+                            <div class="pp-testimonial-location">England</div>
+                        </div>
+                    </div>
+                    <div class="pp-testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="pp-testimonial-quote">
+                        “I buy every fixed matches from the site... Subscribe to this site
+                        and stop to work for small money every day.”
+                    </p>
+                </article>
+
+                <article class="pp-testimonial-card">
+                    <div class="pp-testimonial-person">
+                        <div class="pp-testimonial-avatar" aria-hidden="true">DO</div>
+                        <div>
+                            <div class="pp-testimonial-name">Dembe Okello</div>
+                            <div class="pp-testimonial-location">Uganda</div>
+                        </div>
+                    </div>
+                    <div class="pp-testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="pp-testimonial-quote">
+                        “Yes, I am from Africa and I am happy to have found this site... I
+                        have a beautiful life and currently living in Dubai.”
+                    </p>
+                </article>
+
+                <article class="pp-testimonial-card">
+                    <div class="pp-testimonial-person">
+                        <div class="pp-testimonial-avatar" aria-hidden="true">TB</div>
+                        <div>
+                            <div class="pp-testimonial-name">Turan Bangli</div>
+                            <div class="pp-testimonial-location">Turkey</div>
+                        </div>
+                    </div>
+                    <div class="pp-testimonial-stars" aria-label="5 stars">★★★★★</div>
+                    <p class="pp-testimonial-quote">
+                        “I recommend this site to everyone! Real and accurate matches, five
+                        stars, well done!”
+                    </p>
+                </article>
+            </div>
+        </section>
+
+        <!-- META TAGS -->
+        <section class="pp-extra-section" id="meta-tags">
+            <div class="pp-extra-card pp-meta-card">
+                <p class="pp-meta-updated">
+                    Updated:
+                    {{ now().strftime('%d %B %Y') if now is defined else '27 September 2026' }}
+                    — 8:56 am
+                </p>
+
+                <div class="pp-meta-tags" aria-label="Related tags">
+                    <span class="pp-meta-tag">Best Fixed Match</span>
+                    <span class="pp-meta-tag">Correct Fixed Matches 1x2</span>
+                    <span class="pp-meta-tag">Correct Score Fixed Tips</span>
+                    <span class="pp-meta-tag">fixed match</span>
+                    <span class="pp-meta-tag">fixed matches</span>
+                    <span class="pp-meta-tag">football tips</span>
+                    <span class="pp-meta-tag">Sure Wins</span>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</section>
 
 </div>
 
-</main>
+{% endblock %}
 
+{% block scripts %}
 
-<!-- ================================================================
-     Footer
-================================================================ -->
+{# Add homepage-specific JavaScript here if required. #}
 
-<footer class="pp-footer">
-
-    <div class="pp-container">
-
-        <strong style="color: #fff;">
-            PinnaclePicks
-        </strong>
-
-        <div class="mt-2">
-            Educational sports analytics and historical match data.
-            Historical results are presented for informational and
-            analytical purposes.
-        </div>
-
-    </div>
-
-</footer>
-
-</body>
-</html>
+{% endblock %}

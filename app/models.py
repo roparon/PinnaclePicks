@@ -186,6 +186,117 @@ class User(db.Model):
         return f"<User {self.username}>"
 
 
+
+# ============================================================================
+# SUPPORTED BETTING MARKETS
+# ============================================================================
+#
+# key   → stable code stored in the database (never change these)
+# value → human-readable label shown in the UI
+#
+# To add a new market:
+#   1. Add one line below.
+#   2. Done. It automatically appears in:
+#        - admin match form dropdown
+#        - homepage badge
+#        - match history badge
+#
+
+MARKETS = {
+    # --- Core result markets ---
+    "1X2":             "1X2",
+    "DC":              "Double Chance",
+    "DRAW_NO_BET":     "Draw No Bet",
+
+    # --- Goals markets ---
+    "OVER_UNDER":      "Over/Under",
+    "BTTS":            "BTTS",
+    "GG_NG":           "GG/NG",
+    "EXACT_GOALS":     "Exact Goals",
+    "ODD_EVEN":        "Odd/Even",
+    "TEAM_TO_SCORE":   "Team to Score",
+    "CLEAN_SHEET":     "Clean Sheet",
+    "WIN_TO_NIL":      "Win to Nil",
+
+    # --- Half markets ---
+    "HT_FT":           "HT/FT",
+    "FIRST_HALF":      "First Half",
+    "SECOND_HALF":     "Second Half",
+    "BOTH_HALVES":     "Both Halves",
+    "HALF_TIME":       "Half Time Result",
+    "FULL_TIME":       "Full Time Result",
+
+    # --- Handicap markets ---
+    "ASIAN_HANDICAP":  "Asian Handicap",
+    "EURO_HANDICAP":   "European Handicap",
+    "HANDICAP":        "Handicap",
+
+    # --- Scorer markets ---
+    "ANYTIME_SCORER":  "Anytime Scorer",
+    "FIRST_SCORER":    "First Scorer",
+
+    # --- Stats markets ---
+    "TOTAL_CORNERS":   "Total Corners",
+    "TOTAL_CARDS":     "Total Cards",
+
+    # --- Score markets ---
+    "CORRECT_SCORE":   "Correct Score",
+}
+
+
+# Legacy aliases → canonical keys.
+# Used only for normalizing old rows in the database.
+
+MARKET_ALIASES = {
+    "GG/NG":       "GG_NG",
+    "Over/Under":  "OVER_UNDER",
+    "1x2":         "1X2",
+    "btts":        "BTTS",
+    "BTTS_YES":    "BTTS",
+    "DnB":         "DRAW_NO_BET",
+    "DNB":         "DRAW_NO_BET",
+    "AH":          "ASIAN_HANDICAP",
+    "EH":          "EURO_HANDICAP",
+    "CS":          "CORRECT_SCORE",
+    "O/U":         "OVER_UNDER",
+}
+
+
+def normalize_market_type(market_type):
+    """
+    Return a canonical market_type key.
+
+    Falls back to the original value if unknown, so legacy
+    or custom values never break the UI.
+    """
+    if not market_type:
+        return ""
+
+    cleaned = market_type.strip()
+
+    if cleaned in MARKETS:
+        return cleaned
+
+    if cleaned in MARKET_ALIASES:
+        return MARKET_ALIASES[cleaned]
+
+    return cleaned
+
+
+def get_market_label(market_type):
+    """
+    Return a friendly label for a stored market_type value.
+
+    Accepts canonical keys, legacy aliases, or unknown values.
+    """
+    if not market_type:
+        return ""
+
+    canonical = normalize_market_type(market_type)
+
+    return MARKETS.get(canonical, canonical)
+
+
 # ---------------------------------------------------------------------------
 # Match
 # ---------------------------------------------------------------------------
@@ -219,10 +330,12 @@ class Match(db.Model):
         index=True,
     )
 
-    # 1X2 / Over/Under / GG/NG
+    # Canonical market key — see MARKETS above.
+    # Examples: "1X2", "OVER_UNDER", "GG_NG", "BTTS", "DC", "HT_FT", ...
     market_type = db.Column(
         db.String(30),
         nullable=False,
+        default="1X2",
         index=True,
     )
 
@@ -257,6 +370,12 @@ class Match(db.Model):
     is_win = db.Column(
         db.Boolean,
         nullable=True,
+    )
+
+    finished_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=True,
+        index=True,
     )
 
     created_at = db.Column(
@@ -313,21 +432,17 @@ class Match(db.Model):
         return "pending"
 
     @property
-    def market_label(self):
-        labels = {
-            "1X2": "1X2",
-            "OVER_UNDER": "Over/Under",
-            "Over/Under": "Over/Under",
-            "GG_NG": "GG/NG",
-            "GG/NG": "GG/NG",
-        }
+    def market_code(self):
+        """Canonical market key (normalizes legacy values)."""
+        return normalize_market_type(self.market_type)
 
-        return labels.get(self.market_type, self.market_type)
+    @property
+    def market_label(self):
+        """Human-readable market name — safe for any stored value."""
+        return get_market_label(self.market_type)
 
     def __repr__(self):
         return f"<Match {self.home_team} vs {self.away_team}>"
-
-
 # ---------------------------------------------------------------------------
 # Combo Ticket
 # ---------------------------------------------------------------------------

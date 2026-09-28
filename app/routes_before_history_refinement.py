@@ -25,8 +25,6 @@ from .models import (
     ComboTicket,
     Match,
     MediaProof,
-    MARKETS,
-    normalize_market_type,
     db,
 )
 
@@ -188,71 +186,6 @@ def get_finished_history(days=30, limit=100):
     )
 
 
-def get_weekly_finished_matches(limit=50):
-    """Return finished matches from the previous 7 days."""
-
-    return get_finished_history(
-        days=7,
-        limit=limit,
-    )
-
-
-def get_historical_matches(page=1, per_page=25):
-    """Return paginated finished-match history."""
-
-    try:
-        page = int(page)
-    except (TypeError, ValueError):
-        page = 1
-
-    try:
-        per_page = int(per_page)
-    except (TypeError, ValueError):
-        per_page = 25
-
-    page = max(1, page)
-    per_page = min(max(1, per_page), 100)
-
-    query = Match.query.filter(
-        Match.status == "finished"
-    )
-
-    total = query.count()
-
-    pages = max(
-        1,
-        (total + per_page - 1) // per_page,
-    )
-
-    if total == 0:
-        page = 1
-    else:
-        page = min(page, pages)
-
-    items = (
-        query
-        .order_by(
-            Match.kickoff_time.desc(),
-            Match.id.desc(),
-        )
-        .offset(
-            (page - 1) * per_page
-        )
-        .limit(per_page)
-        .all()
-    )
-
-    return {
-        "items": items,
-        "page": page,
-        "per_page": per_page,
-        "total": total,
-        "pages": pages,
-        "has_prev": page > 1,
-        "has_next": page < pages,
-    }
-
-
 def get_active_combos(limit=20):
     """Return pending combo tickets."""
 
@@ -341,7 +274,7 @@ def admin_required(view_function):
 
 
 # ============================================================================
-# HOME PAGE (single-page app: homepage + embedded match history archive)
+# HOME PAGE
 # ============================================================================
 
 @main.route(
@@ -354,44 +287,12 @@ def index():
 
     Renders:
         app/templates/index.html
-
-    Also embeds the full paginated Match History archive on the SAME page.
-    Pagination is driven by ?page=N&per_page=M query parameters — no
-    redirect to /previous-results is required.
     """
 
-    # ------------------------------------------------------------------
     # Reconcile matches that already have final scores.
-    # ------------------------------------------------------------------
-
     archive_expired_matches(
         commit=True
     )
-
-    # ------------------------------------------------------------------
-    # Pagination inputs for the embedded archive.
-    # ------------------------------------------------------------------
-
-    archive_page = request.args.get(
-        "page",
-        1,
-        type=int,
-    )
-
-    archive_per_page = request.args.get(
-        "per_page",
-        10,
-        type=int,
-    )
-
-    archive = get_historical_matches(
-        page=archive_page,
-        per_page=archive_per_page,
-    )
-
-    # ------------------------------------------------------------------
-    # Homepage sections.
-    # ------------------------------------------------------------------
 
     upcoming_matches = get_upcoming_matches(
         limit=30
@@ -400,10 +301,6 @@ def index():
     finished_matches = get_finished_history(
         days=30,
         limit=100,
-    )
-
-    weekly_finished_matches = get_weekly_finished_matches(
-        limit=50,
     )
 
     combo_tickets = get_active_combos(
@@ -418,52 +315,8 @@ def index():
         "index.html",
         upcoming_matches=upcoming_matches,
         finished_matches=finished_matches,
-        weekly_finished_matches=weekly_finished_matches,
         combo_tickets=combo_tickets,
         media_proofs=media_proofs,
-        historical_matches=archive["items"],
-        archive=archive,
-    )
-
-
-# ============================================================================
-# STANDALONE MATCH HISTORY (kept for direct links / fallbacks)
-# ============================================================================
-
-@main.route(
-    "/previous-results",
-    methods=["GET"],
-)
-def previous_results():
-    """
-    Display the full paginated finished-match archive on its own page.
-
-    This route is kept so that any existing external links to
-    /previous-results continue to work. The homepage now embeds the same
-    archive inline, so this route is optional.
-    """
-
-    page = request.args.get(
-        "page",
-        1,
-        type=int,
-    )
-
-    per_page = request.args.get(
-        "per_page",
-        25,
-        type=int,
-    )
-
-    archive = get_historical_matches(
-        page=page,
-        per_page=per_page,
-    )
-
-    return render_template(
-        "previous_results.html",
-        historical_matches=archive["items"],
-        archive=archive,
     )
 
 
@@ -1009,7 +862,6 @@ def admin_create_match():
             "admin/match_form.html",
             match=None,
             page_title="Create Match",
-            markets=MARKETS,
         )
 
     home_team = request.form.get(
@@ -1036,10 +888,6 @@ def admin_create_match():
         "market_type",
         "",
     ).strip()
-
-    market_type = normalize_market_type(
-        market_type
-    )
 
     pick_selection = request.form.get(
         "pick_selection",
@@ -1089,12 +937,7 @@ def admin_create_match():
 
     if not market_type:
         errors.append(
-            "Market is required."
-        )
-
-    elif market_type not in MARKETS:
-        errors.append(
-            "Please select a valid market."
+            "Market type is required."
         )
 
     if not pick_selection:
@@ -1185,7 +1028,6 @@ def admin_create_match():
             "admin/match_form.html",
             match=None,
             page_title="Create Match",
-            markets=MARKETS,
         )
 
     match = Match(
@@ -1235,7 +1077,6 @@ def admin_create_match():
             "admin/match_form.html",
             match=None,
             page_title="Create Match",
-            markets=MARKETS,
         )
 
     flash(
@@ -1276,7 +1117,6 @@ def admin_edit_match(match_id):
             "admin/match_form.html",
             match=match,
             page_title="Edit Match",
-            markets=MARKETS,
         )
 
     home_team = request.form.get(
@@ -1303,10 +1143,6 @@ def admin_edit_match(match_id):
         "market_type",
         "",
     ).strip()
-
-    market_type = normalize_market_type(
-        market_type
-    )
 
     pick_selection = request.form.get(
         "pick_selection",
@@ -1362,13 +1198,7 @@ def admin_edit_match(match_id):
     if not market_type:
 
         errors.append(
-            "Market is required."
-        )
-
-    elif market_type not in MARKETS:
-
-        errors.append(
-            "Please select a valid market."
+            "Market type is required."
         )
 
     if not pick_selection:
@@ -1479,7 +1309,6 @@ def admin_edit_match(match_id):
             "admin/match_form.html",
             match=match,
             page_title="Edit Match",
-            markets=MARKETS,
         )
 
     # ------------------------------------------------------------------
@@ -1548,7 +1377,6 @@ def admin_edit_match(match_id):
             "admin/match_form.html",
             match=match,
             page_title="Edit Match",
-            markets=MARKETS,
         )
 
     flash(
