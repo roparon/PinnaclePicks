@@ -7,72 +7,11 @@ PinnaclePicks | Sports Analytics & Match History
 {% block head %}
 <meta
     name="description"
-    content="PinnaclePicks provides sports analytics, match predictions, upcoming fixtures, concluded results, historical match data and statistical insights."
+    content="PinnaclePicks sports analytics, historical match results, accumulator tickets and transparent community verification."
 >
-
 <meta name="theme-color" content="#080b10">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="format-detection" content="telephone=no">
-
-{% if not request.args %}
-<link
-    rel="canonical"
-    href="{{ url_for('main.index', _external=True) }}"
->
-{% endif %}
-
-<meta
-    property="og:type"
-    content="website"
->
-<meta
-    property="og:site_name"
-    content="PinnaclePicks"
->
-<meta
-    property="og:title"
-    content="PinnaclePicks | Sports Analytics & Match History"
->
-<meta
-    property="og:description"
-    content="Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data from PinnaclePicks."
->
-<meta
-    property="og:url"
-    content="{{ request.url }}"
->
-
-<meta
-    name="twitter:card"
-    content="summary"
->
-<meta
-    name="twitter:title"
-    content="PinnaclePicks | Sports Analytics & Match History"
->
-<meta
-    name="twitter:description"
-    content="Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data."
->
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "PinnaclePicks",
-    "url": {{ url_for('main.index', _external=True)|tojson }},
-    "description": "Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data."
-}
-</script>
-
-<script type="application/ld+json">
-{
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "PinnaclePicks",
-    "url": {{ url_for('main.index', _external=True)|tojson }}
-}
-</script>
 
 <style>
 
@@ -1591,21 +1530,11 @@ PinnaclePicks | Sports Analytics & Match History
 
                                 <div class="pp-upcoming-teams">
                                     <div class="pp-upcoming-team">
-                                        <a
-                                            href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                            style="color: inherit; text-decoration: none;"
-                                        >
-                                            {{ match.home_team }}
-                                        </a>
+                                        {{ match.home_team }}
                                     </div>
                                     <div class="pp-upcoming-vs">VS</div>
                                     <div class="pp-upcoming-team pp-upcoming-team-away">
-                                        <a
-                                            href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                            style="color: inherit; text-decoration: none;"
-                                        >
-                                            {{ match.away_team }}
-                                        </a>
+                                        {{ match.away_team }}
                                     </div>
                                 </div>
 
@@ -1675,12 +1604,7 @@ PinnaclePicks | Sports Analytics & Match History
                                         </td>
 
                                         <td class="pp-td-match">
-                                            <a
-                                                href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                                style="color: inherit; text-decoration: none; font-weight: 800;"
-                                            >
-                                                {{ match.home_team }} – {{ match.away_team }}
-                                            </a>
+                                            {{ match.home_team }} – {{ match.away_team }}
                                         </td>
 
                                         <td class="pp-td-tip">
@@ -1777,12 +1701,7 @@ PinnaclePicks | Sports Analytics & Match History
                                             </td>
 
                                             <td class="pp-td-match">
-                                                <a
-                                                    href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                                    style="color: inherit; text-decoration: none; font-weight: 800;"
-                                                >
-                                                    {{ match.home_team }} – {{ match.away_team }}
-                                                </a>
+                                                {{ match.home_team }} – {{ match.away_team }}
                                             </td>
 
                                             <td class="pp-td-tip">

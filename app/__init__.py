@@ -67,8 +67,10 @@ def create_app(config_object=None):
 
     from .routes import main
     from .auth import auth
+    from .seo import seo_bp
 
     app.register_blueprint(main)
     app.register_blueprint(auth)
+    app.register_blueprint(seo_bp)
 
     return app

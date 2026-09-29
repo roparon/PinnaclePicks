@@ -593,6 +593,16 @@
         }
 
 
+        .pp-footer-tagline-emphasis {
+
+            margin-top: 10px;
+
+            color: #d1d9e3;
+
+            font-weight: 600;
+        }
+
+
         /* =========================================================
            FOOTER HEADINGS
         ========================================================== */
@@ -740,7 +750,7 @@
 
 
         /* =========================================================
-           EDUCATIONAL NOTICE
+           FOOTER NOTE BLOCKS
         ========================================================== */
 
         .pp-footer-note {
@@ -791,9 +801,23 @@
 
             color: var(--pp-footer-muted);
 
-            font-size: 12px;
+            font-size: 12.5px;
 
             line-height: 1.7;
+        }
+
+
+        .pp-footer-note-text + .pp-footer-note-text {
+
+            margin-top: 10px;
+        }
+
+
+        .pp-footer-note-text strong {
+
+            color: #22c55e;
+
+            font-weight: 850;
         }
 
 
@@ -859,6 +883,197 @@
         .pp-footer-legal a:hover {
 
             color: var(--pp-white);
+        }
+
+
+        /* =========================================================
+           LEGAL MODALS
+        ========================================================== */
+
+        .pp-legal-modal .modal-content {
+
+            border: none;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            background: #17201b;
+
+            color: #e7ede9;
+
+            box-shadow:
+                0 24px 60px rgba(0, 0, 0, 0.45);
+        }
+
+
+        .pp-legal-modal .modal-header {
+
+            padding: 18px 22px;
+
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #1c2620 0%,
+                    #17201b 100%
+                );
+        }
+
+
+        .pp-legal-modal .modal-title {
+
+            color: #ffffff;
+
+            font-size: 16px;
+
+            font-weight: 850;
+
+            letter-spacing: -0.01em;
+        }
+
+
+        .pp-legal-modal .modal-title i {
+
+            color: #22c55e;
+        }
+
+
+        .pp-legal-modal .btn-close {
+
+            filter: invert(1) brightness(2);
+
+            opacity: 0.6;
+
+            transition: opacity 0.15s ease;
+        }
+
+
+        .pp-legal-modal .btn-close:hover {
+
+            opacity: 1;
+        }
+
+
+        .pp-legal-modal .modal-body.pp-legal-body {
+
+            padding: 20px 22px;
+
+            font-size: 13.5px;
+
+            line-height: 1.7;
+
+            color: #d1d9e3;
+
+            max-height: 65vh;
+
+            overflow-y: auto;
+        }
+
+
+        .pp-legal-modal .pp-legal-body p {
+
+            margin: 0 0 12px;
+        }
+
+
+        .pp-legal-modal .pp-legal-body h3 {
+
+            margin: 18px 0 6px;
+
+            color: #ffffff;
+
+            font-size: 13.5px;
+
+            font-weight: 850;
+
+            letter-spacing: 0.01em;
+        }
+
+
+        .pp-legal-modal .pp-legal-body h3:first-child {
+
+            margin-top: 0;
+        }
+
+
+        .pp-legal-modal .pp-legal-body ul {
+
+            margin: 0 0 12px;
+
+            padding-left: 20px;
+        }
+
+
+        .pp-legal-modal .pp-legal-body li {
+
+            margin-bottom: 5px;
+        }
+
+
+        .pp-legal-modal .pp-legal-body a {
+
+            color: #34d399;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .pp-legal-modal .pp-legal-body a:hover {
+
+            color: #6ee7b7;
+
+            text-decoration: underline;
+        }
+
+
+        .pp-legal-modal .pp-legal-body strong {
+
+            color: #ffffff;
+
+            font-weight: 850;
+        }
+
+
+        .pp-legal-modal .modal-footer {
+
+            padding: 14px 22px;
+
+            border-top:
+                1px solid rgba(255, 255, 255, 0.08);
+
+            background:
+                rgba(255, 255, 255, 0.02);
+        }
+
+
+        .pp-legal-modal .modal-footer .btn-success {
+
+            min-height: 42px;
+
+            padding: 8px 20px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: var(--pp-green);
+
+            font-size: 14px;
+
+            font-weight: 800;
+        }
+
+
+        .pp-legal-modal .modal-footer .btn-success:hover {
+
+            background: var(--pp-dark-green);
         }
 
 
@@ -1012,6 +1227,42 @@
 
                 gap:
                     9px 17px;
+            }
+
+
+            /* Modal mobile tuning */
+
+            .pp-legal-modal .modal-dialog {
+
+                margin: 12px;
+            }
+
+
+            .pp-legal-modal .modal-header {
+
+                padding: 14px 16px;
+            }
+
+
+            .pp-legal-modal .modal-title {
+
+                font-size: 15px;
+            }
+
+
+            .pp-legal-modal .modal-body.pp-legal-body {
+
+                padding: 16px;
+
+                font-size: 13px;
+
+                max-height: 70vh;
+            }
+
+
+            .pp-legal-modal .modal-footer {
+
+                padding: 12px 16px;
             }
         }
 
@@ -1439,7 +1690,7 @@
 
 
                 <!-- =================================================
-                     BRAND
+                    BRAND
                 ================================================== -->
 
                 <section class="pp-footer-brand-block">
@@ -1462,10 +1713,20 @@
 
                     <p class="pp-footer-tagline">
 
-                        Educational sports analytics, historical match
-                        data, statistical insights, and structured sports
-                        information — presented through a clear,
-                        accessible, and data-focused platform.
+                        A global leader in sports prediction and fixed-match
+                        analysis — trusted worldwide for 100% genuine, first-
+                        delivered selections and a long-standing record of
+                        results that speak for themselves.
+
+                    </p>
+
+                    <p class="pp-footer-tagline pp-footer-tagline-emphasis">
+
+                        We partner with several verified companies to serve
+                        our customers better, meet every need with precision,
+                        and lift thousands out of poverty — one winning ticket
+                        at a time. When you choose PinnaclePicks, you choose
+                        a brand you can trust.
 
                     </p>
 
@@ -1473,7 +1734,7 @@
 
 
                 <!-- =================================================
-                     EXPLORE
+                    EXPLORE
                 ================================================== -->
 
                 <section>
@@ -1546,7 +1807,7 @@
 
 
                 <!-- =================================================
-                     ACCOUNT
+                    ACCOUNT
                 ================================================== -->
 
                 <section>
@@ -1658,7 +1919,7 @@
 
 
                 <!-- =================================================
-                     CONNECT
+                    CONNECT
                 ================================================== -->
 
                 <section>
@@ -1769,7 +2030,52 @@
 
 
             <!-- =====================================================
-                 EDUCATIONAL NOTICE
+                TRUST & COMMITMENT
+            ====================================================== -->
+
+            <div class="pp-footer-note">
+
+                <p class="pp-footer-note-title">
+
+                    <i
+                        class="bi bi-shield-check"
+                        aria-hidden="true"
+                    ></i>
+
+                    Trusted Worldwide — Proven, Genuine, First-Delivered
+
+                </p>
+
+
+                <p class="pp-footer-note-text">
+
+                    PinnaclePicks is recognised as one of the best prediction
+                    platforms in the world. We deliver 100% genuine fixed
+                    matches, first — before anyone else — and we stand
+                    behind every selection we publish. Our partnerships with
+                    several verified companies allow us to serve our
+                    customers at the highest standard, meet their needs
+                    with precision, and create real, life-changing value.
+
+                </p>
+
+
+                <p class="pp-footer-note-text">
+
+                    Thousands of users have trusted us, and many have
+                    changed their stories through our work. When you join
+                    PinnaclePicks, you are not just placing a bet — you are
+                    partnering with a team that is committed to your success.
+                    Your trust is our greatest asset, and we protect it every
+                    single day.
+
+                </p>
+
+            </div>
+
+
+            <!-- =====================================================
+                EDUCATIONAL NOTICE
             ====================================================== -->
 
             <div class="pp-footer-note">
@@ -1788,12 +2094,29 @@
 
                 <p class="pp-footer-note-text">
 
-                    PinnaclePicks provides sports data, historical
-                    information, statistics, selections, and analytical
-                    content for educational and informational purposes.
-                    Sports outcomes are inherently uncertain, and no
-                    information presented on this platform should be
-                    considered a guarantee of future results.
+                    PinnaclePicks is a dedicated team of professional sports
+                    analysts, statisticians, and data researchers who study
+                    matches, form, trends, and historical patterns with
+                    discipline and precision. Every selection we publish is
+                    the result of genuine, rigorous analysis — never guesswork —
+                    and is delivered with the care, transparency, and
+                    accountability our community deserves.
+
+                </p>
+
+
+                <p class="pp-footer-note-text">
+
+                    We stand behind the quality and integrity of our work,
+                    and thousands of users continue to trust us as a
+                    reliable source of serious sports insight. At the same
+                    time, we believe in honesty: sports are unpredictable by
+                    nature, and no analyst — however skilled — can guarantee
+                    every outcome. What we
+                    <strong>do</strong>
+                    guarantee is authentic analysis, first-delivered insight,
+                    and a genuine commitment to helping you make informed
+                    decisions.
 
                 </p>
 
@@ -1801,7 +2124,7 @@
 
 
             <!-- =====================================================
-                 FOOTER BOTTOM BAR
+                FOOTER BOTTOM BAR
             ====================================================== -->
 
             <div class="pp-footer-bottom">
@@ -1824,15 +2147,27 @@
                     aria-label="Legal navigation"
                 >
 
-                    <a href="#">
+                    <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#legalPrivacyModal"
+                    >
                         Privacy
                     </a>
 
-                    <a href="#">
+                    <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#legalTermsModal"
+                    >
                         Terms
                     </a>
 
-                    <a href="#">
+                    <a
+                        href="#"
+                        data-bs-toggle="modal"
+                        data-bs-target="#legalResponsibleModal"
+                    >
                         Responsible Use
                     </a>
 
@@ -1843,6 +2178,312 @@
         </div>
 
     </footer>
+
+
+    <!-- =========================================================
+         LEGAL MODALS
+    ========================================================== -->
+
+    <!-- ============================================
+         1. PRIVACY POLICY
+    ============================================ -->
+    <div
+        class="modal fade pp-legal-modal"
+        id="legalPrivacyModal"
+        tabindex="-1"
+        aria-labelledby="legalPrivacyLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2 class="modal-title" id="legalPrivacyLabel">
+                        <i class="bi bi-shield-lock me-2" aria-hidden="true"></i>
+                        Privacy Policy
+                    </h2>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+
+                <div class="modal-body pp-legal-body">
+
+                    <p>
+                        PinnaclePicks respects your privacy. This policy
+                        explains what information we collect, how we use it,
+                        and the choices you have.
+                    </p>
+
+                    <h3>Information we collect</h3>
+                    <ul>
+                        <li>Account details (name, email) when you register.</li>
+                        <li>Login data, device type, browser, and IP address.</li>
+                        <li>Payment-related metadata for subscriptions (we do not store card details).</li>
+                        <li>Interaction data such as pages visited and matches viewed.</li>
+                    </ul>
+
+                    <h3>How we use your information</h3>
+                    <ul>
+                        <li>To provide and improve our predictions and services.</li>
+                        <li>To manage your account and subscription.</li>
+                        <li>To send important service updates (not spam).</li>
+                        <li>To detect fraud and protect the platform.</li>
+                    </ul>
+
+                    <h3>Sharing</h3>
+                    <p>
+                        We do not sell your personal data. We only share
+                        information with trusted service providers (payments,
+                        hosting, analytics) strictly to operate the platform,
+                        or when required by law.
+                    </p>
+
+                    <h3>Your rights</h3>
+                    <ul>
+                        <li>Request access to your data.</li>
+                        <li>Request correction or deletion.</li>
+                        <li>Withdraw consent at any time.</li>
+                    </ul>
+
+                    <p>
+                        To exercise these rights, contact us at
+                        <a href="mailto:correctscorefixed365@gmail.com">
+                            correctscorefixed365@gmail.com
+                        </a>.
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================
+         2. TERMS OF SERVICE
+    ============================================ -->
+    <div
+        class="modal fade pp-legal-modal"
+        id="legalTermsModal"
+        tabindex="-1"
+        aria-labelledby="legalTermsLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2 class="modal-title" id="legalTermsLabel">
+                        <i class="bi bi-file-earmark-text me-2" aria-hidden="true"></i>
+                        Terms of Service
+                    </h2>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+
+                <div class="modal-body pp-legal-body">
+
+                    <p>
+                        By accessing PinnaclePicks, you agree to these Terms.
+                        If you do not agree, please do not use the platform.
+                    </p>
+
+                    <h3>1. Eligibility</h3>
+                    <p>
+                        You must be at least 18 years old (or the legal age
+                        in your jurisdiction) to use this service.
+                    </p>
+
+                    <h3>2. Nature of the service</h3>
+                    <p>
+                        PinnaclePicks provides sports analysis, statistics,
+                        and informational predictions. We do
+                        <strong>not</strong> operate a betting platform, and
+                        we do not accept or place bets on your behalf.
+                    </p>
+
+                    <h3>3. Commitment to Quality &amp; Genuine Analysis</h3>
+                    <p>
+                        PinnaclePicks is built on discipline, deep research, and a
+                        team of professional analysts who study every match before
+                        publishing a selection. We stand firmly behind the quality,
+                        integrity, and authenticity of our work — and thousands of
+                        users continue to trust us as a reliable source of serious
+                        sports insight.
+                    </p>
+                    <p>
+                        At the same time, we believe in honesty. Sports are
+                        unpredictable by nature, and no analyst — however skilled —
+                        can guarantee every single outcome. What we
+                        <strong>do</strong> guarantee is authentic analysis,
+                        first-delivered insight, and a genuine commitment to helping
+                        you make informed decisions. You remain fully responsible
+                        for how you use the information we provide.
+                    </p>
+
+                    <h3>4. Subscriptions and payments</h3>
+                    <p>
+                        Paid plans renew according to the plan you choose.
+                        Refunds are issued only where required by law or
+                        where explicitly stated. Misuse may result in
+                        termination.
+                    </p>
+
+                    <h3>5. Acceptable use</h3>
+                    <ul>
+                        <li>No scraping, reselling, or redistribution of content.</li>
+                        <li>No abuse, harassment, or attempts to hack the platform.</li>
+                        <li>No use of the service for illegal activity.</li>
+                    </ul>
+
+                    <h3>6. Intellectual property</h3>
+                    <p>
+                        All content, branding, and analysis belong to
+                        PinnaclePicks and may not be copied or reused
+                        without written permission.
+                    </p>
+
+                    <h3>7. Limitation of liability</h3>
+                    <p>
+                        To the maximum extent allowed by law, PinnaclePicks
+                        is not liable for financial losses, missed
+                        opportunities, or damages arising from use of this
+                        platform.
+                    </p>
+
+                    <h3>8. Changes</h3>
+                    <p>
+                        We may update these Terms at any time. Continued use
+                        of the platform means you accept the updated
+                        version.
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ============================================
+         3. RESPONSIBLE USE
+    ============================================ -->
+    <div
+        class="modal fade pp-legal-modal"
+        id="legalResponsibleModal"
+        tabindex="-1"
+        aria-labelledby="legalResponsibleLabel"
+        aria-hidden="true"
+    >
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h2 class="modal-title" id="legalResponsibleLabel">
+                        <i class="bi bi-heart-pulse me-2" aria-hidden="true"></i>
+                        Responsible Use
+                    </h2>
+                    <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                    ></button>
+                </div>
+
+                <div class="modal-body pp-legal-body">
+
+                    <p>
+                        Sports should be enjoyed responsibly. PinnaclePicks
+                        encourages every user to treat analysis as a tool for
+                        informed decisions — never as a source of guaranteed
+                        outcomes not unless you buy our genuines fixed matches.
+                    </p>
+
+                    <h3>Our commitment</h3>
+                    <ul>
+                        <li>We publish genuine, well-researched analysis.</li>
+                        <li>We never promise guaranteed wins for free matches.</li>
+                        <li>We do not pressure users into betting more than they can afford.</li>
+                        <li>We respect every user's privacy and dignity.</li>
+                    </ul>
+
+                    <h3>Your responsibility if you prefer free matches</h3>
+                    <ul>
+                        <li>Only spend money you can afford to lose.</li>
+                        <li>Never chase losses or bet under emotional pressure.</li>
+                        <li>Set personal limits and stick to them.</li>
+                        <li>Take breaks and keep the activity balanced.</li>
+                    </ul>
+
+                    <h3>Warning signs</h3>
+                    <p>
+                        If you notice any of the following, please seek help:
+                    </p>
+                    <ul>
+                        <li>Betting more than you planned.</li>
+                        <li>Hiding your activity from family or friends.</li>
+                        <li>Feeling anxious, guilty, or unable to stop.</li>
+                        <li>Borrowing money to place bets.</li>
+                    </ul>
+
+                    <h3>Get support</h3>
+                    <p>
+                        If you or someone you know needs help, contact a
+                        local responsible-gambling helpline or a licensed
+                        support organisation in your country. You are never
+                        alone.
+                    </p>
+
+                    <h3>Minimum age</h3>
+                    <p>
+                        This platform is strictly for adults aged 18+ (or
+                        the legal age in your jurisdiction).
+                    </p>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button
+                        type="button"
+                        class="btn btn-success"
+                        data-bs-dismiss="modal"
+                    >
+                        Close
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
     <!-- =========================================================

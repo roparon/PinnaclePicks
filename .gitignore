@@ -1,0 +1,92 @@
+# =========================================================
+# PinnaclePicks — .gitignore
+# =========================================================
+
+# ---------------------------------------------
+# Python
+# ---------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# ---------------------------------------------
+# Virtual environments
+# ---------------------------------------------
+.venv/
+venv/
+env/
+ENV/
+.Pinna/
+.Pinna/*
+
+# ---------------------------------------------
+# Flask
+# ---------------------------------------------
+instance/
+*.db
+*.sqlite
+*.sqlite3
+*.db-journal
+*.db.backup*
+*.db.backup-*
+
+# Keep migration folder if you use Flask-Migrate
+# !migrations/
+
+# ---------------------------------------------
+# Environment / secrets
+# ---------------------------------------------
+.env
+.env.*
+!.env.example
+*.env
+secrets.json
+config.local.py
+
+# ---------------------------------------------
+# Uploads (local user content)
+# ---------------------------------------------
+app/static/uploads/
+app/static/uploads/**
+!app/static/uploads/.gitkeep
+
+# ---------------------------------------------
+# Temporary / helper scripts (one-off rebuilds)
+# ---------------------------------------------
+matches.json
+rebuild_historical_matches.py
+rebuild_*.py
+migrate_*.py
+*.bak
+
+# ---------------------------------------------
+# IDE / editors
+# ---------------------------------------------
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------------------------------------------
+# OS
+# ---------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---------------------------------------------
+# Logs / coverage
+# ---------------------------------------------
+*.log
+logs/
+.coverage
+htmlcov/
+.pytest_cache/
