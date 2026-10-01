@@ -21,39 +21,15 @@ PinnaclePicks | Sports Analytics & Match History
 >
 {% endif %}
 
-<meta
-    property="og:type"
-    content="website"
->
-<meta
-    property="og:site_name"
-    content="PinnaclePicks"
->
-<meta
-    property="og:title"
-    content="PinnaclePicks | Sports Analytics & Match History"
->
-<meta
-    property="og:description"
-    content="Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data from PinnaclePicks."
->
-<meta
-    property="og:url"
-    content="{{ request.url }}"
->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="PinnaclePicks">
+<meta property="og:title" content="PinnaclePicks | Sports Analytics & Match History">
+<meta property="og:description" content="Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data from PinnaclePicks.">
+<meta property="og:url" content="{{ request.url }}">
 
-<meta
-    name="twitter:card"
-    content="summary"
->
-<meta
-    name="twitter:title"
-    content="PinnaclePicks | Sports Analytics & Match History"
->
-<meta
-    name="twitter:description"
-    content="Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data."
->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PinnaclePicks | Sports Analytics & Match History">
+<meta name="twitter:description" content="Sports analytics, match predictions, upcoming fixtures, concluded results and historical match data.">
 
 <script type="application/ld+json">
 {
@@ -77,61 +53,79 @@ PinnaclePicks | Sports Analytics & Match History
 <style>
 
     /* =========================================================
-       PINNACLEPICKS HOMEPAGE — MOBILE FIRST
+       PINNACLEPICKS — DESIGN SYSTEM
     ========================================================= */
 
     :root {
-        --pp-home-bg: #080b10;
-        --pp-home-surface: #10151d;
-        --pp-home-surface-2: #151c26;
-        --pp-home-border: rgba(255, 255, 255, 0.08);
-        --pp-home-border-strong: rgba(255, 255, 255, 0.16);
-        --pp-home-text: #f5f7fa;
-        --pp-home-muted: #8f9baa;
-        --pp-home-muted-2: #6b7686;
 
-        --pp-home-green: #22c55e;
-        --pp-home-green-soft: #4ade80;
-        --pp-home-green-dark: #15803d;
-        --pp-home-red: #ef4444;
-        --pp-home-gold: #f5c451;
-        --pp-home-blue: #3b82f6;
+        --pp-green:        #22c55e;
+        --pp-green-hover:  #4ade80;
+        --pp-green-soft:   #86efac;
+        --pp-green-deep:   #15803d;
 
-        --pp-home-radius: 14px;
-        --pp-home-radius-lg: 18px;
-        --pp-home-touch: 48px;
-        --pp-home-touch-sm: 44px;
+        --pp-bg:           #080b10;
+        --pp-surface:      #10151d;
+        --pp-surface-2:    #151c26;
+        --pp-surface-3:    #1c1c1c;
 
-        --pp-home-gutter: 16px;
-        --pp-home-max: 1180px;
+        --pp-border:       rgba(255, 255, 255, 0.08);
+        --pp-border-strong:rgba(255, 255, 255, 0.16);
 
-        /* Table palette */
-        --pp-tt-header:   #2eb350;
-        --pp-tt-row-odd:  #2a2a2a;
-        --pp-tt-row-even: #333333;
-        --pp-tt-row-hover:#3a3a3a;
-        --pp-tt-border:   rgba(255, 255, 255, 0.08);
+        --pp-text:         #f5f7fa;
+        --pp-text-soft:    #d8dee7;
+        --pp-muted:        #8f9baa;
+
+        --pp-gold:         #252521;
+
+        --pp-success:      #22c55e;
+        --pp-warning:      #f5c451;
+        --pp-danger:       #ef4444;
+        --pp-void:         #cbd5e1;
+
+        --pp-r-sm:         8px;
+        --pp-r-md:         12px;
+        --pp-r-lg:         16px;
+        --pp-r-xl:         20px;
+
+        --pp-s-1:          4px;
+        --pp-s-2:          8px;
+        --pp-s-3:          12px;
+        --pp-s-4:          16px;
+        --pp-s-5:          20px;
+        --pp-s-6:          24px;
+        --pp-s-8:          32px;
+        --pp-s-10:         40px;
+        --pp-s-12:         48px;
+
+        --pp-shadow-sm:    0 1px 2px rgba(0, 0, 0, 0.2);
+        --pp-shadow-md:    0 8px 24px rgba(0, 0, 0, 0.35);
+
+        --pp-gutter:       16px;
+        --pp-max:          1180px;
+        --pp-touch:        48px;
+        --pp-touch-sm:     44px;
+
+        --pp-tt-header:    #2eb350;
+        --pp-tt-row:       #1c1c1c;
+        --pp-tt-row-hover: rgba(255, 255, 255, 0.03);
     }
 
 
     /* =========================================================
-       HOMEPAGE BASE
+       BASE
     ========================================================= */
 
     .pp-home {
         min-width: 320px;
         width: 100%;
-
         background:
             radial-gradient(
                 circle at top,
                 rgba(34, 197, 94, 0.08),
                 transparent 32rem
             ),
-            var(--pp-home-bg);
-
-        color: var(--pp-home-text);
-
+            var(--pp-bg);
+        color: var(--pp-text);
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         -webkit-tap-highlight-color: transparent;
@@ -157,150 +151,507 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-home-container {
         width: 100%;
-        max-width: var(--pp-home-max);
+        max-width: var(--pp-max);
         margin-inline: auto;
-        padding-inline: var(--pp-home-gutter);
+        padding-inline: var(--pp-gutter);
+    }
+
+
+    /* =========================================================
+       HOMEPAGE NOTIFICATION BANNER
+    ========================================================= */
+
+    .pp-notice {
+        margin: var(--pp-s-4) 0 0;
+        padding: var(--pp-s-5) var(--pp-s-4);
+        border-radius: var(--pp-r-md);
+        border: 2px solid var(--pp-gold);
+        text-align: center;
+    }
+
+    .pp-notice-blue {
+        background: linear-gradient(180deg, #1e5fa8 0%, #14477e 100%);
+    }
+
+    .pp-notice-dark {
+        background: linear-gradient(180deg, var(--pp-surface-2) 0%, var(--pp-bg) 100%);
+    }
+
+    .pp-notice-green {
+        background: linear-gradient(180deg, #166534 0%, #0f4a24 100%);
+    }
+
+    .pp-notice-title {
+        margin: 0 0 var(--pp-s-3);
+        color: var(--pp-gold);
+        font-size: clamp(0.9rem, 3.6vw, 1.15rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+    }
+
+    .pp-notice-headline {
+        display: inline-block;
+        margin: 0 0 var(--pp-s-4);
+        padding: 6px 14px;
+        background: var(--pp-gold);
+        color: #0b1a33;
+        font-size: clamp(0.86rem, 3.4vw, 1.05rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: var(--pp-r-sm);
+    }
+
+    .pp-notice-body {
+        margin: 0 0 var(--pp-s-4);
+        color: #ffffff;
+        font-size: clamp(0.86rem, 3.4vw, 1.02rem);
+        font-weight: 800;
+        line-height: 1.7;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        white-space: pre-line;
+    }
+
+    .pp-notice-warning {
+        display: inline-block;
+        margin: var(--pp-s-2) 0;
+        padding: 6px 14px;
+        background: var(--pp-gold);
+        color: #0b1a33;
+        font-size: clamp(0.8rem, 3.2vw, 1rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: var(--pp-r-sm);
+    }
+
+    .pp-notice-footer {
+        display: inline-block;
+        margin: var(--pp-s-2) 0 0;
+        padding: 6px 14px;
+        background: var(--pp-gold);
+        color: #0b1a33;
+        font-size: clamp(0.8rem, 3.2vw, 1rem);
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        border-radius: var(--pp-r-sm);
+    }
+
+    @media (max-width: 400px) {
+        .pp-notice {
+            padding: var(--pp-s-4) var(--pp-s-3);
+        }
+        .pp-notice-body {
+            font-size: 0.82rem;
+        }
     }
 
 
     /* =========================================================
        HERO
-    ========================================= */
+    ========================================================= */
 
-    .pp-home-hero {
-        padding: 32px 0 22px;
+    .pp-hero {
+        position: relative;
+        padding: 0 0 var(--pp-s-5);
+        overflow: hidden;
+        isolation: isolate;
     }
 
-    .pp-home-eyebrow {
-        display: inline-flex;
+    .pp-hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background:
+            radial-gradient(
+                circle at 15% 30%,
+                rgba(34, 197, 94, 0.22),
+                transparent 45%
+            ),
+            radial-gradient(
+                circle at 85% 10%,
+                rgba(34, 197, 94, 0.10),
+                transparent 40%
+            );
+        pointer-events: none;
+    }
+
+    .pp-hero-strip {
+        background:
+            linear-gradient(
+                90deg,
+                var(--pp-gold) 0%,
+                #e8b840 50%,
+                var(--pp-gold) 100%
+            );
+        color: #0b1a33;
+        text-align: center;
+    }
+
+    .pp-hero-strip-inner {
+        display: flex;
         align-items: center;
-        gap: 7px;
+        justify-content: center;
+        gap: var(--pp-s-2);
+        padding: var(--pp-s-2) 0;
+    }
 
-        padding: 7px 11px;
+    .pp-hero-strip-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #0b1a33;
+        animation: pp-pulse 1.6s infinite ease-in-out;
+        flex: 0 0 7px;
+    }
 
-        border: 1px solid rgba(34, 197, 94, 0.24);
-        border-radius: 999px;
+    @keyframes pp-pulse {
+        0%   { opacity: 1; transform: scale(1); }
+        50%  { opacity: 0.35; transform: scale(1.3); }
+        100% { opacity: 1; transform: scale(1); }
+    }
 
-        background: rgba(34, 197, 94, 0.08);
-        color: #86efac;
-
+    .pp-hero-strip-text {
         font-size: 0.7rem;
-        font-weight: 800;
-        line-height: 1.2;
-
+        font-weight: 900;
+        letter-spacing: 0.08em;
         text-transform: uppercase;
-        letter-spacing: 0.07em;
-
-        max-width: 100%;
+        white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        max-width: 100%;
+    }
+
+    .pp-hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--pp-s-2);
+        padding: var(--pp-s-5) 0 var(--pp-s-1);
+    }
+
+    .pp-hero-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 11px;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.08);
+        border: 1px solid rgba(34, 197, 94, 0.28);
+        color: var(--pp-green-soft);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
         white-space: nowrap;
     }
 
-    .pp-home-hero h1 {
-        margin: 14px 0 10px;
+    .pp-hero-badge i {
+        font-size: 0.82rem;
+        color: var(--pp-green);
+    }
 
-        max-width: 760px;
+    .pp-hero-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: var(--pp-s-6);
+        padding-top: var(--pp-s-5);
+    }
 
-        color: var(--pp-home-text);
-
-        font-size: clamp(1.75rem, 8.5vw, 3.6rem);
-        font-weight: 800;
+    .pp-hero-title {
+        margin: 0 0 var(--pp-s-4);
+        color: var(--pp-text);
+        font-size: clamp(1.85rem, 8.5vw, 3.5rem);
+        font-weight: 900;
         line-height: 1.05;
-        letter-spacing: -0.04em;
-
+        letter-spacing: -0.045em;
         overflow-wrap: break-word;
     }
 
-    .pp-home-hero-description {
-        max-width: 950px;
-        margin: 0;
-
-        color: var(--pp-home-muted);
-
-        font-size: clamp(0.92rem, 3.8vw, 1.02rem);
-        line-height: 1.6;
+    .pp-hero-title-accent {
+        color: var(--pp-green);
+        display: inline-block;
     }
 
-    .pp-home-hero-actions {
+    .pp-hero-lead {
+        margin: 0 0 var(--pp-s-5);
+        max-width: 620px;
+        color: var(--pp-muted);
+        font-size: clamp(0.92rem, 3.8vw, 1.02rem);
+        line-height: 1.65;
+    }
+
+    .pp-hero-lead strong {
+        color: var(--pp-text);
+        font-weight: 800;
+    }
+
+    .pp-hero-cta {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 20px;
+        gap: var(--pp-s-3);
+        margin-bottom: var(--pp-s-4);
     }
 
-    .pp-home-hero-actions .pp-home-btn {
+    .pp-hero-cta .pp-home-btn {
         flex: 1 1 auto;
         min-width: 0;
+    }
+
+    .pp-hero-cta-primary,
+    .pp-hero-cta-secondary {
+        gap: var(--pp-s-2);
+    }
+
+    .pp-hero-note {
+        margin: 0;
+        max-width: 620px;
+        padding: var(--pp-s-3) var(--pp-s-4);
+        border: 1px solid rgba(245, 196, 81, 0.25);
+        border-radius: var(--pp-r-md);
+        background: rgba(245, 196, 81, 0.06);
+        color: var(--pp-text-soft);
+        font-size: 0.8rem;
+        line-height: 1.55;
+    }
+
+    .pp-hero-note strong {
+        color: var(--pp-gold);
+        font-weight: 800;
+    }
+
+    .pp-hero-card {
+        position: relative;
+        overflow: hidden;
+        border-radius: var(--pp-r-xl);
+        background:
+            linear-gradient(
+                150deg,
+                rgba(34, 197, 94, 0.14) 0%,
+                rgba(34, 197, 94, 0.03) 40%,
+                rgba(255, 255, 255, 0.01) 100%
+            );
+        border: 1px solid rgba(34, 197, 94, 0.28);
+        box-shadow: var(--pp-shadow-md);
+    }
+
+    .pp-hero-card::before {
+        content: "";
+        position: absolute;
+        inset: 0 0 auto 0;
+        height: 3px;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--pp-green),
+            transparent
+        );
+    }
+
+    .pp-hero-card-inner {
+        padding: var(--pp-s-5) var(--pp-s-5) var(--pp-s-6);
+    }
+
+    .pp-hero-card-tag {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 11px;
+        border-radius: 999px;
+        background: rgba(34, 197, 94, 0.14);
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        color: var(--pp-green-soft);
+        font-size: 0.66rem;
+        font-weight: 900;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+        margin-bottom: var(--pp-s-4);
+    }
+
+    .pp-hero-card-tag i {
+        color: var(--pp-green);
+        font-size: 0.82rem;
+    }
+
+    .pp-hero-card-title {
+        margin: 0 0 6px;
+        color: var(--pp-text);
+        font-size: clamp(1.35rem, 5.5vw, 1.75rem);
+        font-weight: 900;
+        line-height: 1.12;
+        letter-spacing: -0.02em;
+    }
+
+    .pp-hero-card-sub {
+        margin: 0 0 var(--pp-s-4);
+        color: var(--pp-gold);
+        font-size: 0.82rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+    }
+
+    .pp-hero-countdown {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: var(--pp-s-2);
+        margin-bottom: var(--pp-s-5);
+    }
+
+    .pp-hero-countdown-cell {
+        padding: var(--pp-s-3) 6px;
+        border: 1px solid rgba(34, 197, 94, 0.28);
+        border-radius: var(--pp-r-sm);
+        background: rgba(34, 197, 94, 0.06);
+        text-align: center;
+    }
+
+    .pp-hero-countdown-num {
+        display: block;
+        color: var(--pp-text);
+        font-size: clamp(1.05rem, 4.6vw, 1.35rem);
+        font-weight: 900;
+        line-height: 1;
+        letter-spacing: -0.02em;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .pp-hero-countdown-label {
+        display: block;
+        margin-top: 4px;
+        color: var(--pp-green-soft);
+        font-size: 0.58rem;
+        font-weight: 900;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+    }
+
+    .pp-hero-card-list {
+        list-style: none;
+        margin: 0 0 var(--pp-s-5);
+        padding: 0;
+        display: grid;
+        gap: var(--pp-s-2);
+    }
+
+    .pp-hero-card-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--pp-s-2);
+        color: var(--pp-text-soft);
+        font-size: 0.86rem;
+        line-height: 1.5;
+    }
+
+    .pp-hero-card-list i {
+        color: var(--pp-green);
+        font-size: 1rem;
+        margin-top: 2px;
+        flex-shrink: 0;
+    }
+
+    .pp-hero-card-btn {
+        width: 100%;
+        gap: var(--pp-s-2);
+    }
+
+    .pp-hero-payments {
+        margin-top: var(--pp-s-6);
+        padding: var(--pp-s-4);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-lg);
+        background: rgba(255, 255, 255, 0.02);
+        text-align: center;
+    }
+
+    .pp-hero-payments-label {
+        display: block;
+        margin-bottom: var(--pp-s-3);
+        color: var(--pp-muted);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.07em;
+        text-transform: uppercase;
+    }
+
+    .pp-hero-payments-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 6px;
+    }
+
+    .pp-hero-pay {
+        display: inline-flex;
+        align-items: center;
+        padding: 6px 11px;
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-sm);
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--pp-text-soft);
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.02em;
+        white-space: nowrap;
     }
 
 
     /* =========================================================
        BUTTONS
-    ===================================== */
+    ========================================================= */
 
     .pp-home-btn {
-        min-height: var(--pp-home-touch);
-
+        min-height: var(--pp-touch);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-
         padding: 12px 18px;
-
         border: 1px solid transparent;
-        border-radius: 12px;
-
+        border-radius: var(--pp-r-md);
         font-size: 0.88rem;
         font-weight: 800;
         line-height: 1.2;
         text-align: center;
-
         cursor: pointer;
-
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
-
         transition:
-            transform 0.15s ease,
-            background 0.15s ease,
-            border-color 0.15s ease,
-            color 0.15s ease;
+            background-color 180ms ease,
+            border-color 180ms ease,
+            color 180ms ease,
+            transform 180ms ease;
     }
 
-    .pp-home-btn:hover {
-        text-decoration: none;
-    }
-
-    .pp-home-btn:active {
-        transform: scale(0.97);
-    }
+    .pp-home-btn:hover { text-decoration: none; }
+    .pp-home-btn:active { transform: scale(0.97); }
 
     .pp-home-btn:focus-visible {
-        outline: 2px solid var(--pp-home-green);
+        outline: 2px solid var(--pp-green);
         outline-offset: 2px;
     }
 
     .pp-home-btn-primary {
-        background: var(--pp-home-green);
+        background: var(--pp-green);
         color: #031208;
     }
 
     .pp-home-btn-primary:hover {
-        background: var(--pp-home-green-soft);
+        background: var(--pp-green-hover);
         color: #031208;
     }
 
     .pp-home-btn-secondary {
-        background: var(--pp-home-surface);
-        border-color: var(--pp-home-border);
-        color: var(--pp-home-text);
+        background: var(--pp-surface);
+        border-color: var(--pp-border);
+        color: var(--pp-text);
     }
 
     .pp-home-btn-secondary:hover {
-        background: var(--pp-home-surface-2);
-        border-color: var(--pp-home-border-strong);
-        color: var(--pp-home-text);
+        background: var(--pp-surface-2);
+        border-color: var(--pp-border-strong);
+        color: var(--pp-text);
     }
 
 
@@ -309,55 +660,50 @@ PinnaclePicks | Sports Analytics & Match History
     ========================================================= */
 
     .pp-home-section {
-        padding: 24px 0;
+        padding: var(--pp-s-6) 0;
     }
 
     .pp-home-section-header {
         display: flex;
         align-items: flex-end;
         justify-content: space-between;
-        gap: 12px;
-        margin-bottom: 14px;
+        gap: var(--pp-s-3);
+        margin-bottom: var(--pp-s-4);
     }
 
     .pp-home-section-title {
         margin: 0;
-
-        color: var(--pp-home-text);
-
+        color: var(--pp-text);
         font-size: clamp(1.1rem, 4.5vw, 1.4rem);
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1.2;
         letter-spacing: -0.02em;
     }
 
     .pp-home-section-description {
         margin: 4px 0 0;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.8rem;
         line-height: 1.4;
     }
 
 
     /* =========================================================
-       UPCOMING MATCHES — PREMIUM CARDS
+       UPCOMING MATCHES
     ========================================================= */
 
     .pp-upcoming-list {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: var(--pp-s-3);
     }
 
     .pp-upcoming-card {
         position: relative;
         overflow: hidden;
-
-        padding: 16px;
-
-        border: 1px solid var(--pp-home-border);
-        border-radius: var(--pp-home-radius-lg);
-
+        padding: var(--pp-s-4);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-lg);
         background:
             linear-gradient(
                 150deg,
@@ -365,15 +711,9 @@ PinnaclePicks | Sports Analytics & Match History
                 rgba(255, 255, 255, 0.02) 40%,
                 rgba(255, 255, 255, 0.01)
             );
-
-        box-shadow:
-            0 10px 30px rgba(0, 0, 0, 0.28),
-            inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
         transition:
-            transform 0.2s ease,
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
+            border-color 180ms ease,
+            transform 180ms ease;
     }
 
     .pp-upcoming-card::before {
@@ -384,7 +724,7 @@ PinnaclePicks | Sports Analytics & Match History
         background: linear-gradient(
             90deg,
             transparent,
-            var(--pp-home-green),
+            var(--pp-green),
             transparent
         );
         opacity: 0.55;
@@ -393,45 +733,33 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-upcoming-card:hover {
         transform: translateY(-2px);
         border-color: rgba(34, 197, 94, 0.35);
-        box-shadow:
-            0 14px 38px rgba(0, 0, 0, 0.35),
-            0 0 0 1px rgba(34, 197, 94, 0.15);
     }
-
 
     .pp-upcoming-top {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 10px;
-
-        margin-bottom: 14px;
-        padding-bottom: 12px;
-
-        border-bottom: 1px solid var(--pp-home-border);
+        gap: var(--pp-s-3);
+        margin-bottom: var(--pp-s-4);
+        padding-bottom: var(--pp-s-3);
+        border-bottom: 1px solid var(--pp-border);
     }
 
     .pp-upcoming-league {
         display: inline-flex;
         align-items: center;
         gap: 6px;
-
         min-width: 0;
         padding: 5px 10px;
-
-        border: 1px solid rgba(59, 130, 246, 0.22);
+        border: 1px solid var(--pp-border-strong);
         border-radius: 999px;
-
-        background: rgba(59, 130, 246, 0.08);
-        color: #93c5fd;
-
+        background: rgba(255, 255, 255, 0.03);
+        color: var(--pp-text-soft);
         font-size: 0.68rem;
         font-weight: 800;
         line-height: 1;
-
         text-transform: uppercase;
         letter-spacing: 0.05em;
-
         max-width: 60%;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -440,15 +768,12 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-upcoming-time {
         flex-shrink: 0;
-
         display: inline-flex;
         align-items: center;
         gap: 6px;
-
-        color: #d8dee7;
+        color: var(--pp-text-soft);
         font-size: 0.74rem;
         font-weight: 800;
-
         white-space: nowrap;
     }
 
@@ -457,74 +782,56 @@ PinnaclePicks | Sports Analytics & Match History
         width: 6px;
         height: 6px;
         border-radius: 50%;
-        background: var(--pp-home-green);
+        background: var(--pp-green);
         box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
     }
-
 
     .pp-upcoming-teams {
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
         align-items: center;
-        gap: 12px;
-
-        padding: 4px 0 16px;
+        gap: var(--pp-s-3);
+        padding: 4px 0 var(--pp-s-4);
     }
 
     .pp-upcoming-team {
         min-width: 0;
-
-        color: var(--pp-home-text);
-
+        color: var(--pp-text);
         font-size: clamp(0.92rem, 3.6vw, 1.02rem);
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1.3;
         letter-spacing: -0.01em;
-
         overflow-wrap: anywhere;
     }
 
-    .pp-upcoming-team-away {
-        text-align: right;
-    }
+    .pp-upcoming-team-away { text-align: right; }
 
     .pp-upcoming-vs {
         flex-shrink: 0;
-
         display: inline-flex;
         align-items: center;
         justify-content: center;
-
         width: 34px;
         height: 34px;
-
-        border: 1px solid var(--pp-home-border-strong);
+        border: 1px solid var(--pp-border-strong);
         border-radius: 50%;
-
         background: rgba(255, 255, 255, 0.035);
-
-        color: var(--pp-home-muted);
-
+        color: var(--pp-muted);
         font-size: 0.62rem;
         font-weight: 900;
         line-height: 1;
-
         letter-spacing: 0.05em;
     }
-
 
     .pp-upcoming-prediction {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
-        gap: 12px;
-
-        padding: 12px 14px;
-
+        gap: var(--pp-s-3);
+        padding: var(--pp-s-3) var(--pp-s-4);
         border: 1px solid rgba(34, 197, 94, 0.18);
-        border-radius: 12px;
-
+        border-radius: var(--pp-r-md);
         background:
             linear-gradient(
                 135deg,
@@ -536,25 +843,19 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-upcoming-prediction-label {
         display: block;
         margin-bottom: 3px;
-
-        color: #86efac;
-
+        color: var(--pp-green-soft);
         font-size: 0.62rem;
         font-weight: 900;
-
         text-transform: uppercase;
         letter-spacing: 0.09em;
     }
 
     .pp-upcoming-pick {
         min-width: 0;
-
-        color: #ffffff;
-
+        color: var(--pp-text);
         font-size: 0.94rem;
         font-weight: 900;
         line-height: 1.25;
-
         overflow-wrap: anywhere;
     }
 
@@ -568,62 +869,49 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-upcoming-market {
         min-height: 28px;
-
         display: inline-flex;
         align-items: center;
         justify-content: center;
-
         padding: 4px 10px;
-
-        border: 1px solid rgba(59, 130, 246, 0.24);
-        border-radius: 8px;
-
-        background: rgba(59, 130, 246, 0.1);
-        color: #93c5fd;
-
+        border: 1px solid var(--pp-border-strong);
+        border-radius: var(--pp-r-sm);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--pp-text-soft);
         font-size: 0.68rem;
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1;
-
         white-space: nowrap;
     }
 
     .pp-upcoming-odds {
         min-height: 28px;
-
         display: inline-flex;
         align-items: center;
         justify-content: center;
-
         padding: 4px 12px;
-
-        border: 1px solid rgba(245, 196, 81, 0.24);
-        border-radius: 8px;
-
+        border: 1px solid rgba(245, 196, 81, 0.28);
+        border-radius: var(--pp-r-sm);
         background: rgba(245, 196, 81, 0.1);
-        color: var(--pp-home-gold);
-
+        color: var(--pp-gold);
         font-size: 0.76rem;
         font-weight: 900;
         line-height: 1;
-
         letter-spacing: 0.02em;
         white-space: nowrap;
     }
 
 
     /* =========================================================
-       CONCLUDED GAMES & ARCHIVE — SHARED TABLE
+       TABLES
     ========================================================= */
 
     .pp-table-wrap {
         width: 100%;
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
-
-        border-radius: 12px;
-        border: 1px solid var(--pp-home-border);
-        background: #1c1c1c;
+        border-radius: var(--pp-r-md);
+        border: 1px solid var(--pp-border);
+        background: var(--pp-surface-3);
     }
 
     .pp-table {
@@ -634,33 +922,24 @@ PinnaclePicks | Sports Analytics & Match History
     }
 
     .pp-table thead th {
-        padding: 13px 10px;
-
+        padding: var(--pp-s-3) 10px;
         background: var(--pp-tt-header);
         color: #ffffff;
-
         font-size: 0.74rem;
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.08em;
         text-align: center;
-
         white-space: nowrap;
-
         border-right: 1px solid rgba(255, 255, 255, 0.22);
     }
 
-    .pp-table thead th:last-child {
-        border-right: 0;
-    }
+    .pp-table thead th:last-child { border-right: 0; }
 
     .pp-table tbody tr {
-        background: var(--pp-tt-row-even);
-        color: #ffffff;
-    }
-
-    .pp-table tbody tr:nth-child(odd) {
-        background: var(--pp-tt-row-odd);
+        background: var(--pp-tt-row);
+        color: var(--pp-text);
+        transition: background-color 180ms ease;
     }
 
     .pp-table tbody tr:hover {
@@ -668,28 +947,24 @@ PinnaclePicks | Sports Analytics & Match History
     }
 
     .pp-table tbody td {
-        padding: 12px 10px;
+        padding: var(--pp-s-3) 10px;
         text-align: center;
         vertical-align: middle;
-
-        border-top: 1px solid var(--pp-tt-border);
-        border-right: 1px solid var(--pp-tt-border);
-
+        border-top: 1px solid var(--pp-border);
+        border-right: 1px solid var(--pp-border);
         white-space: nowrap;
     }
 
-    .pp-table tbody td:last-child {
-        border-right: 0;
-    }
+    .pp-table tbody td:last-child { border-right: 0; }
 
     .pp-td-date {
-        color: #ffffff;
+        color: var(--pp-text);
         font-weight: 700;
         font-style: italic;
     }
 
     .pp-td-match {
-        color: #ffffff;
+        color: var(--pp-text);
         font-weight: 600;
         white-space: normal;
         min-width: 220px;
@@ -697,7 +972,7 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-td-tip,
     .pp-td-odds {
-        color: #ffffff;
+        color: var(--pp-text);
         font-style: italic;
         font-weight: 600;
     }
@@ -707,10 +982,10 @@ PinnaclePicks | Sports Analytics & Match History
         font-weight: 800;
     }
 
-    .pp-td-result-won     { color: #22c55e; }
-    .pp-td-result-lost    { color: #ef4444; }
-    .pp-td-result-void    { color: #cbd5e1; }
-    .pp-td-result-pending { color: #f5c451; }
+    .pp-td-result-won     { color: var(--pp-success); }
+    .pp-td-result-lost    { color: var(--pp-danger); }
+    .pp-td-result-void    { color: var(--pp-void); }
+    .pp-td-result-pending { color: var(--pp-warning); }
 
 
     /* =========================================================
@@ -722,21 +997,21 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-history-summary {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 10px;
-        margin-bottom: 14px;
+        gap: var(--pp-s-3);
+        margin-bottom: var(--pp-s-4);
     }
 
     .pp-history-stat {
-        padding: 13px 14px;
-        border: 1px solid var(--pp-home-border);
-        border-radius: 12px;
+        padding: var(--pp-s-3) var(--pp-s-4);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-md);
         background: rgba(255, 255, 255, 0.025);
     }
 
     .pp-history-stat-label {
         display: block;
         margin-bottom: 3px;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.68rem;
         font-weight: 800;
         text-transform: uppercase;
@@ -745,7 +1020,7 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-history-stat-value {
         display: block;
-        color: var(--pp-home-text);
+        color: var(--pp-text);
         font-size: 1.18rem;
         font-weight: 900;
         line-height: 1.1;
@@ -761,60 +1036,51 @@ PinnaclePicks | Sports Analytics & Match History
         flex-wrap: wrap;
         align-items: center;
         justify-content: center;
-
         gap: 6px;
-
-        margin-top: 18px;
+        margin-top: var(--pp-s-5);
     }
 
     .pp-history-page-link {
-        min-width: var(--pp-home-touch-sm);
-        min-height: var(--pp-home-touch-sm);
-
+        min-width: var(--pp-touch-sm);
+        min-height: var(--pp-touch-sm);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-
-        padding: 8px 12px;
-
-        border: 1px solid var(--pp-home-border);
-        border-radius: 10px;
-
+        padding: var(--pp-s-2) var(--pp-s-3);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-sm);
         background: rgba(255, 255, 255, 0.03);
-        color: var(--pp-home-text);
-
+        color: var(--pp-text);
         text-decoration: none;
-
         font-size: 0.84rem;
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1;
-
         cursor: pointer;
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
-
-        transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+        transition:
+            border-color 180ms ease,
+            color 180ms ease,
+            background-color 180ms ease;
     }
 
     .pp-history-page-link:hover {
-        border-color: var(--pp-home-green);
-        color: var(--pp-home-green);
+        border-color: var(--pp-green);
+        color: var(--pp-green);
     }
 
     .pp-history-page-link:focus-visible {
-        outline: 2px solid var(--pp-home-green);
+        outline: 2px solid var(--pp-green);
         outline-offset: 2px;
     }
 
     .pp-history-page-link-active {
-        border-color: var(--pp-home-green);
-        background: var(--pp-home-green);
+        border-color: var(--pp-green);
+        background: var(--pp-green);
         color: #031208;
     }
 
-    .pp-history-page-link-active:hover {
-        color: #031208;
-    }
+    .pp-history-page-link-active:hover { color: #031208; }
 
     .pp-history-page-link-disabled {
         opacity: 0.45;
@@ -824,7 +1090,7 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-history-page-info {
         width: 100%;
         margin-top: 6px;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.76rem;
         text-align: center;
     }
@@ -837,15 +1103,13 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-home-combo-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: var(--pp-s-3);
     }
 
     .pp-home-combo-card {
-        padding: 16px;
-
-        border: 1px solid var(--pp-home-border);
-        border-radius: var(--pp-home-radius);
-
+        padding: var(--pp-s-4);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-md);
         background:
             linear-gradient(
                 145deg,
@@ -862,14 +1126,14 @@ PinnaclePicks | Sports Analytics & Match History
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
-        gap: 10px;
+        gap: var(--pp-s-3);
     }
 
     .pp-home-combo-title {
         margin: 0;
-        color: var(--pp-home-text);
+        color: var(--pp-text);
         font-size: 0.96rem;
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1.3;
         overflow-wrap: anywhere;
     }
@@ -877,9 +1141,9 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-home-premium-label {
         flex-shrink: 0;
         padding: 5px 8px;
-        border-radius: 7px;
+        border-radius: var(--pp-r-sm);
         background: rgba(245, 196, 81, 0.1);
-        color: var(--pp-home-gold);
+        color: var(--pp-gold);
         font-size: 0.64rem;
         font-weight: 900;
         text-transform: uppercase;
@@ -890,8 +1154,8 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-home-combo-meta {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
-        margin-top: 14px;
+        gap: var(--pp-s-2);
+        margin-top: var(--pp-s-4);
     }
 
     .pp-home-combo-meta .pp-home-meta-box:nth-child(3) {
@@ -901,13 +1165,13 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-home-meta-box {
         min-width: 0;
         padding: 10px;
-        border-radius: 10px;
+        border-radius: var(--pp-r-sm);
         background: rgba(255, 255, 255, 0.035);
     }
 
     .pp-home-meta-label {
         display: block;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.62rem;
         font-weight: 700;
         text-transform: uppercase;
@@ -917,7 +1181,7 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-home-meta-value {
         display: block;
         margin-top: 3px;
-        color: var(--pp-home-text);
+        color: var(--pp-text);
         font-size: 0.92rem;
         font-weight: 900;
         line-height: 1.2;
@@ -925,15 +1189,15 @@ PinnaclePicks | Sports Analytics & Match History
     }
 
     .pp-home-lock {
-        margin: 13px 0 0;
-        color: var(--pp-home-muted);
+        margin: var(--pp-s-3) 0 0;
+        color: var(--pp-muted);
         font-size: 0.78rem;
         line-height: 1.5;
     }
 
     .pp-home-combo-button {
         width: 100%;
-        margin-top: 13px;
+        margin-top: var(--pp-s-3);
     }
 
 
@@ -944,16 +1208,16 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-home-gallery {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 8px;
+        gap: var(--pp-s-2);
     }
 
     .pp-home-proof {
         position: relative;
         overflow: hidden;
         aspect-ratio: 1 / 1;
-        border: 1px solid var(--pp-home-border);
-        border-radius: 12px;
-        background: var(--pp-home-surface);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-md);
+        background: var(--pp-surface);
         display: block;
         -webkit-tap-highlight-color: transparent;
     }
@@ -962,7 +1226,7 @@ PinnaclePicks | Sports Analytics & Match History
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.25s ease;
+        transition: transform 180ms ease;
     }
 
     .pp-home-proof:hover img,
@@ -993,10 +1257,10 @@ PinnaclePicks | Sports Analytics & Match History
     ========================================================= */
 
     .pp-home-empty {
-        padding: 22px 16px;
-        border: 1px dashed var(--pp-home-border);
-        border-radius: var(--pp-home-radius);
-        color: var(--pp-home-muted);
+        padding: var(--pp-s-5) var(--pp-s-4);
+        border: 1px dashed var(--pp-border);
+        border-radius: var(--pp-r-md);
+        color: var(--pp-muted);
         text-align: center;
         font-size: 0.82rem;
         line-height: 1.5;
@@ -1008,43 +1272,40 @@ PinnaclePicks | Sports Analytics & Match History
     ========================================================= */
 
     .pp-extra-sections {
-        margin-top: 8px;
-        padding: 12px 0 32px;
+        margin-top: var(--pp-s-2);
+        padding: var(--pp-s-3) 0 var(--pp-s-8);
     }
 
-    .pp-extra-section {
-        padding: 22px 0;
-    }
+    .pp-extra-section { padding: var(--pp-s-5) 0; }
 
     .pp-extra-card {
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: var(--pp-home-radius-lg);
-        background: linear-gradient(145deg, rgba(16, 21, 29, 0.96), rgba(9, 13, 19, 0.96));
-        box-shadow: 0 10px 28px rgba(0, 0, 0, 0.16);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-lg);
+        background: var(--pp-surface);
     }
 
-    .pp-offer-card { padding: 16px; }
+    .pp-offer-card { padding: var(--pp-s-4); }
 
     .pp-extra-title {
         margin: 0;
-        color: #ffffff;
+        color: var(--pp-text);
         font-size: clamp(1.05rem, 4.5vw, 1.45rem);
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1.25;
         letter-spacing: -0.02em;
     }
 
     .pp-extra-subtitle {
         margin: 5px 0 0;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.8rem;
         line-height: 1.5;
     }
 
     .pp-offer-list {
         display: grid;
-        gap: 10px;
-        margin: 16px 0 0;
+        gap: var(--pp-s-3);
+        margin: var(--pp-s-4) 0 0;
         padding: 0;
         list-style: none;
     }
@@ -1052,11 +1313,11 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-offer-item {
         display: flex;
         align-items: flex-start;
-        gap: 10px;
-        padding: 12px 13px;
-        border: 1px solid rgba(255, 255, 255, 0.07);
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.025);
+        gap: var(--pp-s-3);
+        padding: var(--pp-s-3);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-md);
+        background: rgba(255, 255, 255, 0.02);
     }
 
     .pp-offer-dot {
@@ -1065,19 +1326,19 @@ PinnaclePicks | Sports Analytics & Match History
         height: 8px;
         margin-top: 7px;
         border-radius: 50%;
-        background: #10b981;
-        box-shadow: 0 0 10px rgba(16, 185, 129, 0.75);
+        background: var(--pp-green);
+        box-shadow: 0 0 8px rgba(34, 197, 94, 0.6);
     }
 
     .pp-offer-copy {
         min-width: 0;
-        color: #f5f7fa;
+        color: var(--pp-text);
         font-size: 0.85rem;
         line-height: 1.55;
         overflow-wrap: anywhere;
     }
 
-    .pp-offer-copy strong { font-weight: 850; }
+    .pp-offer-copy strong { font-weight: 800; }
 
     .pp-offer-link {
         display: inline-flex;
@@ -1085,24 +1346,26 @@ PinnaclePicks | Sports Analytics & Match History
         gap: 7px;
         min-height: 38px;
         margin: 2px 4px;
-        padding: 0 12px;
-        border: 1px solid rgba(16, 185, 129, 0.3);
-        border-radius: 8px;
-        background: rgba(16, 185, 129, 0.08);
-        color: #34d399 !important;
-        font-weight: 850;
+        padding: 0 var(--pp-s-3);
+        border: 1px solid rgba(34, 197, 94, 0.35);
+        border-radius: var(--pp-r-sm);
+        background: rgba(34, 197, 94, 0.08);
+        color: var(--pp-green-soft) !important;
+        font-weight: 800;
         font-size: 0.84rem;
         -webkit-tap-highlight-color: transparent;
         touch-action: manipulation;
+        transition:
+            background-color 180ms ease,
+            color 180ms ease;
     }
 
     .pp-offer-link:hover,
     .pp-offer-link:active {
-        background: rgba(16, 185, 129, 0.15);
-        color: #6ee7b7 !important;
+        background: rgba(34, 197, 94, 0.16);
+        color: #ffffff !important;
     }
 
-    /* SVG icon sizing inside offer links */
     .pp-offer-link svg {
         width: 16px;
         height: 16px;
@@ -1110,114 +1373,113 @@ PinnaclePicks | Sports Analytics & Match History
         display: block;
     }
 
-
-    /* ---------- Brand-coloured offer buttons ---------- */
-
-    /* Telegram */
     .pp-offer-link-telegram {
-        border-color: rgba(34, 158, 217, 0.45) !important;
-        background: rgba(34, 158, 217, 0.1) !important;
-        color: #4db8e8 !important;
+        border-color: rgba(34, 158, 217, 0.35) !important;
+        background: rgba(34, 158, 217, 0.08) !important;
+        color: #7ec1e2 !important;
     }
 
     .pp-offer-link-telegram:hover,
     .pp-offer-link-telegram:active {
-        background: rgba(34, 158, 217, 0.22) !important;
-        color: #7ed0f0 !important;
+        background: rgba(34, 158, 217, 0.18) !important;
+        color: #ffffff !important;
     }
 
-    /* WhatsApp */
     .pp-offer-link-whatsapp {
-        border-color: rgba(37, 211, 102, 0.45) !important;
-        background: rgba(37, 211, 102, 0.1) !important;
-        color: #25d366 !important;
+        border-color: rgba(37, 211, 102, 0.35) !important;
+        background: rgba(37, 211, 102, 0.08) !important;
+        color: #7ce3a1 !important;
     }
 
     .pp-offer-link-whatsapp:hover,
     .pp-offer-link-whatsapp:active {
-        background: rgba(37, 211, 102, 0.22) !important;
-        color: #4ade80 !important;
+        background: rgba(37, 211, 102, 0.18) !important;
+        color: #ffffff !important;
     }
 
-    /* Action row inside offer items */
     .pp-offer-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 8px;
-        margin-top: 10px;
+        gap: var(--pp-s-2);
+        margin-top: var(--pp-s-3);
     }
 
-    .pp-offer-actions .pp-offer-link {
-        margin: 0;
-    }
+    .pp-offer-actions .pp-offer-link { margin: 0; }
 
+
+    /* =========================================================
+       SUPPORT
+    ========================================================= */
 
     .pp-support-card {
-        padding: 20px 16px;
+        padding: var(--pp-s-5) var(--pp-s-4);
         text-align: center;
     }
 
     .pp-support-heading {
-        margin: 0 0 12px;
-        color: #ffffff;
+        margin: 0 0 var(--pp-s-3);
+        color: var(--pp-text);
         font-size: 1rem;
-        font-weight: 850;
+        font-weight: 800;
     }
 
     .pp-support-contact {
         display: flex;
         flex-direction: column;
         align-items: center;
-        gap: 8px;
-        color: #dbe3ec;
+        gap: var(--pp-s-2);
+        color: var(--pp-text-soft);
         font-size: 0.85rem;
         line-height: 1.6;
     }
 
-    .pp-support-contact > span[aria-hidden="true"] {
-        display: none;
-    }
+    .pp-support-contact > span[aria-hidden="true"] { display: none; }
 
     .pp-support-contact a {
-        color: #34d399 !important;
+        color: var(--pp-green-soft) !important;
         font-weight: 800;
         overflow-wrap: anywhere;
         word-break: break-word;
     }
 
     .pp-warning {
-        margin: 16px auto 0;
+        margin: var(--pp-s-4) auto 0;
         max-width: 900px;
-        padding: 12px 13px;
+        padding: var(--pp-s-3);
         border: 1px solid rgba(239, 68, 68, 0.3);
-        border-radius: 11px;
+        border-radius: var(--pp-r-md);
         background: rgba(127, 29, 29, 0.24);
         color: #fecaca;
         font-size: 0.78rem;
-        font-weight: 750;
+        font-weight: 700;
         line-height: 1.55;
         text-align: left;
     }
 
-    .pp-testimonials-header { margin-bottom: 14px; }
+
+    /* =========================================================
+       TESTIMONIALS
+    ========================================================= */
+
+    .pp-testimonials-header { margin-bottom: var(--pp-s-4); }
 
     .pp-testimonials-grid {
         display: grid;
         grid-template-columns: 1fr;
-        gap: 12px;
+        gap: var(--pp-s-3);
     }
 
     .pp-testimonial-card {
-        padding: 16px;
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: var(--pp-home-radius-lg);
-        background: linear-gradient(145deg, rgba(16, 21, 29, 0.96), rgba(9, 13, 19, 0.96));
+        padding: var(--pp-s-4);
+        border: 1px solid var(--pp-border);
+        border-radius: var(--pp-r-lg);
+        background: var(--pp-surface);
     }
 
     .pp-testimonial-person {
         display: flex;
         align-items: center;
-        gap: 11px;
+        gap: var(--pp-s-3);
     }
 
     .pp-testimonial-avatar {
@@ -1226,49 +1488,54 @@ PinnaclePicks | Sports Analytics & Match History
         flex: 0 0 44px;
         display: grid;
         place-items: center;
-        border: 1px solid rgba(16, 185, 129, 0.3);
+        border: 1px solid rgba(34, 197, 94, 0.3);
         border-radius: 50%;
-        background: rgba(16, 185, 129, 0.1);
-        color: #34d399;
+        background: rgba(34, 197, 94, 0.1);
+        color: var(--pp-green-soft);
         font-size: 0.82rem;
         font-weight: 900;
     }
 
     .pp-testimonial-name {
-        color: #ffffff;
+        color: var(--pp-text);
         font-size: 0.86rem;
-        font-weight: 850;
+        font-weight: 800;
         line-height: 1.2;
     }
 
     .pp-testimonial-location {
         margin-top: 2px;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.72rem;
     }
 
     .pp-testimonial-stars {
-        margin-top: 13px;
-        color: var(--pp-home-gold);
+        margin-top: var(--pp-s-3);
+        color: var(--pp-gold);
         font-size: 0.82rem;
         letter-spacing: 0.1em;
     }
 
     .pp-testimonial-quote {
-        margin: 9px 0 0;
-        color: #dce2e9;
+        margin: var(--pp-s-2) 0 0;
+        color: var(--pp-text-soft);
         font-size: 0.82rem;
         line-height: 1.65;
     }
 
+
+    /* =========================================================
+       META TAGS
+    ========================================================= */
+
     .pp-meta-card {
-        padding: 16px;
+        padding: var(--pp-s-4);
         text-align: center;
     }
 
     .pp-meta-updated {
         margin: 0;
-        color: var(--pp-home-muted);
+        color: var(--pp-muted);
         font-size: 0.74rem;
         font-weight: 700;
         line-height: 1.5;
@@ -1279,7 +1546,7 @@ PinnaclePicks | Sports Analytics & Match History
         flex-wrap: wrap;
         justify-content: center;
         gap: 6px;
-        margin-top: 12px;
+        margin-top: var(--pp-s-3);
     }
 
     .pp-meta-tag {
@@ -1287,30 +1554,308 @@ PinnaclePicks | Sports Analytics & Match History
         align-items: center;
         min-height: 30px;
         padding: 0 10px;
-        border: 1px solid rgba(16, 185, 129, 0.16);
+        border: 1px solid rgba(34, 197, 94, 0.16);
         border-radius: 999px;
-        background: rgba(16, 185, 129, 0.055);
-        color: #9eeac9;
+        background: rgba(34, 197, 94, 0.055);
+        color: var(--pp-green-soft);
         font-size: 0.68rem;
-        font-weight: 750;
+        font-weight: 700;
         line-height: 1;
         white-space: nowrap;
     }
 
 
     /* =========================================================
-       TABLET (≥ 576px)
+       FIXED MATCHES
     ========================================================= */
+
+    .pp-fixed-section {
+        background: var(--pp-surface);
+        border: 1px solid rgba(34, 197, 94, 0.25);
+        border-radius: var(--pp-r-lg);
+        padding: var(--pp-s-5) var(--pp-s-4) var(--pp-s-6);
+        margin-top: var(--pp-s-2);
+    }
+
+    .pp-fixed-topline {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 4px var(--pp-s-3);
+        margin-bottom: var(--pp-s-2);
+        color: var(--pp-muted);
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+    }
+
+    .pp-fixed-topline span:last-child { text-align: right; }
+
+    .pp-fixed-hero-wrap {
+        text-align: center;
+        margin: var(--pp-s-3) 0 var(--pp-s-4);
+    }
+
+    .pp-fixed-hero-title {
+        margin: 0;
+        display: inline-block;
+        color: var(--pp-green);
+        background: transparent;
+        font-size: clamp(1.05rem, 5vw, 1.55rem);
+        font-weight: 900;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 6px 14px;
+        border: 1px solid var(--pp-green);
+        border-radius: var(--pp-r-sm);
+    }
+
+    .pp-fixed-sub {
+        margin: 0 0 var(--pp-s-3);
+        color: var(--pp-text);
+        font-size: clamp(0.86rem, 3.6vw, 1rem);
+        text-align: center;
+        font-weight: 700;
+    }
+
+    .pp-fixed-desc {
+        margin: 0 auto var(--pp-s-3);
+        color: var(--pp-text-soft);
+        font-size: clamp(0.82rem, 3.4vw, 0.94rem);
+        line-height: 1.6;
+        text-align: center;
+        max-width: 820px;
+        font-weight: 600;
+    }
+
+    .pp-fixed-desc a {
+        color: var(--pp-green-soft);
+        text-decoration: underline;
+        font-weight: 800;
+    }
+
+    .pp-fixed-warning-wrap {
+        text-align: center;
+        margin: var(--pp-s-3) 0 var(--pp-s-4);
+    }
+
+    .pp-fixed-warning {
+        display: inline-block;
+        color: var(--pp-gold);
+        background: transparent;
+        font-size: clamp(0.9rem, 4vw, 1.1rem);
+        font-weight: 900;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        padding: 6px 14px;
+        border: 1px solid var(--pp-gold);
+        border-radius: var(--pp-r-sm);
+    }
+
+    .pp-fixed-table-wrap {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        border-radius: var(--pp-r-md);
+        border: 1px solid var(--pp-border);
+        background: var(--pp-surface-3);
+    }
+
+    .pp-fixed-table {
+        width: 100%;
+        min-width: 560px;
+        border-collapse: collapse;
+        font-size: 0.86rem;
+    }
+
+    .pp-fixed-table thead th {
+        background: var(--pp-tt-header);
+        color: #ffffff;
+        font-size: 0.76rem;
+        font-weight: 800;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        text-align: center;
+        padding: var(--pp-s-3) 8px;
+        border-right: 1px solid rgba(255, 255, 255, 0.22);
+    }
+
+    .pp-fixed-table thead th:last-child { border-right: 0; }
+
+    .pp-fixed-table tbody td {
+        background: var(--pp-surface-3);
+        color: var(--pp-text);
+        font-size: 0.86rem;
+        font-weight: 700;
+        letter-spacing: 0.02em;
+        text-align: center;
+        padding: var(--pp-s-3) 8px;
+        border-top: 1px solid var(--pp-border);
+        border-right: 1px solid var(--pp-border);
+        white-space: nowrap;
+        transition: background-color 180ms ease;
+    }
+
+    .pp-fixed-table tbody td:last-child { border-right: 0; }
+
+    .pp-fixed-table tbody tr:hover td {
+        background: rgba(255, 255, 255, 0.03);
+    }
+
+    .pp-fixed-table tbody td.pp-fixed-span {
+        background: rgba(34, 197, 94, 0.08);
+        color: var(--pp-text);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.86rem;
+        padding: var(--pp-s-3) 8px;
+    }
+
+    .pp-fixed-table tbody td.pp-fixed-yellow-cell {
+        background: rgba(34, 197, 94, 0.14);
+        color: var(--pp-green-soft);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.84rem;
+        padding: var(--pp-s-3) 8px;
+    }
+
+    .pp-fixed-footer {
+        margin: var(--pp-s-4) 0 0;
+        text-align: center;
+        color: var(--pp-text);
+        font-size: clamp(0.82rem, 3.4vw, 0.94rem);
+        font-weight: 800;
+        letter-spacing: 0.03em;
+    }
+
+    .pp-fixed-footer a {
+        color: var(--pp-green-soft);
+        font-weight: 800;
+        text-decoration: none;
+        border-bottom: 1px solid currentColor;
+        padding-bottom: 1px;
+    }
+
+    .pp-fixed-footer a:hover {
+        color: #ffffff;
+    }
+
+    .pp-fixed-footer .pp-fixed-footer-or {
+        color: var(--pp-muted);
+        font-weight: 800;
+        margin: 0 6px;
+    }
+
+    .pp-fixed-footer-whatsapp {
+        display: inline-block;
+        margin-top: var(--pp-s-2);
+        color: #7ce3a1 !important;
+        background: transparent;
+        padding: 4px 10px;
+        font-weight: 800;
+        letter-spacing: 0.05em;
+        border: 1px solid rgba(37, 211, 102, 0.35) !important;
+        border-radius: var(--pp-r-sm);
+    }
+
+    .pp-fixed-footer-whatsapp:hover {
+        color: #ffffff !important;
+        background: rgba(37, 211, 102, 0.15);
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 400px) {
+
+        .pp-hero-strip-text {
+            font-size: 0.62rem;
+            letter-spacing: 0.04em;
+        }
+
+        .pp-hero-title {
+            font-size: clamp(1.6rem, 9.5vw, 2.1rem);
+        }
+
+        .pp-hero-cta {
+            flex-direction: column;
+        }
+
+        .pp-hero-cta .pp-home-btn {
+            width: 100%;
+        }
+
+        .pp-hero-card-inner {
+            padding: var(--pp-s-4);
+        }
+
+        .pp-hero-pay {
+            font-size: 0.62rem;
+            padding: 5px 8px;
+        }
+    }
+
+
+    @media (max-width: 360px) {
+
+        :root { --pp-gutter: 12px; }
+
+        .pp-hero-title {
+            font-size: clamp(1.6rem, 9vw, 2rem);
+        }
+
+        .pp-hero-cta {
+            flex-direction: column;
+        }
+
+        .pp-hero-cta .pp-home-btn { width: 100%; }
+
+        .pp-upcoming-team { font-size: 0.86rem; }
+
+        .pp-upcoming-vs {
+            width: 30px;
+            height: 30px;
+            font-size: 0.58rem;
+        }
+
+        .pp-upcoming-prediction {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .pp-upcoming-meta { justify-content: flex-start; }
+
+        .pp-home-gallery { grid-template-columns: 1fr; }
+
+        .pp-home-combo-meta { grid-template-columns: 1fr; }
+
+        .pp-table {
+            min-width: 520px;
+            font-size: 0.76rem;
+        }
+
+        .pp-table thead th {
+            padding: 10px 6px;
+            font-size: 0.68rem;
+            letter-spacing: 0.05em;
+        }
+
+        .pp-table tbody td { padding: 10px 6px; }
+
+        .pp-td-match { min-width: 160px; }
+    }
+
 
     @media (min-width: 576px) {
 
-        :root {
-            --pp-home-gutter: 20px;
-        }
-
-        .pp-home-hero {
-            padding: 48px 0 30px;
-        }
+        :root { --pp-gutter: 20px; }
 
         .pp-home-gallery {
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1338,8 +1883,8 @@ PinnaclePicks | Sports Analytics & Match History
             margin-inline: 8px;
         }
 
-        .pp-offer-card { padding: 22px; }
-        .pp-support-card { padding: 24px; }
+        .pp-offer-card { padding: var(--pp-s-5); }
+        .pp-support-card { padding: var(--pp-s-6); }
         .pp-support-contact { flex-direction: row; flex-wrap: wrap; }
         .pp-support-contact > span[aria-hidden="true"] { display: inline; }
 
@@ -1349,20 +1894,19 @@ PinnaclePicks | Sports Analytics & Match History
     }
 
 
-    /* =========================================================
-       DESKTOP (≥ 900px)
-    ========================================================= */
-
     @media (min-width: 900px) {
 
-        .pp-home-hero {
-            padding: 70px 0 45px;
+        .pp-hero-grid {
+            grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+            gap: var(--pp-s-8);
+            align-items: center;
+            padding-top: var(--pp-s-8);
         }
 
         .pp-home-content-grid {
             display: grid;
             grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
-            gap: 24px;
+            gap: var(--pp-s-6);
             align-items: start;
         }
 
@@ -1379,7 +1923,7 @@ PinnaclePicks | Sports Analytics & Match History
             grid-template-columns: repeat(4, minmax(0, 1fr));
         }
 
-        .pp-extra-section { padding: 30px 0; }
+        .pp-extra-section { padding: var(--pp-s-8) 0; }
 
         .pp-testimonials-grid {
             grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1387,91 +1931,11 @@ PinnaclePicks | Sports Analytics & Match History
     }
 
 
-    /* =========================================================
-       VERY SMALL MOBILE (≤ 360px)
-    ========================================================= */
-
-    @media (max-width: 360px) {
-
-        :root {
-            --pp-home-gutter: 12px;
-        }
-
-        .pp-home-hero h1 {
-            font-size: clamp(1.6rem, 9vw, 2rem);
-        }
-
-        .pp-home-hero-actions {
-            flex-direction: column;
-        }
-
-        .pp-home-hero-actions .pp-home-btn {
-            width: 100%;
-        }
-
-        .pp-upcoming-team {
-            font-size: 0.86rem;
-        }
-
-        .pp-upcoming-vs {
-            width: 30px;
-            height: 30px;
-            font-size: 0.58rem;
-        }
-
-        .pp-upcoming-prediction {
-            flex-direction: column;
-            align-items: stretch;
-        }
-
-        .pp-upcoming-meta {
-            justify-content: flex-start;
-        }
-
-        .pp-home-gallery {
-            grid-template-columns: 1fr;
-        }
-
-        .pp-home-combo-meta {
-            grid-template-columns: 1fr;
-        }
-
-        .pp-table {
-            min-width: 520px;
-            font-size: 0.76rem;
-        }
-
-        .pp-table thead th {
-            padding: 10px 6px;
-            font-size: 0.68rem;
-            letter-spacing: 0.05em;
-        }
-
-        .pp-table tbody td {
-            padding: 10px 6px;
-        }
-
-        .pp-td-match {
-            min-width: 160px;
-        }
-    }
-
-
-    /* =========================================================
-       LANDSCAPE PHONE
-    ========================================================= */
-
     @media (max-height: 480px) and (orientation: landscape) {
 
-        .pp-home-hero {
-            padding: 24px 0 16px;
-        }
+        .pp-hero { padding: var(--pp-s-5) 0 var(--pp-s-4); }
     }
 
-
-    /* =========================================================
-       REDUCED MOTION
-    ========================================================= */
 
     @media (prefers-reduced-motion: reduce) {
 
@@ -1484,15 +1948,11 @@ PinnaclePicks | Sports Analytics & Match History
     }
 
 
-    /* =========================================================
-       HIGH CONTRAST
-    ========================================================= */
-
     @media (prefers-contrast: more) {
 
         .pp-home {
-            --pp-home-muted: #c7d0db;
-            --pp-home-border: rgba(255, 255, 255, 0.18);
+            --pp-muted: #c7d0db;
+            --pp-border: rgba(255, 255, 255, 0.18);
         }
     }
 
@@ -1503,53 +1963,202 @@ PinnaclePicks | Sports Analytics & Match History
 {% block content %}
 
 <div class="pp-home">
+<!-- =========================================================
+     HERO — SPORTY / HIGH IMPACT
+========================================================== -->
+<section class="pp-hero">
 
-<!-- HERO -->
-<section class="pp-home-hero">
+    <div class="pp-hero-strip">
+        <div class="pp-home-container pp-hero-strip-inner">
+            <span class="pp-hero-strip-dot" aria-hidden="true"></span>
+            <span class="pp-hero-strip-text">
+                PinnaclePicks · 100% Sure Fixed Matches Tips
+            </span>
+        </div>
+    </div>
+
     <div class="pp-home-container">
 
-        <span class="pp-home-eyebrow">
-            ● Trusted Worldwide · Genuine Fixed Matches
-        </span>
-
-        <h1>
-            Real Analysts.<br>
-            Real Fixed Matches.<br>
-            <span style="color: var(--pp-home-green);">
-                100% Sure Fixed Matches.
+        <div class="pp-hero-badges">
+            <span class="pp-hero-badge">
+                <i class="bi bi-shield-check" aria-hidden="true"></i>
+                Trusted Worldwide
             </span>
-        </h1>
+            <span class="pp-hero-badge">
+                <i class="bi bi-patch-check-fill" aria-hidden="true"></i>
+                Genuine Fixed Matches
+            </span>
+            <span class="pp-hero-badge">
+                <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
+                First-Delivered Tips
+            </span>
+        </div>
 
-        <p class="pp-home-hero-description">
-            PinnaclePicks is built on genuine, professional analysis —
-            not guesswork. Every fixed match we publish is first-delivered,
-            backed by a team of dedicated sports analysts, and trusted by
-            thousands of users around the world. From documented history
-            to live selections and verified community proof, everything
-            you need is right here on one platform.
-        </p>
+        <div class="pp-hero-grid">
 
-        <div class="pp-home-hero-actions">
+            <div class="pp-hero-copy">
 
-            <a href="#upcoming" class="pp-home-btn pp-home-btn-primary">
-                View Today's Free Matches
-            </a>
+                <h1 class="pp-hero-title">
+                    Real Analysts.<br>
+                    Real Fixed Matches.<br>
+                    <span class="pp-hero-title-accent">
+                        100% Sure Fixed Matches.
+                    </span>
+                </h1>
 
-            <a href="#history" class="pp-home-btn pp-home-btn-secondary">
-                See Our Proven Record Of Free Matches
-            </a>
+                <p class="pp-hero-lead">
+                    PinnaclePicks is built on genuine, professional analysis —
+                    not guesswork. Every fixed match we publish is
+                    <strong>first-delivered</strong>, backed by a team of
+                    dedicated sports analysts, and trusted by thousands of
+                    users around the world.
+                </p>
+
+                <div class="pp-hero-cta">
+                    <a href="#fixed-matches"
+                       class="pp-home-btn pp-home-btn-primary pp-hero-cta-primary">
+                        <i class="bi bi-trophy-fill" aria-hidden="true"></i>
+                        Get Fixed Matches
+                    </a>
+
+                    <a href="#upcoming"
+                       class="pp-home-btn pp-home-btn-secondary pp-hero-cta-secondary">
+                        <i class="bi bi-eye-fill" aria-hidden="true"></i>
+                        View Free Matches
+                    </a>
+                </div>
+
+                <p class="pp-hero-note">
+                    Free matches are <strong>not guaranteed</strong>.
+                    For 100% genuine, first-delivered fixed matches,
+                    contact our team on Telegram or WhatsApp.
+                </p>
+
+            </div>
+
+            <aside class="pp-hero-card" aria-label="Today's featured plan">
+
+                <div class="pp-hero-card-inner">
+
+                    <span class="pp-hero-card-tag">
+                        <i class="bi bi-lightning-charge-fill" aria-hidden="true"></i>
+                        Today's Featured Plan
+                    </span>
+
+                    <h2 class="pp-hero-card-title">
+                        Daily Single<br>
+                        Fixed Matches
+                    </h2>
+
+                    <p class="pp-hero-card-sub">
+                        100% sure · Genuine · First-delivered
+                    </p>
+
+                    <div class="pp-hero-countdown"
+                         id="ppHeroCountdown"
+                         role="timer"
+                         aria-live="off">
+                        <div class="pp-hero-countdown-cell">
+                            <span class="pp-hero-countdown-num" data-unit="days">00</span>
+                            <span class="pp-hero-countdown-label">Days</span>
+                        </div>
+                        <div class="pp-hero-countdown-cell">
+                            <span class="pp-hero-countdown-num" data-unit="hours">00</span>
+                            <span class="pp-hero-countdown-label">Hrs</span>
+                        </div>
+                        <div class="pp-hero-countdown-cell">
+                            <span class="pp-hero-countdown-num" data-unit="minutes">00</span>
+                            <span class="pp-hero-countdown-label">Min</span>
+                        </div>
+                        <div class="pp-hero-countdown-cell">
+                            <span class="pp-hero-countdown-num" data-unit="seconds">00</span>
+                            <span class="pp-hero-countdown-label">Sec</span>
+                        </div>
+                    </div>
+
+                    <ul class="pp-hero-card-list">
+                        <li>
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                            <span>Professional analysts only</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                            <span>Daily odds are between 3.00 – 5.00</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                            <span>Delivered before kickoff</span>
+                        </li>
+                        <li>
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                            <span>Weekly · Two weeks · Monthly plans</span>
+                        </li>
+                    </ul>
+
+                    <a href="#fixed-matches"
+                       class="pp-home-btn pp-home-btn-primary pp-hero-card-btn">
+                        See Plans &amp; Pricing
+                        <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                    </a>
+
+                </div>
+
+            </aside>
 
         </div>
 
-        <p class="pp-home-hero-note">
-            These are our <strong>free matches</strong> — shared openly for
-            our community. Free matches are <strong>not guaranteed</strong>.
-            For 100% genuine, first-delivered fixed matches, please contact
-            our customer care through Telegram or WhatsApp.
-        </p>
+        <div class="pp-hero-payments">
+
+            <span class="pp-hero-payments-label">
+                Payment can be done through:
+            </span>
+
+            <div class="pp-hero-payments-list">
+                <span class="pp-hero-pay">Western Union</span>
+                <span class="pp-hero-pay">PayPal</span>
+                <span class="pp-hero-pay">Skrill</span>
+                <span class="pp-hero-pay">Neteller</span>
+                <span class="pp-hero-pay">Mobile Money</span>
+                <span class="pp-hero-pay">Bitcoin</span>
+            </div>
+
+        </div>
 
     </div>
+
 </section>
+
+<!-- =========================================================
+     HOMEPAGE NOTIFICATION BANNER (admin-managed)
+    ========================================================== -->
+    {% if notification %}
+    <div class="pp-home-container">
+        <div class="pp-notice pp-notice-{{ notification.style }}">
+
+            {% if notification.title %}
+                <p class="pp-notice-title">{{ notification.title }}</p>
+            {% endif %}
+
+            {% if notification.headline %}
+                <p class="pp-notice-headline">{{ notification.headline }}</p>
+            {% endif %}
+
+            {% if notification.body %}
+                <p class="pp-notice-body">{{ notification.body }}</p>
+            {% endif %}
+
+            {% if notification.warning %}
+                <p class="pp-notice-warning">{{ notification.warning }}</p>
+            {% endif %}
+
+            {% if notification.footer %}
+                <p class="pp-notice-footer">{{ notification.footer }}</p>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
+
 
 <!-- MAIN CONTENT -->
 <div class="pp-home-container">
@@ -1558,7 +2167,6 @@ PinnaclePicks | Sports Analytics & Match History
         <!-- PRIMARY COLUMN -->
         <div>
 
-            <!-- UPCOMING MATCHES — PREMIUM CARDS -->
             <section id="upcoming" class="pp-home-section">
 
                 <div class="pp-home-section-header">
@@ -1591,19 +2199,15 @@ PinnaclePicks | Sports Analytics & Match History
 
                                 <div class="pp-upcoming-teams">
                                     <div class="pp-upcoming-team">
-                                        <a
-                                            href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                            style="color: inherit; text-decoration: none;"
-                                        >
+                                        <a href="{{ url_for('seo.match_detail', match_id=match.id) }}"
+                                           style="color: inherit; text-decoration: none;">
                                             {{ match.home_team }}
                                         </a>
                                     </div>
                                     <div class="pp-upcoming-vs">VS</div>
                                     <div class="pp-upcoming-team pp-upcoming-team-away">
-                                        <a
-                                            href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                            style="color: inherit; text-decoration: none;"
-                                        >
+                                        <a href="{{ url_for('seo.match_detail', match_id=match.id) }}"
+                                           style="color: inherit; text-decoration: none;">
                                             {{ match.away_team }}
                                         </a>
                                     </div>
@@ -1641,7 +2245,6 @@ PinnaclePicks | Sports Analytics & Match History
             </section>
 
 
-            <!-- PREVIOUS CONCLUDED GAMES — TABLE -->
             <section id="history" class="pp-home-section">
 
                 <div class="pp-home-section-header">
@@ -1675,10 +2278,8 @@ PinnaclePicks | Sports Analytics & Match History
                                         </td>
 
                                         <td class="pp-td-match">
-                                            <a
-                                                href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                                style="color: inherit; text-decoration: none; font-weight: 800;"
-                                            >
+                                            <a href="{{ url_for('seo.match_detail', match_id=match.id) }}"
+                                               style="color: inherit; text-decoration: none; font-weight: 800;">
                                                 {{ match.home_team }} – {{ match.away_team }}
                                             </a>
                                         </td>
@@ -1723,7 +2324,6 @@ PinnaclePicks | Sports Analytics & Match History
             </section>
 
 
-            <!-- HISTORICAL MATCH ARCHIVE — SAME TABLE -->
             <section id="historical-archive" class="pp-home-section">
 
                 <div class="pp-home-section-header">
@@ -1777,10 +2377,8 @@ PinnaclePicks | Sports Analytics & Match History
                                             </td>
 
                                             <td class="pp-td-match">
-                                                <a
-                                                    href="{{ url_for('seo.match_detail', match_id=match.id) }}"
-                                                    style="color: inherit; text-decoration: none; font-weight: 800;"
-                                                >
+                                                <a href="{{ url_for('seo.match_detail', match_id=match.id) }}"
+                                                   style="color: inherit; text-decoration: none; font-weight: 800;">
                                                     {{ match.home_team }} – {{ match.away_team }}
                                                 </a>
                                             </td>
@@ -1825,11 +2423,9 @@ PinnaclePicks | Sports Analytics & Match History
                         <nav class="pp-history-pagination" aria-label="Match history pagination">
 
                             {% if archive.has_prev %}
-                                <a
-                                    href="{{ url_for('main.index', page=archive.page - 1, per_page=archive.per_page) }}#historical-archive"
-                                    class="pp-history-page-link"
-                                    aria-label="Previous page"
-                                >←</a>
+                                <a href="{{ url_for('main.index', page=archive.page - 1, per_page=archive.per_page) }}#historical-archive"
+                                   class="pp-history-page-link"
+                                   aria-label="Previous page">←</a>
                             {% else %}
                                 <span class="pp-history-page-link pp-history-page-link-disabled" aria-hidden="true">←</span>
                             {% endif %}
@@ -1838,10 +2434,8 @@ PinnaclePicks | Sports Analytics & Match History
                             {% set end_page = [archive.pages, archive.page + 2]|min %}
 
                             {% if start_page > 1 %}
-                                <a
-                                    href="{{ url_for('main.index', page=1, per_page=archive.per_page) }}#historical-archive"
-                                    class="pp-history-page-link"
-                                >1</a>
+                                <a href="{{ url_for('main.index', page=1, per_page=archive.per_page) }}#historical-archive"
+                                   class="pp-history-page-link">1</a>
                                 {% if start_page > 2 %}
                                     <span class="pp-history-page-link pp-history-page-link-disabled">…</span>
                                 {% endif %}
@@ -1853,10 +2447,8 @@ PinnaclePicks | Sports Analytics & Match History
                                         {{ page_number }}
                                     </span>
                                 {% else %}
-                                    <a
-                                        href="{{ url_for('main.index', page=page_number, per_page=archive.per_page) }}#historical-archive"
-                                        class="pp-history-page-link"
-                                    >{{ page_number }}</a>
+                                    <a href="{{ url_for('main.index', page=page_number, per_page=archive.per_page) }}#historical-archive"
+                                       class="pp-history-page-link">{{ page_number }}</a>
                                 {% endif %}
                             {% endfor %}
 
@@ -1864,18 +2456,14 @@ PinnaclePicks | Sports Analytics & Match History
                                 {% if end_page < archive.pages - 1 %}
                                     <span class="pp-history-page-link pp-history-page-link-disabled">…</span>
                                 {% endif %}
-                                <a
-                                    href="{{ url_for('main.index', page=archive.pages, per_page=archive.per_page) }}#historical-archive"
-                                    class="pp-history-page-link"
-                                >{{ archive.pages }}</a>
+                                <a href="{{ url_for('main.index', page=archive.pages, per_page=archive.per_page) }}#historical-archive"
+                                   class="pp-history-page-link">{{ archive.pages }}</a>
                             {% endif %}
 
                             {% if archive.has_next %}
-                                <a
-                                    href="{{ url_for('main.index', page=archive.page + 1, per_page=archive.per_page) }}#historical-archive"
-                                    class="pp-history-page-link"
-                                    aria-label="Next page"
-                                >→</a>
+                                <a href="{{ url_for('main.index', page=archive.page + 1, per_page=archive.per_page) }}#historical-archive"
+                                   class="pp-history-page-link"
+                                   aria-label="Next page">→</a>
                             {% else %}
                                 <span class="pp-history-page-link pp-history-page-link-disabled" aria-hidden="true">→</span>
                             {% endif %}
@@ -1891,13 +2479,120 @@ PinnaclePicks | Sports Analytics & Match History
 
             </section>
 
+
+            <section id="fixed-matches" class="pp-home-section">
+
+                <div class="pp-fixed-section">
+
+                    <div class="pp-fixed-topline">
+                        <span>Daily Single Matches</span>
+                        <span>PinnaclePicks · Daily Single Matches</span>
+                    </div>
+
+                    <div class="pp-fixed-hero-wrap">
+                        <h2 class="pp-fixed-hero-title">
+                            Daily Single Fixed Matches
+                        </h2>
+                    </div>
+
+                    <p class="pp-fixed-sub">
+                        Select plan and sign up today
+                    </p>
+
+                    <p class="pp-fixed-desc">
+                        Choose between <strong>One week</strong>,
+                        <strong>Two weeks</strong> or <strong>One month</strong>
+                        daily fixed matches — all designed to make your betting
+                        experience as easy and profitable as possible. If you
+                        need help to choose — just ask us! We're happy to help
+                        you <a href="#upcoming">PinnaclePicks 1×2</a> team.
+                    </p>
+
+                    <div class="pp-fixed-warning-wrap">
+                        <div class="pp-fixed-warning">
+                            We work only with serious clients!
+                        </div>
+                    </div>
+
+                    <div class="pp-fixed-table-wrap">
+                        <table class="pp-fixed-table">
+
+                            <thead>
+                                <tr>
+                                    <th scope="col">One Week</th>
+                                    <th scope="col">Two Weeks</th>
+                                    <th scope="col">One Month</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+                                    <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">Contact</a></td>
+                                    <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">Contact</a></td>
+                                    <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">Contact</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
+                                    <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
+                                    <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
+                                    <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
+                                    <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
+                                    <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
+                                    <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3" class="pp-fixed-span">
+                                        Odds 3.00 5.00
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="3" class="pp-fixed-span">
+                                        Daily Single Matches
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="pp-fixed-yellow-cell">Dont</td>
+                                    <td class="pp-fixed-yellow-cell">Ask For</td>
+                                    <td class="pp-fixed-yellow-cell">Free Trial</td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <p class="pp-fixed-footer">
+                        Contact US EMAIL:
+                        <a href="mailto:YOUR_EMAIL_HERE">YOUR_EMAIL_HERE</a>
+                        <span class="pp-fixed-footer-or">OR</span>
+                        <a href="YOUR_WHATSAPP_LINK_HERE"
+                           class="pp-fixed-footer-whatsapp"
+                           target="_blank"
+                           rel="noopener noreferrer">WHATSAPP</a>
+                    </p>
+
+                </div>
+
+            </section>
+
         </div>
 
 
         <!-- SECONDARY COLUMN -->
         <aside class="pp-home-sticky-column">
 
-            <!-- COMBOS -->
             <section id="combos" class="pp-home-section">
 
                 <div class="pp-home-section-header">
@@ -1949,25 +2644,25 @@ PinnaclePicks | Sports Analytics & Match History
                                     </p>
                                     {% if current_user.is_authenticated
                                           and current_user.has_active_subscription %}
-                                        <a
-                                            href="{{ url_for('main.premium_combo', combo_id=combo.id) }}"
-                                            class="pp-home-btn pp-home-btn-primary pp-home-combo-button"
-                                        >View Premium Combo</a>
+                                        <a href="{{ url_for('main.premium_combo', combo_id=combo.id) }}"
+                                           class="pp-home-btn pp-home-btn-primary pp-home-combo-button">
+                                            View Premium Combo
+                                        </a>
                                     {% else %}
-                                        <a
-                                            href="{{ url_for(
+                                        <a href="{{ url_for(
                                                 'main.subscription_page',
                                                 plan='monthly',
                                                 next=url_for('main.premium_combo', combo_id=combo.id)
                                             ) }}"
-                                            class="pp-home-btn pp-home-btn-primary pp-home-combo-button"
-                                        >Unlock Premium Combos</a>
+                                           class="pp-home-btn pp-home-btn-primary pp-home-combo-button">
+                                            Unlock Premium Combos
+                                        </a>
                                     {% endif %}
                                 {% else %}
-                                    <a
-                                        href="{{ url_for('main.premium_combo', combo_id=combo.id) }}"
-                                        class="pp-home-btn pp-home-btn-secondary pp-home-combo-button"
-                                    >View Combo</a>
+                                    <a href="{{ url_for('main.premium_combo', combo_id=combo.id) }}"
+                                       class="pp-home-btn pp-home-btn-secondary pp-home-combo-button">
+                                        View Combo
+                                    </a>
                                 {% endif %}
 
                             </article>
@@ -1982,7 +2677,6 @@ PinnaclePicks | Sports Analytics & Match History
             </section>
 
 
-            <!-- TRANSPARENCY / PROOF -->
             <section class="pp-home-section">
 
                 <div class="pp-home-section-header">
@@ -1997,18 +2691,14 @@ PinnaclePicks | Sports Analytics & Match History
                 {% if media_proofs %}
                     <div class="pp-home-gallery">
                         {% for proof in media_proofs %}
-                            <a
-                                href="{{ url_for('static', filename=proof.image_path) }}"
-                                class="pp-home-proof"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                            >
-                                <img
-                                    src="{{ url_for('static', filename=proof.image_path) }}"
-                                    alt="{{ proof.caption or 'Community verification screenshot' }}"
-                                    loading="lazy"
-                                    decoding="async"
-                                >
+                            <a href="{{ url_for('static', filename=proof.image_path) }}"
+                               class="pp-home-proof"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <img src="{{ url_for('static', filename=proof.image_path) }}"
+                                     alt="{{ proof.caption or 'Community verification screenshot' }}"
+                                     loading="lazy"
+                                     decoding="async">
                                 {% if proof.caption %}
                                     <div class="pp-home-proof-caption">
                                         {{ proof.caption }}
@@ -2036,7 +2726,6 @@ PinnaclePicks | Sports Analytics & Match History
 <section class="pp-extra-sections">
     <div class="pp-home-container">
 
-        <!-- OFFERS -->
         <section class="pp-extra-section" id="offers">
             <div class="pp-extra-card pp-offer-card">
                 <h2 class="pp-extra-title">Choose your offer</h2>
@@ -2047,7 +2736,6 @@ PinnaclePicks | Sports Analytics & Match History
 
                 <ul class="pp-offer-list">
 
-                    <!-- FIXED MATCHES — Telegram + WhatsApp Customer Care -->
                     <li class="pp-offer-item">
                         <span class="pp-offer-dot" aria-hidden="true"></span>
                         <div class="pp-offer-copy">
@@ -2055,38 +2743,31 @@ PinnaclePicks | Sports Analytics & Match History
                             <span>Contact our customer care for 100% Correct Score Fixed Tips.</span>
 
                             <div class="pp-offer-actions">
-
-                                <a
-                                    href="YOUR_TELEGRAM_LINK_HERE"
-                                    class="pp-offer-link pp-offer-link-telegram"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="Contact us on Telegram"
-                                >
+                                <a href="YOUR_TELEGRAM_LINK_HERE"
+                                   class="pp-offer-link pp-offer-link-telegram"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="Contact us on Telegram">
                                     <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
                                         <path d="M21.94 4.94a1.3 1.3 0 0 0-1.36-.2L2.9 12.13c-.36.14-.6.47-.6.86 0 .4.24.72.6.86l4.13 1.5 1.5 4.9c.1.34.4.58.75.6h.06c.33 0 .64-.17.83-.44l2.32-3.35 4.55 3.35c.24.18.52.27.8.27.14 0 .28-.02.42-.06a1.3 1.3 0 0 0 .85-1.02l2.7-14.1a1.3 1.3 0 0 0-.43-1.16z"/>
                                     </svg>
                                     Telegram
                                 </a>
 
-                                <a
-                                    href="YOUR_WHATSAPP_BUSINESS_LINK_HERE"
-                                    class="pp-offer-link pp-offer-link-whatsapp"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    aria-label="Contact us on WhatsApp"
-                                >
+                                <a href="YOUR_WHATSAPP_BUSINESS_LINK_HERE"
+                                   class="pp-offer-link pp-offer-link-whatsapp"
+                                   target="_blank"
+                                   rel="noopener noreferrer"
+                                   aria-label="Contact us on WhatsApp">
                                     <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
                                         <path d="M20.52 3.48A11.87 11.87 0 0 0 12.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.14 1.6 5.94L0 24l6.36-1.67a11.85 11.85 0 0 0 5.68 1.45h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.23-6.15-3.4-8.43zm-8.47 18.27h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.77.99 1.01-3.68-.24-.38a9.86 9.86 0 0 1-1.51-5.23c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.87-9.88 9.87zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.11 3.22 5.11 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
                                     </svg>
                                     WhatsApp
                                 </a>
-
                             </div>
                         </div>
                     </li>
 
-                    <!-- FREE PREDICTIONS — Already on this page -->
                     <li class="pp-offer-item">
                         <span class="pp-offer-dot" aria-hidden="true"></span>
                         <div class="pp-offer-copy">
@@ -2097,11 +2778,9 @@ PinnaclePicks | Sports Analytics & Match History
                             </span>
 
                             <div class="pp-offer-actions">
-                                <a
-                                    href="#upcoming"
-                                    class="pp-offer-link"
-                                    aria-label="Jump to free matches"
-                                >
+                                <a href="#upcoming"
+                                   class="pp-offer-link"
+                                   aria-label="Jump to free matches">
                                     <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor">
                                         <path d="M12 4a8 8 0 1 0 8 8h-2a6 6 0 1 1-6-6V4zm1 4v5.17l3.24 3.24 1.42-1.42L15 12.41V8h-2z"/>
                                     </svg>
@@ -2115,7 +2794,6 @@ PinnaclePicks | Sports Analytics & Match History
             </div>
         </section>
 
-        <!-- SUPPORT -->
         <section class="pp-extra-section" id="support">
             <div class="pp-extra-card pp-support-card">
                 <h2 class="pp-support-heading">Support Contact Here:</h2>
@@ -2130,11 +2808,9 @@ PinnaclePicks | Sports Analytics & Match History
                     <span aria-hidden="true">|</span>
                     <span>
                         WhatsApp:
-                        <a
-                            href="https://wa.me/38971302586"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
+                        <a href="https://wa.me/38971302586"
+                           target="_blank"
+                           rel="noopener noreferrer">
                             +389 71 302 586
                         </a>
                     </span>
@@ -2147,7 +2823,6 @@ PinnaclePicks | Sports Analytics & Match History
             </div>
         </section>
 
-        <!-- TESTIMONIALS -->
         <section class="pp-extra-section" id="testimonials">
             <div class="pp-testimonials-header">
                 <h2 class="pp-extra-title">Comments about our subscriptions</h2>
@@ -2204,7 +2879,6 @@ PinnaclePicks | Sports Analytics & Match History
             </div>
         </section>
 
-        <!-- META TAGS -->
         <section class="pp-extra-section" id="meta-tags">
             <div class="pp-extra-card pp-meta-card">
                 <p class="pp-meta-updated">
@@ -2234,6 +2908,58 @@ PinnaclePicks | Sports Analytics & Match History
 
 {% block scripts %}
 
-{# Add homepage-specific JavaScript here if required. #}
+<script>
+/* =========================================================
+   HERO — LIVE COUNTDOWN
+   Auto-rolls to the next midnight if the timer hits zero,
+   so the countdown always feels alive on a live site.
+========================================================= */
+(function () {
+    var root = document.getElementById("ppHeroCountdown");
+    if (!root) return;
+
+    var cells = {
+        days:    root.querySelector('[data-unit="days"]'),
+        hours:   root.querySelector('[data-unit="hours"]'),
+        minutes: root.querySelector('[data-unit="minutes"]'),
+        seconds: root.querySelector('[data-unit="seconds"]')
+    };
+
+    function pad(n) {
+        return n < 10 ? "0" + n : "" + n;
+    }
+
+    function nextTarget() {
+        var t = new Date();
+        t.setHours(24, 0, 0, 0);
+        return t;
+    }
+
+    var target = nextTarget();
+
+    function tick() {
+        var now = new Date();
+        var diff = Math.max(0, target - now);
+
+        var totalSeconds = Math.floor(diff / 1000);
+        var days    = Math.floor(totalSeconds / 86400);
+        var hours   = Math.floor((totalSeconds % 86400) / 3600);
+        var minutes = Math.floor((totalSeconds % 3600) / 60);
+        var seconds = totalSeconds % 60;
+
+        cells.days.textContent    = pad(days);
+        cells.hours.textContent   = pad(hours);
+        cells.minutes.textContent = pad(minutes);
+        cells.seconds.textContent = pad(seconds);
+
+        if (diff <= 0) {
+            target = nextTarget();
+        }
+    }
+
+    tick();
+    setInterval(tick, 1000);
+})();
+</script>
 
 {% endblock %}

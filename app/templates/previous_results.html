@@ -10,12 +10,15 @@ Match History | PinnaclePicks
     content="Browse the PinnaclePicks historical match archive, including concluded matches, final scores, predictions and match results."
 >
 
-{% if not request.args %}
 <link
     rel="canonical"
-    href="{{ url_for('main.previous_results', _external=True) }}"
+    href="{{ url_for(
+        'main.previous_results',
+        page=archive.page,
+        per_page=archive.per_page,
+        _external=True
+    ) }}"
 >
-{% endif %}
 
 <meta
     property="og:type"

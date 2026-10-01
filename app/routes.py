@@ -25,6 +25,7 @@ from .models import (
     ComboTicket,
     Match,
     MediaProof,
+    Notification,
     MARKETS,
     normalize_market_type,
     db,
@@ -282,6 +283,38 @@ def get_recent_proofs(limit=24):
     )
 
 
+def get_live_notification():
+    """
+    Return the most recent live notification, or None.
+
+    A notification is considered live when:
+
+    1. is_active is True
+    2. The current time falls within the optional
+       starts_at / ends_at window.
+    """
+
+    now = utc_now()
+
+    candidates = (
+        Notification.query
+        .filter(
+            Notification.is_active.is_(True)
+        )
+        .order_by(
+            Notification.created_at.desc()
+        )
+        .all()
+    )
+
+    for notification in candidates:
+
+        if notification.is_live:
+            return notification
+
+    return None
+
+
 # ============================================================================
 # Access control
 # ============================================================================
@@ -414,6 +447,12 @@ def index():
         limit=24
     )
 
+    # ------------------------------------------------------------------
+    # Live notification banner (admin-managed).
+    # ------------------------------------------------------------------
+
+    notification = get_live_notification()
+
     return render_template(
         "index.html",
         upcoming_matches=upcoming_matches,
@@ -423,6 +462,7 @@ def index():
         media_proofs=media_proofs,
         historical_matches=archive["items"],
         archive=archive,
+        notification=notification,
     )
 
 
@@ -1774,3 +1814,263 @@ def admin_delete_match(match_id):
             "main.admin_dashboard"
         )
     )
+
+
+# ============================================================================
+# ADMIN — NOTIFICATIONS
+# ============================================================================
+
+@main.route(
+    "/admin/notifications",
+    methods=["GET"],
+)
+@admin_required
+def admin_notifications():
+    """List all notifications."""
+
+    notifications = (
+        Notification.query
+        .order_by(
+            Notification.is_active.desc(),
+            Notification.created_at.desc(),
+        )
+        .all()
+    )
+
+    return render_template(
+        "admin/notifications.html",
+        notifications=notifications,
+    )
+
+
+@main.route(
+    "/admin/notifications/create",
+    methods=["GET", "POST"],
+)
+@admin_required
+def admin_notification_create():
+    """Create a new notification."""
+
+    if request.method == "GET":
+        return render_template(
+            "admin/notification_form.html",
+            notification=None,
+            page_title="Create Notification",
+        )
+
+    title = request.form.get("title", "").strip()
+    headline = request.form.get("headline", "").strip()
+    body = request.form.get("body", "").strip()
+    warning = request.form.get("warning", "").strip()
+    footer = request.form.get("footer", "").strip()
+    style = request.form.get("style", "blue").strip().lower()
+    is_active = request.form.get("is_active") == "on"
+
+    starts_raw = request.form.get("starts_at", "").strip()
+    ends_raw = request.form.get("ends_at", "").strip()
+
+    errors = []
+
+    if not title:
+        errors.append("Title is required.")
+
+    if not headline:
+        errors.append("Headline is required.")
+
+    if style not in {"blue", "dark", "green"}:
+        style = "blue"
+
+    starts_at = None
+    if starts_raw:
+        try:
+            starts_at = datetime.fromisoformat(starts_raw)
+            if starts_at.tzinfo is None:
+                starts_at = starts_at.replace(tzinfo=timezone.utc)
+        except ValueError:
+            errors.append("Invalid 'starts at' date.")
+
+    ends_at = None
+    if ends_raw:
+        try:
+            ends_at = datetime.fromisoformat(ends_raw)
+            if ends_at.tzinfo is None:
+                ends_at = ends_at.replace(tzinfo=timezone.utc)
+        except ValueError:
+            errors.append("Invalid 'ends at' date.")
+
+    if errors:
+        for error in errors:
+            flash(error, "danger")
+
+        return render_template(
+            "admin/notification_form.html",
+            notification=None,
+            page_title="Create Notification",
+        )
+
+    notification = Notification(
+        title=title,
+        headline=headline,
+        body=body,
+        warning=warning,
+        footer=footer,
+        style=style,
+        is_active=is_active,
+        starts_at=starts_at,
+        ends_at=ends_at,
+    )
+
+    db.session.add(notification)
+
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Could not create notification.")
+        flash("The notification could not be created.", "danger")
+        return render_template(
+            "admin/notification_form.html",
+            notification=None,
+            page_title="Create Notification",
+        )
+
+    flash("Notification created successfully.", "success")
+    return redirect(url_for("main.admin_notifications"))
+
+
+@main.route(
+    "/admin/notifications/<int:notification_id>/edit",
+    methods=["GET", "POST"],
+)
+@admin_required
+def admin_notification_edit(notification_id):
+    """Edit an existing notification."""
+
+    notification = db.session.get(Notification, notification_id)
+
+    if notification is None:
+        abort(404)
+
+    if request.method == "GET":
+        return render_template(
+            "admin/notification_form.html",
+            notification=notification,
+            page_title="Edit Notification",
+        )
+
+    notification.title = request.form.get("title", "").strip()
+    notification.headline = request.form.get("headline", "").strip()
+    notification.body = request.form.get("body", "").strip()
+    notification.warning = request.form.get("warning", "").strip()
+    notification.footer = request.form.get("footer", "").strip()
+
+    style = request.form.get("style", "blue").strip().lower()
+    notification.style = style if style in {"blue", "dark", "green"} else "blue"
+
+    notification.is_active = request.form.get("is_active") == "on"
+
+    starts_raw = request.form.get("starts_at", "").strip()
+    ends_raw = request.form.get("ends_at", "").strip()
+
+    notification.starts_at = None
+    if starts_raw:
+        try:
+            dt = datetime.fromisoformat(starts_raw)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            notification.starts_at = dt
+        except ValueError:
+            flash("Invalid 'starts at' date.", "danger")
+            return redirect(
+                url_for("main.admin_notification_edit", notification_id=notification.id)
+            )
+
+    notification.ends_at = None
+    if ends_raw:
+        try:
+            dt = datetime.fromisoformat(ends_raw)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+            notification.ends_at = dt
+        except ValueError:
+            flash("Invalid 'ends at' date.", "danger")
+            return redirect(
+                url_for("main.admin_notification_edit", notification_id=notification.id)
+            )
+
+    if not notification.title:
+        flash("Title is required.", "danger")
+        return redirect(
+            url_for("main.admin_notification_edit", notification_id=notification.id)
+        )
+
+    if not notification.headline:
+        flash("Headline is required.", "danger")
+        return redirect(
+            url_for("main.admin_notification_edit", notification_id=notification.id)
+        )
+
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Could not update notification.")
+        flash("The notification could not be updated.", "danger")
+
+    flash("Notification updated successfully.", "success")
+    return redirect(url_for("main.admin_notifications"))
+
+
+@main.route(
+    "/admin/notifications/<int:notification_id>/toggle",
+    methods=["POST"],
+)
+@admin_required
+def admin_notification_toggle(notification_id):
+    """Toggle a notification's active state."""
+
+    notification = db.session.get(Notification, notification_id)
+
+    if notification is None:
+        abort(404)
+
+    notification.is_active = not notification.is_active
+
+    try:
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Could not toggle notification.")
+        flash("The notification could not be updated.", "danger")
+        return redirect(url_for("main.admin_notifications"))
+
+    state = "activated" if notification.is_active else "deactivated"
+    flash(f"Notification {state}.", "success")
+
+    return redirect(url_for("main.admin_notifications"))
+
+
+@main.route(
+    "/admin/notifications/<int:notification_id>/delete",
+    methods=["POST"],
+)
+@admin_required
+def admin_notification_delete(notification_id):
+    """Delete a notification."""
+
+    notification = db.session.get(Notification, notification_id)
+
+    if notification is None:
+        abort(404)
+
+    try:
+        db.session.delete(notification)
+        db.session.commit()
+    except Exception:
+        db.session.rollback()
+        current_app.logger.exception("Could not delete notification.")
+        flash("The notification could not be deleted.", "danger")
+        return redirect(url_for("main.admin_notifications"))
+
+    flash("Notification deleted.", "success")
+    return redirect(url_for("main.admin_notifications"))

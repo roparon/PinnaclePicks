@@ -1,0 +1,537 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ page_title }} | PinnaclePicks Admin
+{% endblock %}
+
+{% block head %}
+<style>
+    .pp-nf-page {
+        width: min(100%, 820px);
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+    }
+
+    .pp-nf-header {
+        margin-bottom: 20px;
+    }
+
+    .pp-nf-header h1 {
+        margin: 0;
+        font-size: clamp(1.35rem, 4vw, 1.8rem);
+        font-weight: 800;
+        color: #172033;
+    }
+
+    .pp-nf-header p {
+        margin: 6px 0 0;
+        color: #687386;
+        font-size: .92rem;
+    }
+
+    .pp-nf-card {
+        background: #fff;
+        border: 1px solid #e7ebf0;
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, .06);
+        overflow: hidden;
+    }
+
+    .pp-nf-card-body {
+        padding: 20px;
+    }
+
+    .pp-nf-section {
+        margin-bottom: 24px;
+    }
+
+    .pp-nf-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .pp-nf-section-title {
+        margin: 0 0 14px;
+        font-size: .95rem;
+        font-weight: 800;
+        color: #172033;
+    }
+
+    .pp-nf-field {
+        margin-bottom: 16px;
+    }
+
+    .pp-nf-field:last-child {
+        margin-bottom: 0;
+    }
+
+    .pp-nf-label {
+        display: block;
+        margin-bottom: 7px;
+        font-size: .88rem;
+        font-weight: 700;
+        color: #273449;
+    }
+
+    .pp-nf-help {
+        display: block;
+        margin-top: 5px;
+        color: #7b8494;
+        font-size: .78rem;
+        line-height: 1.45;
+    }
+
+    .pp-nf-input,
+    .pp-nf-select,
+    .pp-nf-textarea {
+        width: 100%;
+        border: 1px solid #d9dee7;
+        border-radius: 11px;
+        background: #fff;
+        color: #172033;
+        font: inherit;
+        outline: none;
+        transition:
+            border-color .18s ease,
+            box-shadow .18s ease;
+    }
+
+    .pp-nf-input,
+    .pp-nf-select {
+        min-height: 46px;
+        padding: 10px 12px;
+    }
+
+    .pp-nf-textarea {
+        min-height: 120px;
+        padding: 12px;
+        resize: vertical;
+        line-height: 1.55;
+    }
+
+    .pp-nf-input:focus,
+    .pp-nf-select:focus,
+    .pp-nf-textarea:focus {
+        border-color: #198754;
+        box-shadow: 0 0 0 3px rgba(25, 135, 84, .10);
+    }
+
+    .pp-nf-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .pp-nf-check {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        min-height: 46px;
+        padding: 11px 12px;
+        border: 1px solid #e0e5eb;
+        border-radius: 11px;
+        background: #f8fafc;
+        cursor: pointer;
+    }
+
+    .pp-nf-check input {
+        width: 18px;
+        height: 18px;
+        accent-color: #198754;
+        flex: 0 0 auto;
+    }
+
+    .pp-nf-check-text {
+        min-width: 0;
+    }
+
+    .pp-nf-check-title {
+        display: block;
+        font-size: .88rem;
+        font-weight: 700;
+        color: #273449;
+    }
+
+    .pp-nf-check-description {
+        display: block;
+        margin-top: 2px;
+        color: #7b8494;
+        font-size: .76rem;
+    }
+
+    .pp-nf-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 16px 20px;
+        border-top: 1px solid #edf0f4;
+        background: #fbfcfd;
+    }
+
+    .pp-nf-btn {
+        min-height: 44px;
+        padding: 10px 17px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        font-size: .88rem;
+        font-weight: 750;
+        text-decoration: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pp-nf-btn-primary {
+        background: #198754;
+        color: #fff;
+    }
+
+    .pp-nf-btn-primary:hover {
+        background: #157347;
+        color: #fff;
+    }
+
+    .pp-nf-btn-secondary {
+        background: #fff;
+        color: #344054;
+        border-color: #d9dee7;
+    }
+
+    .pp-nf-btn-secondary:hover {
+        background: #f5f7fa;
+        color: #172033;
+    }
+
+    .pp-nf-preview {
+        margin-top: 8px;
+        padding: 14px;
+        border: 1px solid #e4e8ee;
+        border-radius: 12px;
+        background: #f8fafc;
+        color: #5e6878;
+        font-size: .82rem;
+        line-height: 1.5;
+    }
+
+    @media (min-width: 640px) {
+        .pp-nf-page {
+            padding: 32px 20px 56px;
+        }
+
+        .pp-nf-card-body {
+            padding: 24px;
+        }
+
+        .pp-nf-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .pp-nf-actions {
+            padding: 16px 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .pp-nf-page {
+            padding: 18px 12px 36px;
+        }
+
+        .pp-nf-card-body {
+            padding: 16px;
+        }
+
+        .pp-nf-actions {
+            padding: 14px 16px;
+        }
+
+        .pp-nf-btn {
+            flex: 1 1 auto;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="pp-nf-page">
+
+    <div class="pp-nf-header">
+        <h1>{{ page_title }}</h1>
+        <p>
+            Create and manage the announcement shown to users on PinnaclePicks.
+        </p>
+    </div>
+
+    <form
+        method="POST"
+        action="{% if notification %}{{ url_for('main.admin_notification_edit', notification_id=notification.id) }}{% else %}{{ url_for('main.admin_notification_create') }}{% endif %}"
+        class="pp-nf-card"
+    >
+
+        <div class="pp-nf-card-body">
+
+            <!-- BASIC CONTENT -->
+            <section class="pp-nf-section">
+
+                <h2 class="pp-nf-section-title">
+                    Notification Content
+                </h2>
+
+                <div class="pp-nf-field">
+                    <label class="pp-nf-label" for="title">
+                        Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        class="pp-nf-input"
+                        maxlength="200"
+                        required
+                        value="{{ notification.title if notification else '' }}"
+                        placeholder="e.g. NEXT COMBO TICKET MATCHES"
+                    >
+
+                    <small class="pp-nf-help">
+                        The main title displayed on the notification.
+                    </small>
+                </div>
+
+                <div class="pp-nf-field">
+                    <label class="pp-nf-label" for="headline">
+                        Headline
+                    </label>
+
+                    <input
+                        type="text"
+                        id="headline"
+                        name="headline"
+                        class="pp-nf-input"
+                        maxlength="200"
+                        required
+                        value="{{ notification.headline if notification else '' }}"
+                        placeholder="e.g. 03.10.2026 (SATURDAY)"
+                    >
+
+                    <small class="pp-nf-help">
+                        A short supporting headline or date.
+                    </small>
+                </div>
+
+                <div class="pp-nf-field">
+                    <label class="pp-nf-label" for="body">
+                        Body
+                    </label>
+
+                    <textarea
+                        id="body"
+                        name="body"
+                        class="pp-nf-textarea"
+                        placeholder="Enter the main notification message..."
+                    >{{ notification.body if notification else '' }}</textarea>
+
+                    <small class="pp-nf-help">
+                        Main announcement content. Line breaks are allowed.
+                    </small>
+                </div>
+
+                <div class="pp-nf-field">
+                    <label class="pp-nf-label" for="warning">
+                        Warning / Important Message
+                    </label>
+
+                    <input
+                        type="text"
+                        id="warning"
+                        name="warning"
+                        class="pp-nf-input"
+                        maxlength="200"
+                        value="{{ notification.warning if notification else '' }}"
+                        placeholder="e.g. WE WORK ONLY WITH SERIOUS CLIENTS!"
+                    >
+                </div>
+
+                <div class="pp-nf-field">
+                    <label class="pp-nf-label" for="footer">
+                        Footer
+                    </label>
+
+                    <input
+                        type="text"
+                        id="footer"
+                        name="footer"
+                        class="pp-nf-input"
+                        maxlength="200"
+                        value="{{ notification.footer if notification else '' }}"
+                        placeholder="e.g. NOT FREE! NOT PAYMENT AFTER!"
+                    >
+                </div>
+
+            </section>
+
+
+            <!-- DISPLAY SETTINGS -->
+            <section class="pp-nf-section">
+
+                <h2 class="pp-nf-section-title">
+                    Display Settings
+                </h2>
+
+                <div class="pp-nf-grid">
+
+                    <div class="pp-nf-field">
+                        <label class="pp-nf-label" for="style">
+                            Notification Style
+                        </label>
+
+                        <select
+                            id="style"
+                            name="style"
+                            class="pp-nf-select"
+                        >
+                            <option
+                                value="blue"
+                                {% if notification and notification.style == "blue" %}selected{% endif %}
+                            >
+                                Blue
+                            </option>
+
+                            <option
+                                value="dark"
+                                {% if notification and notification.style == "dark" %}selected{% endif %}
+                            >
+                                Dark
+                            </option>
+
+                            <option
+                                value="green"
+                                {% if notification and notification.style == "green" %}selected{% endif %}
+                            >
+                                Green
+                            </option>
+                        </select>
+
+                        <small class="pp-nf-help">
+                            Controls the visual theme of the notification.
+                        </small>
+                    </div>
+
+                    <div class="pp-nf-field">
+
+                        <label class="pp-nf-label">
+                            Status
+                        </label>
+
+                        <label class="pp-nf-check">
+
+                            <input
+                                type="checkbox"
+                                name="is_active"
+                                {% if notification is none or notification.is_active %}checked{% endif %}
+                            >
+
+                            <span class="pp-nf-check-text">
+                                <span class="pp-nf-check-title">
+                                    Active notification
+                                </span>
+
+                                <span class="pp-nf-check-description">
+                                    Allow this notification to appear when its schedule permits.
+                                </span>
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- SCHEDULING -->
+            <section class="pp-nf-section">
+
+                <h2 class="pp-nf-section-title">
+                    Schedule
+                </h2>
+
+                <div class="pp-nf-grid">
+
+                    <div class="pp-nf-field">
+                        <label class="pp-nf-label" for="starts_at">
+                            Starts At
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="starts_at"
+                            name="starts_at"
+                            class="pp-nf-input"
+                            value="{% if notification and notification.starts_at %}{{ notification.starts_at.strftime('%Y-%m-%dT%H:%M') }}{% endif %}"
+                        >
+
+                        <small class="pp-nf-help">
+                            Leave empty to make it available immediately.
+                        </small>
+                    </div>
+
+                    <div class="pp-nf-field">
+                        <label class="pp-nf-label" for="ends_at">
+                            Ends At
+                        </label>
+
+                        <input
+                            type="datetime-local"
+                            id="ends_at"
+                            name="ends_at"
+                            class="pp-nf-input"
+                            value="{% if notification and notification.ends_at %}{{ notification.ends_at.strftime('%Y-%m-%dT%H:%M') }}{% endif %}"
+                        >
+
+                        <small class="pp-nf-help">
+                            Leave empty for no automatic expiry.
+                        </small>
+                    </div>
+
+                </div>
+
+                <div class="pp-nf-preview">
+                    The notification will only be considered live when it is active
+                    and the current time falls within the configured schedule.
+                </div>
+
+            </section>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+        <div class="pp-nf-actions">
+
+            <button
+                type="submit"
+                class="pp-nf-btn pp-nf-btn-primary"
+            >
+                {% if notification %}
+                    Save Changes
+                {% else %}
+                    Create Notification
+                {% endif %}
+            </button>
+
+            <a
+                href="{{ url_for('main.admin_notifications') }}"
+                class="pp-nf-btn pp-nf-btn-secondary"
+            >
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

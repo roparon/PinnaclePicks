@@ -5,6 +5,11 @@
 {% endblock %}
 
 {% block head %}
+{% set match_url = url_for(
+    'seo.match_detail',
+    match_id=match.id,
+    _external=True
+) %}
 
 <meta
     name="description"
@@ -38,12 +43,12 @@
 
 <meta
     property="og:url"
-    content="{{ request.url }}"
+    content="{{ match_url }}"
 >
 
 <link
     rel="canonical"
-    href="{{ request.url }}"
+    href="{{ match_url }}"
 >
 
 <script type="application/ld+json">
@@ -52,7 +57,7 @@
     "@type": "SportsEvent",
     "name": {{ (match.home_team ~ " vs " ~ match.away_team)|tojson }},
     "sport": "Football",
-    "url": {{ request.url|tojson }},
+    "url": {{ match_url|tojson }},
     "startDate": {{ match.kickoff_time.isoformat()|tojson }},
     "homeTeam": {
         "@type": "SportsTeam",
@@ -87,7 +92,7 @@
             "@type": "ListItem",
             "position": 3,
             "name": {{ (match.home_team ~ " vs " ~ match.away_team)|tojson }},
-            "item": {{ request.url|tojson }}
+            "item": {{ match_url|tojson }}
         }
     ]
 }

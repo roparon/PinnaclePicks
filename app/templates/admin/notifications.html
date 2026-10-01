@@ -1,0 +1,469 @@
+{% extends "base.html" %}
+
+{% block title %}
+Notifications | Admin | PinnaclePicks
+{% endblock %}
+
+{% block head %}
+<style>
+    .pp-nf-page {
+        width: min(100%, 1000px);
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+    }
+
+    .pp-nf-header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+
+    .pp-nf-heading h1 {
+        margin: 0;
+        color: #172033;
+        font-size: clamp(1.35rem, 4vw, 1.8rem);
+        font-weight: 800;
+    }
+
+    .pp-nf-heading p {
+        margin: 6px 0 0;
+        color: #687386;
+        font-size: .9rem;
+        line-height: 1.5;
+    }
+
+    .pp-nf-create {
+        flex: 0 0 auto;
+        min-height: 44px;
+        padding: 10px 15px;
+        border-radius: 10px;
+        background: #198754;
+        color: #fff;
+        text-decoration: none;
+        font-size: .86rem;
+        font-weight: 750;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+    }
+
+    .pp-nf-create:hover {
+        background: #157347;
+        color: #fff;
+    }
+
+    .pp-nf-list {
+        display: grid;
+        gap: 14px;
+    }
+
+    .pp-nf-card {
+        overflow: hidden;
+        background: #fff;
+        border: 1px solid #e5e9ef;
+        border-radius: 16px;
+        box-shadow: 0 6px 24px rgba(15, 23, 42, .05);
+    }
+
+    .pp-nf-card-main {
+        padding: 18px;
+    }
+
+    .pp-nf-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 14px;
+    }
+
+    .pp-nf-title {
+        min-width: 0;
+    }
+
+    .pp-nf-title h2 {
+        margin: 0;
+        color: #172033;
+        font-size: 1rem;
+        font-weight: 800;
+        line-height: 1.35;
+    }
+
+    .pp-nf-headline {
+        margin-top: 5px;
+        color: #667085;
+        font-size: .84rem;
+        line-height: 1.45;
+    }
+
+    .pp-nf-status {
+        flex: 0 0 auto;
+        padding: 5px 9px;
+        border-radius: 999px;
+        font-size: .72rem;
+        font-weight: 800;
+        line-height: 1;
+    }
+
+    .pp-nf-status-active {
+        background: #e8f7ef;
+        color: #137a4b;
+    }
+
+    .pp-nf-status-inactive {
+        background: #eef1f5;
+        color: #667085;
+    }
+
+    .pp-nf-body {
+        margin-top: 14px;
+        padding: 13px 14px;
+        border-radius: 11px;
+        background: #f8fafc;
+        color: #475467;
+        font-size: .84rem;
+        line-height: 1.55;
+        white-space: pre-line;
+    }
+
+    .pp-nf-meta {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        margin-top: 14px;
+        color: #7b8494;
+        font-size: .76rem;
+    }
+
+    .pp-nf-meta-item strong {
+        color: #596579;
+        font-weight: 700;
+    }
+
+    .pp-nf-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        padding: 13px 18px;
+        border-top: 1px solid #edf0f4;
+        background: #fbfcfd;
+    }
+
+    .pp-nf-action {
+        min-height: 40px;
+        padding: 8px 12px;
+        border: 1px solid #dce1e8;
+        border-radius: 9px;
+        background: #fff;
+        color: #344054;
+        font-size: .78rem;
+        font-weight: 750;
+        text-decoration: none;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .pp-nf-action:hover {
+        background: #f5f7fa;
+        color: #172033;
+    }
+
+    .pp-nf-action-primary {
+        border-color: #198754;
+        background: #198754;
+        color: #fff;
+    }
+
+    .pp-nf-action-primary:hover {
+        background: #157347;
+        color: #fff;
+    }
+
+    .pp-nf-action-danger {
+        border-color: #f0c7cc;
+        color: #b42318;
+    }
+
+    .pp-nf-action-danger:hover {
+        background: #fff4f2;
+        color: #b42318;
+    }
+
+    .pp-nf-empty {
+        padding: 42px 20px;
+        border: 1px dashed #d9dee7;
+        border-radius: 16px;
+        background: #fff;
+        text-align: center;
+    }
+
+    .pp-nf-empty h2 {
+        margin: 0;
+        color: #273449;
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .pp-nf-empty p {
+        margin: 7px 0 18px;
+        color: #7b8494;
+        font-size: .84rem;
+    }
+
+    .pp-nf-empty a {
+        min-height: 42px;
+        padding: 9px 15px;
+        border-radius: 9px;
+        background: #198754;
+        color: #fff;
+        text-decoration: none;
+        font-size: .82rem;
+        font-weight: 750;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    @media (min-width: 640px) {
+        .pp-nf-page {
+            padding: 32px 20px 56px;
+        }
+
+        .pp-nf-card-main {
+            padding: 20px;
+        }
+
+        .pp-nf-meta {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .pp-nf-actions {
+            padding: 13px 20px;
+        }
+    }
+
+    @media (max-width: 520px) {
+        .pp-nf-header {
+            flex-direction: column;
+        }
+
+        .pp-nf-create {
+            width: 100%;
+        }
+
+        .pp-nf-top {
+            flex-direction: column;
+        }
+
+        .pp-nf-status {
+            align-self: flex-start;
+        }
+
+        .pp-nf-actions {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .pp-nf-action {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+
+{% block content %}
+
+<div class="pp-nf-page">
+
+    <div class="pp-nf-header">
+
+        <div class="pp-nf-heading">
+            <h1>Notifications</h1>
+
+            <p>
+                Manage announcements displayed across PinnaclePicks.
+            </p>
+        </div>
+
+        <a
+            href="{{ url_for('main.admin_notification_create') }}"
+            class="pp-nf-create"
+        >
+            + Create Notification
+        </a>
+
+    </div>
+
+
+    {% if notifications %}
+
+        <div class="pp-nf-list">
+
+            {% for notification in notifications %}
+
+                <article class="pp-nf-card">
+
+                    <div class="pp-nf-card-main">
+
+                        <div class="pp-nf-top">
+
+                            <div class="pp-nf-title">
+
+                                <h2>
+                                    {{ notification.title }}
+                                </h2>
+
+                                {% if notification.headline %}
+                                    <div class="pp-nf-headline">
+                                        {{ notification.headline }}
+                                    </div>
+                                {% endif %}
+
+                            </div>
+
+
+                            {% if notification.is_active %}
+
+                                <span class="pp-nf-status pp-nf-status-active">
+                                    ACTIVE
+                                </span>
+
+                            {% else %}
+
+                                <span class="pp-nf-status pp-nf-status-inactive">
+                                    INACTIVE
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if notification.body %}
+
+                            <div class="pp-nf-body">
+                                {{ notification.body }}
+                            </div>
+
+                        {% endif %}
+
+
+                        <div class="pp-nf-meta">
+
+                            <div class="pp-nf-meta-item">
+                                <strong>Style:</strong>
+                                {{ notification.style|capitalize }}
+                            </div>
+
+                            <div class="pp-nf-meta-item">
+                                <strong>Live now:</strong>
+
+                                {% if notification.is_live %}
+                                    Yes
+                                {% else %}
+                                    No
+                                {% endif %}
+                            </div>
+
+                            <div class="pp-nf-meta-item">
+                                <strong>Starts:</strong>
+
+                                {% if notification.starts_at %}
+                                    {{ notification.starts_at.strftime('%d %b %Y, %H:%M') }}
+                                {% else %}
+                                    Immediately
+                                {% endif %}
+                            </div>
+
+                            <div class="pp-nf-meta-item">
+                                <strong>Ends:</strong>
+
+                                {% if notification.ends_at %}
+                                    {{ notification.ends_at.strftime('%d %b %Y, %H:%M') }}
+                                {% else %}
+                                    No expiry
+                                {% endif %}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="pp-nf-actions">
+
+                        <a
+                            href="{{ url_for('main.admin_notification_edit', notification_id=notification.id) }}"
+                            class="pp-nf-action pp-nf-action-primary"
+                        >
+                            Edit
+                        </a>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('main.admin_notification_toggle', notification_id=notification.id) }}"
+                            style="margin:0;"
+                        >
+                            <button
+                                type="submit"
+                                class="pp-nf-action"
+                            >
+                                {% if notification.is_active %}
+                                    Deactivate
+                                {% else %}
+                                    Activate
+                                {% endif %}
+                            </button>
+                        </form>
+
+
+                        <form
+                            method="POST"
+                            action="{{ url_for('main.admin_notification_delete', notification_id=notification.id) }}"
+                            style="margin:0;"
+                            onsubmit="return confirm('Delete this notification? This action cannot be undone.');"
+                        >
+                            <button
+                                type="submit"
+                                class="pp-nf-action pp-nf-action-danger"
+                            >
+                                Delete
+                            </button>
+                        </form>
+
+                    </div>
+
+                </article>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="pp-nf-empty">
+
+            <h2>
+                No notifications yet
+            </h2>
+
+            <p>
+                Create your first announcement to display it on PinnaclePicks.
+            </p>
+
+            <a href="{{ url_for('main.admin_notification_create') }}">
+                Create Notification
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

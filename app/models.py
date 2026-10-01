@@ -547,3 +547,133 @@ class MediaProof(db.Model):
 
     def __repr__(self):
         return f"<MediaProof {self.id}>"
+
+# ============================================================================
+# NOTIFICATIONS / ANNOUNCEMENTS
+# ============================================================================
+
+class Notification(db.Model):
+    """
+    Admin-managed announcement banner.
+
+    Shown on the homepage when `is_active` is True and the current
+    time falls within the optional `starts_at` / `ends_at` window.
+    """
+
+    __tablename__ = "notifications"
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True,
+    )
+
+    # e.g. "NEXT COMBO TICKET MATCHES"
+    title = db.Column(
+        db.String(200),
+        nullable=False,
+        default="",
+    )
+
+    # e.g. "03.10.2026 (SATURDAY)"
+    headline = db.Column(
+        db.String(200),
+        nullable=False,
+        default="",
+    )
+
+    # e.g. "BEST SOCCER MATCHES\nFROM BEST SOURCES"
+    body = db.Column(
+        db.Text,
+        nullable=False,
+        default="",
+    )
+
+    # e.g. "WE WORK ONLY WITH SERIOUS CLIENTS!"
+    warning = db.Column(
+        db.String(200),
+        nullable=False,
+        default="",
+    )
+
+    # e.g. "NOT FREE! NOT PAYMENT AFTER!"
+    footer = db.Column(
+        db.String(200),
+        nullable=False,
+        default="",
+    )
+
+    # Visual style: "blue" (default), "dark", "green"
+    style = db.Column(
+        db.String(20),
+        nullable=False,
+        default="blue",
+        index=True,
+    )
+
+    # Active toggle
+    is_active = db.Column(
+        db.Boolean,
+        nullable=False,
+        default=True,
+        index=True,
+    )
+
+    # Optional scheduling window
+    starts_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=True,
+        index=True,
+    )
+
+    ends_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=True,
+        index=True,
+    )
+
+    # Timestamps
+    created_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+    )
+
+    updated_at = db.Column(
+        db.DateTime(timezone=True),
+        nullable=False,
+        default=lambda: datetime.now(timezone.utc),
+        onupdate=lambda: datetime.now(timezone.utc),
+    )
+
+
+    # ------------------------------------------------------------------
+    # Helpers
+    # ------------------------------------------------------------------
+
+    @property
+    def is_live(self):
+        """Return True if this notification should currently be shown."""
+        if not self.is_active:
+            return False
+
+        now = datetime.now(timezone.utc)
+
+        if self.starts_at is not None:
+            start = self.starts_at
+            if start.tzinfo is None:
+                start = start.replace(tzinfo=timezone.utc)
+            if now < start:
+                return False
+
+        if self.ends_at is not None:
+            end = self.ends_at
+            if end.tzinfo is None:
+                end = end.replace(tzinfo=timezone.utc)
+            if now > end:
+                return False
+
+        return True
+
+
+    def __repr__(self):
+        return f"<Notification {self.title!r} active={self.is_active}>"
