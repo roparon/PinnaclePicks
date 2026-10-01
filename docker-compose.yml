@@ -1,0 +1,12 @@
+services:
+  pinnaclepicks:
+    build: .
+    container_name: pinnaclepicks
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./instance:/app/instance
+    environment:
+      SECRET_KEY: "docker-development-secret"
+      FLASK_ENV: "development"
+    restart: unless-stopped
