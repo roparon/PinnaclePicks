@@ -1,4 +1,5 @@
 import os
+from sqlalchemy import event
 
 from flask import Flask
 from flask_login import LoginManager
@@ -29,6 +30,17 @@ def create_app(config_object=None):
     # ------------------------------------------------------------------
 
     db.init_app(app)
+
+    # Neon PostgreSQL pooler may provide an empty search_path.
+    # Set the application schema after each database connection.
+    if app.config["SQLALCHEMY_DATABASE_URI"].startswith(
+        ("postgresql://", "postgresql+psycopg://")
+    ):
+        with app.app_context():
+            @event.listens_for(db.engine, "connect")
+            def set_postgres_search_path(dbapi_connection, connection_record):
+                with dbapi_connection.cursor() as cursor:
+                    cursor.execute("SET search_path TO public")
     migrate.init_app(app, db)
 
     login_manager.init_app(app)
