@@ -162,90 +162,364 @@ PinnaclePicks | Sports Analytics & Match History
     ========================================================= */
 
     .pp-notice {
+        --pp-gold: #f5c451;
+        --pp-green: #22c55e;
+        --pp-surface: #10151d;
+        --pp-border: rgba(255, 255, 255, 0.08);
+        --pp-text: #f5f7fa;
+        --pp-muted: #8f9baa;
+        --pp-danger: #ef4444;
+
+        position: relative;
+        width: 100%;
+        max-width: 100%;
         margin: var(--pp-s-4) 0 var(--pp-s-2);
-        padding: var(--pp-s-5) var(--pp-s-4);
-        border-radius: var(--pp-r-md);
-        border: 2px solid var(--pp-gold);
-        text-align: center;
+
+        color: var(--pp-text);
+        background: var(--pp-surface);
+
+        border: 1px solid var(--pp-border);
+        border-radius: 16px;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 12px 35px rgba(0, 0, 0, 0.18),
+            0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
-    .pp-notice-blue {
-        background: linear-gradient(180deg, #1e5fa8 0%, #14477e 100%);
+    .pp-notice *,
+    .pp-notice *::before,
+    .pp-notice *::after {
+        box-sizing: border-box;
     }
 
-    .pp-notice-dark {
-        background: linear-gradient(180deg, var(--pp-surface-2) 0%, var(--pp-bg) 100%);
+    .pp-notice-inner {
+        display: flex;
+        width: 100%;
+        min-width: 0;
     }
 
-    .pp-notice-green {
-        background: linear-gradient(180deg, #166534 0%, #0f4a24 100%);
+    .pp-notice-accent {
+        flex: 0 0 3px;
+        width: 3px;
+        min-height: 100%;
+        background: var(--pp-gold);
+    }
+
+    .pp-notice-content {
+        width: 100%;
+        min-width: 0;
+        padding: 18px 16px 16px;
+    }
+
+    /* Header / eyebrow */
+
+    .pp-notice-header {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        min-width: 0;
+        margin-bottom: 10px;
+    }
+
+    .pp-notice-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 30px;
+        height: 30px;
+        flex: 0 0 30px;
+
+        color: var(--pp-green);
+
+        background: rgba(34, 197, 94, 0.10);
+        border: 1px solid rgba(34, 197, 94, 0.20);
+        border-radius: 8px;
     }
 
     .pp-notice-title {
-        margin: 0 0 var(--pp-s-3);
-        color: var(--pp-gold);
-        font-size: clamp(0.9rem, 3.6vw, 1.15rem);
-        font-weight: 900;
+        min-width: 0;
+        margin: 0;
+
+        color: var(--pp-muted);
+
+        font-size: 10px;
+        font-weight: 800;
+        line-height: 1.3;
+
+        letter-spacing: 0.16em;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+
+        overflow-wrap: anywhere;
     }
+
+    /* Headline */
 
     .pp-notice-headline {
-        display: inline-block;
-        margin: 0 0 var(--pp-s-4);
-        padding: 6px 14px;
-        background: var(--pp-gold);
-        color: #0b1a33;
-        font-size: clamp(0.86rem, 3.4vw, 1.05rem);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border-radius: var(--pp-r-sm);
+        max-width: 100%;
+        margin: 0 0 9px;
+
+        color: var(--pp-gold);
+
+        font-size: clamp(20px, 5vw, 30px);
+        font-weight: 800;
+        line-height: 1.15;
+
+        letter-spacing: -0.025em;
+
+        overflow-wrap: anywhere;
     }
 
+    /* Body */
+
     .pp-notice-body {
-        margin: 0 0 var(--pp-s-4);
-        color: #ffffff;
-        font-size: clamp(0.86rem, 3.4vw, 1.02rem);
-        font-weight: 800;
-        line-height: 1.7;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
+        max-width: 620px;
+        margin: 0;
+
+        color: var(--pp-text);
+
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.65;
+
+        overflow-wrap: anywhere;
         white-space: pre-line;
     }
 
-    .pp-notice-warning {
-        display: inline-block;
-        margin: var(--pp-s-2) 0;
-        padding: 6px 14px;
-        background: var(--pp-gold);
-        color: #0b1a33;
-        font-size: clamp(0.8rem, 3.2vw, 1rem);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border-radius: var(--pp-r-sm);
-    }
+    /* Footer / warning area */
 
     .pp-notice-footer {
-        display: inline-block;
-        margin: var(--pp-s-2) 0 0;
-        padding: 6px 14px;
-        background: var(--pp-gold);
-        color: #0b1a33;
-        font-size: clamp(0.8rem, 3.2vw, 1rem);
-        font-weight: 900;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        border-radius: var(--pp-r-sm);
+        width: 100%;
+        margin-top: 17px;
+        padding-top: 14px;
+
+        border-top: 1px solid var(--pp-border);
     }
 
-    @media (max-width: 400px) {
-        .pp-notice {
-            padding: var(--pp-s-4) var(--pp-s-3);
+    .pp-notice-warning-row {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 8px;
+        width: 100%;
+    }
+
+    .pp-notice-warning {
+        display: flex;
+        align-items: center;
+
+        width: 100%;
+        min-width: 0;
+        min-height: 44px;
+
+        margin: 0;
+        padding: 9px 11px;
+
+        color: #15191f;
+        background: var(--pp-gold);
+
+        border: 1px solid rgba(245, 196, 81, 0.45);
+        border-radius: 10px;
+
+        font-size: 10px;
+        font-weight: 800;
+        line-height: 1.35;
+
+        letter-spacing: 0.025em;
+        text-transform: uppercase;
+    }
+
+    .pp-notice-warning-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 27px;
+        height: 27px;
+        flex: 0 0 27px;
+
+        margin-right: 9px;
+
+        color: #15191f;
+
+        background: rgba(255, 255, 255, 0.38);
+        border-radius: 7px;
+    }
+
+    .pp-notice-warning-text {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .pp-notice-footer-text {
+        display: none;
+    }
+
+    /* Blue */
+
+    .pp-notice-blue {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(37, 99, 235, 0.13),
+                rgba(16, 21, 29, 0.98) 55%
+            ),
+            var(--pp-surface);
+    }
+
+    .pp-notice-blue .pp-notice-accent {
+        background: #60a5fa;
+    }
+
+    .pp-notice-blue .pp-notice-icon {
+        color: #60a5fa;
+        background: rgba(96, 165, 250, 0.10);
+        border-color: rgba(96, 165, 250, 0.20);
+    }
+
+    /* Dark */
+
+    .pp-notice-dark {
+        background:
+            linear-gradient(
+                135deg,
+                #0b0f14,
+                #10151d
+            );
+    }
+
+    .pp-notice-dark .pp-notice-accent {
+        background: var(--pp-gold);
+    }
+
+    /* Green */
+
+    .pp-notice-green {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(34, 197, 94, 0.12),
+                rgba(16, 21, 29, 0.98) 58%
+            ),
+            var(--pp-surface);
+    }
+
+    .pp-notice-green .pp-notice-accent {
+        background: var(--pp-green);
+    }
+
+    .pp-notice-green .pp-notice-icon {
+        color: var(--pp-green);
+    }
+
+    /* Gold */
+
+    .pp-notice-gold {
+        background:
+            linear-gradient(
+                135deg,
+                rgba(245, 196, 81, 0.10),
+                rgba(16, 21, 29, 0.98) 58%
+            ),
+            var(--pp-surface);
+    }
+
+    .pp-notice-gold .pp-notice-accent {
+        background: var(--pp-gold);
+    }
+
+    /* 576px+ */
+
+    @media (min-width: 576px) {
+        .pp-notice-content {
+            padding: 20px 20px 18px;
         }
+
+        .pp-notice-warning-row {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+        }
+
+        .pp-notice-warning {
+            min-height: 44px;
+        }
+    }
+
+    /* 768px+ */
+
+    @media (min-width: 768px) {
+        .pp-notice {
+            max-width: 640px;
+            margin-left: auto;
+            margin-right: auto;
+            border-radius: 18px;
+        }
+
+        .pp-notice-content {
+            padding: 22px 24px 20px;
+        }
+
+        .pp-notice-header {
+            justify-content: center;
+        }
+
+        .pp-notice-headline {
+            text-align: center;
+        }
+
         .pp-notice-body {
-            font-size: 0.82rem;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+    }
+
+    /* 1024px+ */
+
+    @media (min-width: 1024px) {
+        .pp-notice-content {
+            padding: 24px 28px 22px;
+        }
+    }
+
+    /* 320px safety */
+
+    @media (max-width: 359px) {
+        .pp-notice {
+            border-radius: 14px;
+        }
+
+        .pp-notice-content {
+            padding: 16px;
+        }
+
+        .pp-notice-headline {
+            font-size: 20px;
+        }
+
+        .pp-notice-body {
+            font-size: 13px;
+        }
+
+        .pp-notice-warning {
+            padding: 8px 9px;
+            font-size: 9px;
+        }
+
+        .pp-notice-warning-icon {
+            width: 25px;
+            height: 25px;
+            flex-basis: 25px;
+            margin-right: 7px;
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .pp-notice,
+        .pp-notice * {
+            transition: none !important;
+            animation: none !important;
         }
     }
 
@@ -2167,28 +2441,132 @@ PinnaclePicks | Sports Analytics & Match History
     ========================================================== -->
     {% if notification %}
     <div class="pp-home-container">
-        <div class="pp-notice pp-notice-{{ notification.style }}">
+        <div
+            class="pp-notice pp-notice-{{ notification.style }}"
+            role="status"
+            aria-label="PinnaclePicks notification"
+        >
+            <div class="pp-notice-inner">
 
-            {% if notification.title %}
-                <p class="pp-notice-title">{{ notification.title }}</p>
-            {% endif %}
+                <div
+                    class="pp-notice-accent"
+                    aria-hidden="true"
+                ></div>
 
-            {% if notification.headline %}
-                <p class="pp-notice-headline">{{ notification.headline }}</p>
-            {% endif %}
+                <div class="pp-notice-content">
 
-            {% if notification.body %}
-                <p class="pp-notice-body">{{ notification.body }}</p>
-            {% endif %}
+                    {% if notification.title %}
+                    <div class="pp-notice-header">
+                        <span
+                            class="pp-notice-icon"
+                            role="img"
+                            aria-label="PinnaclePicks notification"
+                        >
+                            <svg
+                                viewBox="0 0 24 24"
+                                width="18"
+                                height="18"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                aria-hidden="true"
+                            >
+                                <path d="M12 3l9 4v5c0 5.5-3.8 8.5-9 10-5.2-1.5-9-4.5-9-10V7l9-4z"></path>
+                                <path d="M9 12l2 2 4-4"></path>
+                            </svg>
+                        </span>
 
-            {% if notification.warning %}
-                <p class="pp-notice-warning">{{ notification.warning }}</p>
-            {% endif %}
+                        <span class="pp-notice-title">
+                            {{ notification.title }}
+                        </span>
+                    </div>
+                    {% endif %}
 
-            {% if notification.footer %}
-                <p class="pp-notice-footer">{{ notification.footer }}</p>
-            {% endif %}
+                    {% if notification.headline %}
+                    <div class="pp-notice-headline">
+                        {{ notification.headline }}
+                    </div>
+                    {% endif %}
 
+                    {% if notification.body %}
+                    <div class="pp-notice-body">
+                        {{ notification.body }}
+                    </div>
+                    {% endif %}
+
+                    {% if notification.warning or notification.footer %}
+                    <div class="pp-notice-footer">
+
+                        <div class="pp-notice-warning-row">
+
+                            {% if notification.warning %}
+                            <div class="pp-notice-warning">
+                                <span
+                                    class="pp-notice-warning-icon"
+                                    role="img"
+                                    aria-label="Important warning"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="17"
+                                        height="17"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <path d="M12 3l8 4v5c0 4.8-3.2 7.7-8 9-4.8-1.3-8-4.2-8-9V7l8-4z"></path>
+                                        <path d="M8.5 12l2.3 2.3 4.7-4.7"></path>
+                                    </svg>
+                                </span>
+
+                                <span class="pp-notice-warning-text">
+                                    {{ notification.warning }}
+                                </span>
+                            </div>
+                            {% endif %}
+
+                            {% if notification.footer %}
+                            <div class="pp-notice-warning">
+                                <span
+                                    class="pp-notice-warning-icon"
+                                    role="img"
+                                    aria-label="Payment information"
+                                >
+                                    <svg
+                                        viewBox="0 0 24 24"
+                                        width="17"
+                                        height="17"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        stroke-width="2"
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        aria-hidden="true"
+                                    >
+                                        <circle cx="12" cy="12" r="9"></circle>
+                                        <path d="M8 8l8 8"></path>
+                                        <path d="M16 8l-8 8"></path>
+                                    </svg>
+                                </span>
+
+                                <span class="pp-notice-warning-text">
+                                    {{ notification.footer }}
+                                </span>
+                            </div>
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
         </div>
     </div>
     {% endif %}
@@ -2568,21 +2946,21 @@ PinnaclePicks | Sports Analytics & Match History
                                     </tr>
 
                                     <tr>
-                                        <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
-                                        <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
-                                        <td><a href="YOUR_WHATSAPP_LINK_HERE" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
+                                        <td><a href="https://wa.me/254752635475" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
+                                        <td><a href="https://wa.me/254752635475" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
+                                        <td><a href="https://wa.me/254752635475" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none; display: block;">WhatsApp</a></td>
                                     </tr>
 
                                     <tr>
-                                        <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
-                                        <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
-                                        <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
+                                        <td><a href="https://t.me/pinnaclepicksnet" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
+                                        <td><a href="https://t.me/pinnaclepicksnet" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
+                                        <td><a href="https://t.me/pinnaclepicksnet" style="color: inherit; text-decoration: none; display: block;">Telegram</a></td>
                                     </tr>
 
                                     <tr>
-                                        <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
-                                        <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
-                                        <td><a href="mailto:YOUR_EMAIL_HERE" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
+                                        <td><a href="picckspinna@gmail.com" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
+                                        <td><a href="picckspinna@gmail.com" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
+                                        <td><a href="picckspinna@gmail.com" style="color: inherit; text-decoration: none; display: block;">Mail</a></td>
                                     </tr>
 
                                     <tr>
@@ -2609,12 +2987,12 @@ PinnaclePicks | Sports Analytics & Match History
 
                         <p class="pp-fixed-footer">
                             Contact US EMAIL:
-                            <a href="mailto:YOUR_EMAIL_HERE">YOUR_EMAIL_HERE</a>
+                            <a href="mailto:picckspinna@gmail.com">picckspinna@gmail.com</a>
                             <span class="pp-fixed-footer-or">OR</span>
-                            <a href="YOUR_WHATSAPP_LINK_HERE"
+                            <a href="https://wa.me/254752635475"
                                class="pp-fixed-footer-whatsapp"
                                target="_blank"
-                               rel="noopener noreferrer">WHATSAPP</a>
+                               rel="noopener noreferrer"></a>
                         </p>
 
                     </div>
@@ -2777,7 +3155,7 @@ PinnaclePicks | Sports Analytics & Match History
                                 <span>Contact our customer care for 100% Correct Score Fixed Tips.</span>
 
                                 <div class="pp-offer-actions">
-                                    <a href="YOUR_TELEGRAM_LINK_HERE"
+                                    <a href="https://t.me/pinnaclepicksnet"
                                        class="pp-offer-link pp-offer-link-telegram"
                                        target="_blank"
                                        rel="noopener noreferrer"
@@ -2788,7 +3166,7 @@ PinnaclePicks | Sports Analytics & Match History
                                         Telegram
                                     </a>
 
-                                    <a href="YOUR_WHATSAPP_BUSINESS_LINK_HERE"
+                                    <a href="https://wa.me/254752635475"
                                        class="pp-offer-link pp-offer-link-whatsapp"
                                        target="_blank"
                                        rel="noopener noreferrer"
@@ -2836,16 +3214,15 @@ PinnaclePicks | Sports Analytics & Match History
                         <span>
                             E-Mail:
                             <a href="mailto:correctscorefixed365@gmail.com">
-                                correctscorefixed365@gmail.com
+                                picckspinna@gmail.com
                             </a>
                         </span>
                         <span aria-hidden="true">|</span>
                         <span>
                             WhatsApp:
-                            <a href="https://wa.me/38971302586"
+                            <a href="https://wa.me/254752635475"
                                target="_blank"
                                rel="noopener noreferrer">
-                                +389 71 302 586
                             </a>
                         </span>
                     </div>
@@ -2886,7 +3263,7 @@ PinnaclePicks | Sports Analytics & Match History
                             <div class="pp-testimonial-avatar" aria-hidden="true">DO</div>
                             <div>
                                 <div class="pp-testimonial-name">Dembe Okello</div>
-                                <div class="pp-testimonial-location">Uganda</div>
+                                <div class="pp-testimonial-location">Ghana</div>
                             </div>
                         </div>
                         <div class="pp-testimonial-stars" aria-label="5 stars">★★★★★</div>
@@ -2908,6 +3285,20 @@ PinnaclePicks | Sports Analytics & Match History
                         <p class="pp-testimonial-quote">
                             “I recommend this site to everyone! Real and accurate matches, five
                             stars, well done!”
+                        </p>
+                    </article>
+
+                    <article class="pp-testimonial-card">
+                        <div class="pp-testimonial-person">
+                            <div class="pp-testimonial-avatar" aria-hidden="true">KM</div>
+                            <div>
+                                <div class="pp-testimonial-name">Kondwani Musonda</div>
+                                <div class="pp-testimonial-location">Zambia</div>
+                            </div>
+                        </div>
+                        <div class="pp-testimonial-stars" aria-label="5 stars">★★★★★</div>
+                        <p class="pp-testimonial-quote">
+                            “Greetings from Lusaka! PinnaclePicks has completely changed my approach to sports analysis. The consistency and transparency are unmatched, and it has been a total game-changer for me.”
                         </p>
                     </article>
                 </div>
