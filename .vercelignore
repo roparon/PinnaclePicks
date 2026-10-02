@@ -1,0 +1,37 @@
+# Local Python environments
+.Pinna/
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Local secrets / environment files
+.env
+.env.*
+!.env.example
+
+# Local database and runtime data
+instance/
+*.sqlite
+*.sqlite3
+*.db
+
+# Git / Vercel local metadata
+.git/
+.vercel/
+
+# Local development / Docker files
+docker-compose.yml
+Dockerfile
+
+# Development scripts and generated data
+migrate_sqlite_to_postgres.py
+migrate_markets.py
+rebuild_historical_matches.py
+matches.json
+
+# Editor / OS files
+.vscode/
+.idea/
+*.swp
+.DS_Store
