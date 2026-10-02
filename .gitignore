@@ -90,3 +90,6 @@ logs/
 .coverage
 htmlcov/
 .pytest_cache/
+
+migrate_sqlite_to_postgres.py
+.env.docker
