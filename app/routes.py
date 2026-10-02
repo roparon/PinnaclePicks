@@ -1,4 +1,5 @@
 import os
+import tempfile
 import uuid
 from datetime import datetime, timedelta, timezone
 from functools import wraps
@@ -20,6 +21,8 @@ from flask_login import (
 )
 
 from werkzeug.utils import secure_filename
+
+from vercel import blob
 
 from .models import (
     ComboTicket,
@@ -660,27 +663,6 @@ def upload_proof():
         )
 
     # ------------------------------------------------------------------
-    # Upload directory
-    # ------------------------------------------------------------------
-
-    upload_directory = current_app.config.get(
-        "PROOF_UPLOAD_FOLDER"
-    )
-
-    if not upload_directory:
-
-        upload_directory = os.path.join(
-            current_app.static_folder,
-            "uploads",
-            "proofs",
-        )
-
-    os.makedirs(
-        upload_directory,
-        exist_ok=True,
-    )
-
-    # ------------------------------------------------------------------
     # Secure filename
     # ------------------------------------------------------------------
 
@@ -720,48 +702,52 @@ def upload_proof():
     )
 
     filename = (
+        f"pinnaclepicks-proofs/"
         f"{uuid.uuid4().hex}"
         f".{extension}"
     )
 
-    destination = os.path.abspath(
-        os.path.join(
-            upload_directory,
-            filename,
-        )
-    )
-
-    upload_root = os.path.abspath(
-        upload_directory
-    )
-
     # ------------------------------------------------------------------
-    # Path traversal protection
+    # Upload to Vercel Blob using a temporary filesystem file.
+    #
+    # Vercel's production filesystem is ephemeral, so the temporary
+    # file exists only long enough for Blob storage to receive it.
     # ------------------------------------------------------------------
 
-    if not destination.startswith(
-        upload_root + os.sep
-    ):
-        abort(400)
-
-    # ------------------------------------------------------------------
-    # Save file
-    # ------------------------------------------------------------------
+    temporary_path = None
+    blob_url = None
 
     try:
 
+        with tempfile.NamedTemporaryFile(
+            prefix="pinnaclepicks-proof-",
+            suffix=f".{extension}",
+            delete=False,
+        ) as temporary_file:
+
+            temporary_path = temporary_file.name
+
         image.save(
-            destination
+            temporary_path
         )
 
-    except OSError:
+        result = blob.upload_file(
+            temporary_path,
+            filename,
+            access="public",
+            content_type=image.mimetype or None,
+        )
+
+        blob_url = result.url
+
+    except Exception:
 
         current_app.logger.exception(
-            "Unable to save proof image."
+            "Unable to upload proof image to Vercel Blob."
         )
 
         flash(
-            "The image could not be saved. Please try again.",
+            "The image could not be uploaded. Please try again.",
             "danger",
         )
 
@@ -769,20 +755,32 @@ def upload_proof():
             request.url
         )
 
-    # ------------------------------------------------------------------
-    # Store path relative to /static/
-    # ------------------------------------------------------------------
+    finally:
 
-    relative_path = os.path.relpath(
-        destination,
-        current_app.static_folder,
-    ).replace(
-        os.sep,
-        "/",
-    )
+        if temporary_path:
+
+            try:
+
+                if os.path.exists(
+                    temporary_path
+                ):
+                    os.remove(
+                        temporary_path
+                    )
+
+            except OSError:
+
+                current_app.logger.exception(
+                    "Could not remove temporary proof image."
+                )
+
+    # ------------------------------------------------------------------
+    # Store the public Blob URL in the existing MediaProof record.
+    # No database migration is required.
+    # ------------------------------------------------------------------
 
     proof = MediaProof(
-        image_path=relative_path,
+        image_path=blob_url,
         caption=caption or None,
     )
 
@@ -798,20 +796,22 @@ def upload_proof():
 
         db.session.rollback()
 
-        try:
+        # The Blob was already uploaded. Remove it if the database
+        # transaction fails so we do not leave an orphaned object.
+        if blob_url:
 
-            if os.path.exists(
-                destination
-            ):
-                os.remove(
-                    destination
+            try:
+
+                blob.delete(
+                    blob_url
                 )
 
-        except OSError:
+            except Exception:
 
-            current_app.logger.exception(
-                "Could not clean up uploaded proof."
-            )
+                current_app.logger.exception(
+                    "Could not clean up proof Blob after "
+                    "database failure."
+                )
 
         current_app.logger.exception(
             "Could not create MediaProof record."
@@ -868,13 +868,92 @@ def delete_proof(proof_id):
             )
         )
 
+    image_path = proof.image_path or ""
+
     # ------------------------------------------------------------------
-    # Resolve physical image path safely
+    # Vercel Blob image
     # ------------------------------------------------------------------
 
-    image_path = None
+    if image_path.startswith(
+        ("http://", "https://")
+    ):
 
-    if proof.image_path:
+        try:
+
+            blob.delete(
+                image_path
+            )
+
+        except Exception:
+
+            current_app.logger.exception(
+                "Could not delete proof image from Vercel Blob."
+            )
+
+            flash(
+                "The transparency proof could not be deleted "
+                "from image storage.",
+                "danger",
+            )
+
+            return redirect(
+                url_for(
+                    "main.upload_proof"
+                )
+            )
+
+        # --------------------------------------------------------------
+        # Delete database record after Blob deletion succeeds.
+        # --------------------------------------------------------------
+
+        try:
+
+            db.session.delete(
+                proof
+            )
+
+            db.session.commit()
+
+        except Exception:
+
+            db.session.rollback()
+
+            current_app.logger.exception(
+                "Could not delete MediaProof record."
+            )
+
+            flash(
+                "The image was removed from storage, but the "
+                "proof record could not be deleted.",
+                "danger",
+            )
+
+            return redirect(
+                url_for(
+                    "main.upload_proof"
+                )
+            )
+
+        flash(
+            "Transparency proof deleted successfully.",
+            "success",
+        )
+
+        return redirect(
+            url_for(
+                "main.upload_proof"
+            )
+        )
+
+    # ------------------------------------------------------------------
+    # Legacy local filesystem image
+    #
+    # Keep support for proofs uploaded before Vercel Blob storage.
+    # ------------------------------------------------------------------
+
+    local_image_path = None
+
+    if image_path:
 
         static_root = os.path.abspath(
             current_app.static_folder
@@ -883,14 +962,14 @@ def delete_proof(proof_id):
         candidate_path = os.path.abspath(
             os.path.join(
                 current_app.static_folder,
-                proof.image_path,
+                image_path,
             )
         )
 
         if candidate_path.startswith(
             static_root + os.sep
         ):
-            image_path = candidate_path
+            local_image_path = candidate_path
 
     # ------------------------------------------------------------------
     # Delete database record
@@ -924,25 +1003,25 @@ def delete_proof(proof_id):
         )
 
     # ------------------------------------------------------------------
-    # Delete physical image
+    # Delete legacy local image if one exists.
     # ------------------------------------------------------------------
 
-    if image_path:
+    if local_image_path:
 
         try:
 
             if os.path.isfile(
-                image_path
+                local_image_path
             ):
                 os.remove(
-                    image_path
+                    local_image_path
                 )
 
         except OSError:
 
             current_app.logger.exception(
                 "The proof record was deleted, "
-                "but the image file could not be removed."
+                "but the legacy image file could not be removed."
             )
 
             flash(

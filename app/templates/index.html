@@ -2691,11 +2691,11 @@ PinnaclePicks | Sports Analytics & Match History
                 {% if media_proofs %}
                     <div class="pp-home-gallery">
                         {% for proof in media_proofs %}
-                            <a href="{{ url_for('static', filename=proof.image_path) }}"
+                            <a href="{% if proof.image_path.startswith('http://') or proof.image_path.startswith('https://') %}{{ proof.image_path }}{% else %}{{ url_for('static', filename=proof.image_path) }}{% endif %}"
                                class="pp-home-proof"
                                target="_blank"
                                rel="noopener noreferrer">
-                                <img src="{{ url_for('static', filename=proof.image_path) }}"
+                                <img src="{% if proof.image_path.startswith('http://') or proof.image_path.startswith('https://') %}{{ proof.image_path }}{% else %}{{ url_for('static', filename=proof.image_path) }}{% endif %}"
                                      alt="{{ proof.caption or 'Community verification screenshot' }}"
                                      loading="lazy"
                                      decoding="async">

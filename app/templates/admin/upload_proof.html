@@ -849,10 +849,7 @@
                             <div class="proof-image-wrap">
 
                                 <img
-                                    src="{{ url_for(
-                                        'static',
-                                        filename=proof.image_path
-                                    ) }}"
+                                    src="{% if proof.image_path.startswith('http://') or proof.image_path.startswith('https://') %}{{ proof.image_path }}{% else %}{{ url_for('static', filename=proof.image_path) }}{% endif %}"
                                     alt="{{ proof.caption or 'Transparency proof' }}"
                                     class="proof-image"
                                     loading="lazy"
@@ -901,10 +898,7 @@
                                 <div class="proof-actions">
 
                                     <a
-                                        href="{{ url_for(
-                                            'static',
-                                            filename=proof.image_path
-                                        ) }}"
+                                        href="{% if proof.image_path.startswith('http://') or proof.image_path.startswith('https://') %}{{ proof.image_path }}{% else %}{{ url_for('static', filename=proof.image_path) }}{% endif %}"
                                         class="proof-view-button"
                                         target="_blank"
                                         rel="noopener noreferrer"

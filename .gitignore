@@ -93,3 +93,5 @@ htmlcov/
 
 migrate_sqlite_to_postgres.py
 .env.docker
+.vercel
+.env*
