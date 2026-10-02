@@ -58,22 +58,6 @@ def create_app(config_object=None):
             return None
 
     # ------------------------------------------------------------------
-    # Proof upload folder
-    # ------------------------------------------------------------------
-
-    upload_folder = app.config.get("PROOF_UPLOAD_FOLDER")
-
-    if not os.path.isabs(upload_folder):
-        upload_folder = os.path.join(
-            app.root_path,
-            upload_folder,
-        )
-
-    app.config["PROOF_UPLOAD_FOLDER"] = upload_folder
-
-    os.makedirs(upload_folder, exist_ok=True)
-
-    # ------------------------------------------------------------------
     # Blueprints
     # ------------------------------------------------------------------
 
