@@ -1994,41 +1994,6 @@ PinnaclePicks | Sports Analytics & Match History
 {% block content %}
 
 <div class="pp-home">
-
-    <!-- =========================================================
-         HOMEPAGE NOTIFICATION BANNER (admin-managed)
-         Sits at the very top so it never separates the hero
-         from the rest of the page.
-    ========================================================== -->
-    {% if notification %}
-    <div class="pp-home-container">
-        <div class="pp-notice pp-notice-{{ notification.style }}">
-
-            {% if notification.title %}
-                <p class="pp-notice-title">{{ notification.title }}</p>
-            {% endif %}
-
-            {% if notification.headline %}
-                <p class="pp-notice-headline">{{ notification.headline }}</p>
-            {% endif %}
-
-            {% if notification.body %}
-                <p class="pp-notice-body">{{ notification.body }}</p>
-            {% endif %}
-
-            {% if notification.warning %}
-                <p class="pp-notice-warning">{{ notification.warning }}</p>
-            {% endif %}
-
-            {% if notification.footer %}
-                <p class="pp-notice-footer">{{ notification.footer }}</p>
-            {% endif %}
-
-        </div>
-    </div>
-    {% endif %}
-
-
     <!-- =========================================================
          HERO — SPORTY / HIGH IMPACT
     ========================================================== -->
@@ -2193,6 +2158,40 @@ PinnaclePicks | Sports Analytics & Match History
         </div>
 
     </section>
+
+
+    <!-- =========================================================
+         HOMEPAGE NOTIFICATION BANNER (admin-managed)
+         Sits at the very top so it never separates the hero
+         from the rest of the page.
+    ========================================================== -->
+    {% if notification %}
+    <div class="pp-home-container">
+        <div class="pp-notice pp-notice-{{ notification.style }}">
+
+            {% if notification.title %}
+                <p class="pp-notice-title">{{ notification.title }}</p>
+            {% endif %}
+
+            {% if notification.headline %}
+                <p class="pp-notice-headline">{{ notification.headline }}</p>
+            {% endif %}
+
+            {% if notification.body %}
+                <p class="pp-notice-body">{{ notification.body }}</p>
+            {% endif %}
+
+            {% if notification.warning %}
+                <p class="pp-notice-warning">{{ notification.warning }}</p>
+            {% endif %}
+
+            {% if notification.footer %}
+                <p class="pp-notice-footer">{{ notification.footer }}</p>
+            {% endif %}
+
+        </div>
+    </div>
+    {% endif %}
 
 
     <!-- MAIN CONTENT -->
