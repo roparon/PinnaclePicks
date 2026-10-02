@@ -38,6 +38,11 @@ from .models import (
 main = Blueprint("main", __name__)
 
 
+@main.route("/googleaaeb185e1a9c2151.html")
+def google_site_verification():
+    return "google-site-verification: googleaaeb185e1a9c2151.html"
+
+
 # ============================================================================
 # Configuration
 # ============================================================================
