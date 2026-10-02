@@ -214,7 +214,7 @@
 
             width: 100%;
 
-            background: rgba(43, 46, 43, 0.97);
+            background: #22c55e;
 
             border-bottom: 1px solid var(--pp-border);
 
@@ -366,6 +366,242 @@
             color: var(--pp-white);
 
             transform: translateY(-1px);
+        }
+
+
+        /* =========================================================
+           ACCOUNT DROPDOWN (Desktop)
+        ========================================================== */
+
+        .pp-acc-dropdown {
+
+            position: relative;
+        }
+
+
+        .pp-acc-toggle {
+
+            cursor: pointer;
+
+            background: transparent;
+
+            border: 0;
+
+            font-family: inherit;
+        }
+
+
+        .pp-acc-toggle .pp-acc-avatar {
+
+            width: 26px;
+
+            height: 26px;
+
+            flex: 0 0 26px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: var(--pp-green);
+
+            color: var(--pp-white);
+
+            font-size: 11px;
+
+            font-weight: 900;
+
+            letter-spacing: -0.02em;
+        }
+
+
+        .pp-acc-toggle .pp-acc-caret {
+
+            font-size: 11px;
+
+            opacity: 0.7;
+        }
+
+
+        .pp-acc-menu {
+
+            position: absolute;
+
+            top: calc(100% + 8px);
+
+            right: 0;
+
+            z-index: 1200;
+
+            min-width: 220px;
+
+            padding: 6px;
+
+            margin: 0;
+
+            list-style: none;
+
+            border-radius: var(--pp-radius-md);
+
+            background: #ffffff;
+
+            border: 1px solid var(--pp-border);
+
+            box-shadow:
+                0 12px 36px rgba(23, 32, 27, 0.14),
+                0 2px 8px rgba(23, 32, 27, 0.06);
+
+            opacity: 0;
+
+            visibility: hidden;
+
+            transform: translateY(-6px);
+
+            transition:
+                opacity 0.15s ease,
+                transform 0.15s ease,
+                visibility 0.15s ease;
+        }
+
+
+        .pp-acc-dropdown:hover .pp-acc-menu,
+        .pp-acc-dropdown:focus-within .pp-acc-menu {
+
+            opacity: 1;
+
+            visibility: visible;
+
+            transform: translateY(0);
+        }
+
+
+        .pp-acc-menu-head {
+
+            padding: 10px 12px 8px;
+
+            border-bottom: 1px solid var(--pp-border);
+
+            margin-bottom: 4px;
+        }
+
+
+        .pp-acc-menu-name {
+
+            display: block;
+
+            color: var(--pp-text);
+
+            font-size: 13.5px;
+
+            font-weight: 800;
+
+            line-height: 1.2;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .pp-acc-menu-email {
+
+            display: block;
+
+            margin-top: 2px;
+
+            color: var(--pp-muted);
+
+            font-size: 11.5px;
+
+            line-height: 1.3;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        .pp-acc-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            min-height: 40px;
+
+            padding: 8px 12px;
+
+            border-radius: 9px;
+
+            color: var(--pp-text-soft);
+
+            text-decoration: none;
+
+            font-size: 13.5px;
+
+            font-weight: 650;
+
+            transition:
+                background-color 0.15s ease,
+                color 0.15s ease;
+        }
+
+
+        .pp-acc-item:hover {
+
+            background: var(--pp-light-green);
+
+            color: var(--pp-dark-green);
+        }
+
+
+        .pp-acc-item i {
+
+            font-size: 15px;
+
+            flex: 0 0 18px;
+
+            text-align: center;
+        }
+
+
+        .pp-acc-item-danger {
+
+            color: #b42318;
+        }
+
+
+        .pp-acc-item-danger:hover {
+
+            background: #fff0f0;
+
+            color: #8a1a12;
+        }
+
+
+        .pp-acc-item-admin {
+
+            color: #8a6500;
+        }
+
+
+        .pp-acc-item-admin:hover {
+
+            background: #fff8e6;
+
+            color: #6b4d00;
+        }
+
+
+        .pp-acc-divider {
+
+            height: 1px;
+
+            margin: 6px 4px;
+
+            background: var(--pp-border);
         }
 
 
@@ -1123,7 +1359,7 @@
 
                 display: grid;
 
-                grid-template-columns: repeat(2, minmax(0, 1fr));
+                grid-template-columns: 1fr;
 
                 gap: 7px;
 
@@ -1141,18 +1377,86 @@
                 min-height: 46px;
 
                 padding:
-                    8px
-                    9px;
+                    10px
+                    12px;
 
                 background: #f6f8f7;
 
                 font-size: 13px;
+
+                justify-content: flex-start;
             }
 
 
             .pp-nav-link.pp-primary {
 
                 background: var(--pp-green);
+            }
+
+
+            /* Mobile dropdown */
+
+            .pp-acc-dropdown {
+
+                width: 100%;
+            }
+
+
+            .pp-acc-toggle {
+
+                width: 100%;
+
+                min-height: 46px;
+
+                padding: 10px 12px;
+
+                background: #f6f8f7;
+
+                border-radius: var(--pp-radius-sm);
+
+                display: inline-flex;
+
+                align-items: center;
+
+                justify-content: flex-start;
+
+                gap: 8px;
+
+                color: var(--pp-text-soft);
+
+                font-size: 13px;
+
+                font-weight: 650;
+            }
+
+
+            .pp-acc-menu {
+
+                position: static;
+
+                opacity: 1;
+
+                visibility: visible;
+
+                transform: none;
+
+                display: none;
+
+                min-width: 0;
+
+                width: 100%;
+
+                box-shadow: none;
+
+                border: 1px solid var(--pp-border);
+
+                margin-top: 6px;
+            }
+
+
+            .pp-acc-dropdown.open .pp-acc-menu {
+
+                display: block;
             }
 
 
@@ -1482,7 +1786,7 @@
 
                     <div class="pp-nav-links">
 
-                        <!-- Home -->
+                        <!-- Home — always visible -->
 
                         <a
                             href="{{ url_for('main.index') }}"
@@ -1499,86 +1803,179 @@
                         </a>
 
 
-                        <!-- Premium -->
-
-                        <a
-                            href="{{ url_for('main.subscription_page') }}"
-                            class="pp-nav-link"
-                        >
-
-                            <i
-                                class="bi bi-stars"
-                                aria-hidden="true"
-                            ></i>
-
-                            <span>Premium</span>
-
-                        </a>
-
-
                         {% if current_user.is_authenticated %}
 
-                            <!-- Account -->
+                            <!-- =========================================
+                                 LOGGED-IN NAVIGATION
+                                 Home · Premium · Account (dropdown)
+                            ========================================== -->
+
+                            <!-- Premium -->
 
                             <a
-                                href="{{ url_for('auth.account') }}"
+                                href="{{ url_for('main.subscription_page') }}"
                                 class="pp-nav-link"
                             >
 
                                 <i
-                                    class="bi bi-person-circle"
+                                    class="bi bi-stars"
                                     aria-hidden="true"
                                 ></i>
 
-                                <span>Account</span>
+                                <span>Premium</span>
 
                             </a>
 
 
-                            {% if current_user.is_admin %}
+                            <!-- Account dropdown -->
 
-                                <!-- Admin -->
+                            <div class="pp-acc-dropdown" id="ppAccountDropdown">
 
-                                <a
-                                    href="{{ url_for('main.admin_dashboard') }}"
-                                    class="pp-nav-link"
+                                <button
+                                    type="button"
+                                    class="pp-nav-link pp-acc-toggle"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    aria-controls="ppAccountMenu"
                                 >
 
+                                    <span
+                                        class="pp-acc-avatar"
+                                        aria-hidden="true"
+                                    >
+                                        {{ (current_user.email or current_user.username or "?")[0]|upper }}
+                                    </span>
+
+                                    <span>Account</span>
+
                                     <i
-                                        class="bi bi-speedometer2"
+                                        class="bi bi-chevron-down pp-acc-caret"
                                         aria-hidden="true"
                                     ></i>
 
-                                    <span>Admin</span>
-
-                                </a>
-
-                            {% endif %}
+                                </button>
 
 
-                            <!-- Logout -->
+                                <ul
+                                    class="pp-acc-menu"
+                                    id="ppAccountMenu"
+                                    role="menu"
+                                >
 
-                            <a
-                                href="{{ url_for('auth.logout') }}"
-                                class="pp-nav-link pp-primary"
-                            >
+                                    <li class="pp-acc-menu-head">
 
-                                <i
-                                    class="bi bi-box-arrow-right"
-                                    aria-hidden="true"
-                                ></i>
+                                        <span class="pp-acc-menu-name">
+                                            {{ current_user.username or current_user.email.split("@")[0] }}
+                                        </span>
 
-                                <span>Logout</span>
+                                        <span class="pp-acc-menu-email">
+                                            {{ current_user.email }}
+                                        </span>
 
-                            </a>
+                                    </li>
+
+
+                                    <li role="none">
+
+                                        <a
+                                            href="{{ url_for('auth.account') }}"
+                                            class="pp-acc-item"
+                                            role="menuitem"
+                                        >
+
+                                            <i
+                                                class="bi bi-person-circle"
+                                                aria-hidden="true"
+                                            ></i>
+
+                                            My Account
+
+                                        </a>
+
+                                    </li>
+
+
+                                    <li role="none">
+
+                                        <a
+                                            href="{{ url_for('main.subscription_page') }}"
+                                            class="pp-acc-item"
+                                            role="menuitem"
+                                        >
+
+                                            <i
+                                                class="bi bi-credit-card"
+                                                aria-hidden="true"
+                                            ></i>
+
+                                            Subscription
+
+                                        </a>
+
+                                    </li>
+
+
+                                    {% if current_user.is_admin %}
+
+                                        <li class="pp-acc-divider" role="separator"></li>
+
+                                        <li role="none">
+
+                                            <a
+                                                href="{{ url_for('main.admin_dashboard') }}"
+                                                class="pp-acc-item pp-acc-item-admin"
+                                                role="menuitem"
+                                            >
+
+                                                <i
+                                                    class="bi bi-speedometer2"
+                                                    aria-hidden="true"
+                                                ></i>
+
+                                                Admin Dashboard
+
+                                            </a>
+
+                                        </li>
+
+                                    {% endif %}
+
+
+                                    <li class="pp-acc-divider" role="separator"></li>
+
+                                    <li role="none">
+
+                                        <a
+                                            href="{{ url_for('auth.logout') }}"
+                                            class="pp-acc-item pp-acc-item-danger"
+                                            role="menuitem"
+                                        >
+
+                                            <i
+                                                class="bi bi-box-arrow-right"
+                                                aria-hidden="true"
+                                            ></i>
+
+                                            Logout
+
+                                        </a>
+
+                                    </li>
+
+                                </ul>
+
+                            </div>
 
                         {% else %}
 
-                            <!-- Login -->
+                            <!-- =========================================
+                                 GUEST NAVIGATION
+                                 Home · Login (combined login/register)
+                            ========================================== -->
 
                             <a
                                 href="{{ url_for('auth.login') }}"
-                                class="pp-nav-link"
+                                class="pp-nav-link pp-primary"
                             >
 
                                 <i
@@ -1587,23 +1984,6 @@
                                 ></i>
 
                                 <span>Login</span>
-
-                            </a>
-
-
-                            <!-- Register -->
-
-                            <a
-                                href="{{ url_for('auth.register') }}"
-                                class="pp-nav-link pp-primary"
-                            >
-
-                                <i
-                                    class="bi bi-person-plus"
-                                    aria-hidden="true"
-                                ></i>
-
-                                <span>Create Account</span>
 
                             </a>
 
@@ -1857,6 +2237,28 @@
                             </li>
 
 
+                            {% if current_user.is_admin %}
+
+                                <li>
+
+                                    <a
+                                        href="{{ url_for('main.admin_dashboard') }}"
+                                    >
+
+                                        <i
+                                            class="bi bi-speedometer2 me-2"
+                                            aria-hidden="true"
+                                        ></i>
+
+                                        Admin Dashboard
+
+                                    </a>
+
+                                </li>
+
+                            {% endif %}
+
+
                             <li>
 
                                 <a
@@ -1930,8 +2332,6 @@
 
 
                     <div class="pp-footer-socials">
-
-                        <!-- Replace # with your real social URLs -->
 
                         <a
                             href="#"
@@ -2184,9 +2584,7 @@
          LEGAL MODALS
     ========================================================== -->
 
-    <!-- ============================================
-         1. PRIVACY POLICY
-    ============================================ -->
+    <!-- 1. PRIVACY POLICY -->
     <div
         class="modal fade pp-legal-modal"
         id="legalPrivacyModal"
@@ -2273,9 +2671,7 @@
     </div>
 
 
-    <!-- ============================================
-         2. TERMS OF SERVICE
-    ============================================ -->
+    <!-- 2. TERMS OF SERVICE -->
     <div
         class="modal fade pp-legal-modal"
         id="legalTermsModal"
@@ -2393,9 +2789,7 @@
     </div>
 
 
-    <!-- ============================================
-         3. RESPONSIBLE USE
-    ============================================ -->
+    <!-- 3. RESPONSIBLE USE -->
     <div
         class="modal fade pp-legal-modal"
         id="legalResponsibleModal"
@@ -2493,6 +2887,42 @@
     <script
         src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
+
+
+    <!-- =========================================================
+         MOBILE ACCOUNT DROPDOWN TOGGLE
+         On desktop the dropdown opens on hover. On mobile it
+         needs an actual tap, so this tiny script adds that.
+         No Bootstrap dependency, no conflicts.
+    ========================================================== -->
+    <script>
+    (function () {
+        var dropdown = document.getElementById("ppAccountDropdown");
+        if (!dropdown) return;
+
+        var toggle = dropdown.querySelector(".pp-acc-toggle");
+        if (!toggle) return;
+
+        toggle.addEventListener("click", function (event) {
+            // Only intervene on mobile viewport
+            if (window.matchMedia("(min-width: 992px)").matches) return;
+
+            event.preventDefault();
+            var isOpen = dropdown.classList.toggle("open");
+            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+        });
+
+        // Close the menu when tapping outside
+        document.addEventListener("click", function (event) {
+            if (window.matchMedia("(min-width: 992px)").matches) return;
+
+            if (!dropdown.contains(event.target)) {
+                dropdown.classList.remove("open");
+                toggle.setAttribute("aria-expanded", "false");
+            }
+        });
+    })();
+    </script>
 
 
     {% block scripts %}{% endblock %}

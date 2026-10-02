@@ -88,6 +88,10 @@
         opacity: 0.65;
     }
 
+    /* =========================================================
+       PREMIUM NOTE — with Telegram / WhatsApp care-desk links
+    ========================================================= */
+
     .premium-note {
         margin-top: 18px;
         padding: 15px 16px;
@@ -96,11 +100,70 @@
         background: rgba(245, 196, 81, 0.06);
         color: #b8c0ca;
         font-size: 0.88rem;
-        line-height: 1.5;
+        line-height: 1.65;
     }
 
     .premium-note strong {
         color: #f5c451;
+        font-weight: 800;
+    }
+
+    .premium-note-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+
+        padding: 3px 10px;
+        margin: 0 2px;
+
+        border-radius: 6px;
+
+        font-weight: 800;
+        text-decoration: none;
+
+        white-space: nowrap;
+
+        transition:
+            background-color 180ms ease,
+            color 180ms ease,
+            border-color 180ms ease;
+    }
+
+    .premium-note-link svg {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+        display: block;
+    }
+
+    /* ---------- Telegram ---------- */
+
+    .premium-note-telegram {
+        background: rgba(34, 158, 217, 0.12);
+        border: 1px solid rgba(34, 158, 217, 0.4);
+        color: #7ec1e2 !important;
+    }
+
+    .premium-note-telegram:hover,
+    .premium-note-telegram:active {
+        background: rgba(34, 158, 217, 0.22);
+        border-color: rgba(34, 158, 217, 0.7);
+        color: #ffffff !important;
+    }
+
+    /* ---------- WhatsApp ---------- */
+
+    .premium-note-whatsapp {
+        background: rgba(37, 211, 102, 0.12);
+        border: 1px solid rgba(37, 211, 102, 0.4);
+        color: #7ce3a1 !important;
+    }
+
+    .premium-note-whatsapp:hover,
+    .premium-note-whatsapp:active {
+        background: rgba(37, 211, 102, 0.22);
+        border-color: rgba(37, 211, 102, 0.7);
+        color: #ffffff !important;
     }
 
     @media (min-width: 576px) {
@@ -114,6 +177,13 @@
 
         .plan-card {
             padding: 24px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .premium-note {
+            padding: 13px 14px;
+            font-size: 0.84rem;
         }
     }
 </style>
@@ -194,7 +264,37 @@
     <div class="premium-note">
         <strong>Premium access:</strong>
         Subscription payments will be connected once the payment
-        integration is ready. Contact our caredesk through our telegram or whatsapp for early access to premium combos.
+        integration is ready. Contact our caredesk through
+
+        <a
+            href="https://t.me/pinnaclepicksnet"
+            class="premium-note-link premium-note-telegram"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contact our care desk on Telegram"
+        >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M21.94 4.94a1.3 1.3 0 0 0-1.36-.2L2.9 12.13c-.36.14-.6.47-.6.86 0 .4.24.72.6.86l4.13 1.5 1.5 4.9c.1.34.4.58.75.6h.06c.33 0 .64-.17.83-.44l2.32-3.35 4.55 3.35c.24.18.52.27.8.27.14 0 .28-.02.42-.06a1.3 1.3 0 0 0 .85-1.02l2.7-14.1a1.3 1.3 0 0 0-.43-1.16z"/>
+            </svg>
+            Telegram
+        </a>
+
+        or
+
+        <a
+            href="https://wa.me/254752635475"
+            class="premium-note-link premium-note-whatsapp"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contact our care desk on WhatsApp"
+        >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M20.52 3.48A11.87 11.87 0 0 0 12.05 0C5.5 0 .18 5.32.18 11.87c0 2.09.55 4.14 1.6 5.94L0 24l6.36-1.67a11.85 11.85 0 0 0 5.68 1.45h.01c6.55 0 11.87-5.32 11.87-11.87 0-3.17-1.23-6.15-3.4-8.43zm-8.47 18.27h-.01a9.86 9.86 0 0 1-5.02-1.37l-.36-.21-3.77.99 1.01-3.68-.24-.38a9.86 9.86 0 0 1-1.51-5.23c0-5.45 4.44-9.88 9.9-9.88 2.64 0 5.12 1.03 6.99 2.9a9.82 9.82 0 0 1 2.89 6.99c0 5.45-4.44 9.87-9.88 9.87zm5.42-7.4c-.3-.15-1.76-.87-2.03-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.64.08-.3-.15-1.26-.47-2.4-1.48-.89-.79-1.48-1.77-1.66-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.44-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.03-.52-.07-.15-.67-1.62-.92-2.21-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.8.37-.27.3-1.04 1.02-1.04 2.48 0 1.46 1.07 2.87 1.22 3.07.15.2 2.11 3.22 5.11 4.51.71.31 1.27.49 1.7.63.72.23 1.37.2 1.88.12.57-.08 1.76-.72 2.01-1.41.25-.7.25-1.29.17-1.41-.07-.12-.27-.2-.57-.35z"/>
+            </svg>
+            WhatsApp
+        </a>
+
+        for early access to premium combos.
     </div>
 
 </div>

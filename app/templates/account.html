@@ -1,0 +1,767 @@
+{% extends "base.html" %}
+
+{% block title %}
+My Account | PinnaclePicks
+{% endblock %}
+
+{% block head %}
+<meta
+    name="description"
+    content="Manage your PinnaclePicks account, subscription and preferences."
+>
+<style>
+
+    /* =========================================================
+       ACCOUNT PAGE — DESIGN SYSTEM
+    ========================================================= */
+
+    .pp-acc-page {
+        width: min(100%, 980px);
+        margin: 0 auto;
+        padding: 24px 16px 48px;
+    }
+
+
+    /* ---------- Header ---------- */
+
+    .pp-acc-header {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        padding: 20px;
+        margin-bottom: 22px;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+
+        background:
+            linear-gradient(
+                145deg,
+                rgba(34, 197, 94, 0.08) 0%,
+                rgba(255, 255, 255, 0.02) 40%,
+                rgba(255, 255, 255, 0.01) 100%
+            );
+
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .pp-acc-avatar {
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 50%;
+
+        background:
+            linear-gradient(
+                145deg,
+                #22c55e 0%,
+                #15803d 100%
+            );
+
+        color: #031208;
+
+        font-size: 1.5rem;
+        font-weight: 900;
+        letter-spacing: -0.02em;
+
+        box-shadow: 0 4px 12px rgba(34, 197, 94, 0.35);
+    }
+
+    .pp-acc-head-copy {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .pp-acc-name {
+        margin: 0;
+        color: #f5f7fa;
+
+        font-size: clamp(1.15rem, 4.4vw, 1.5rem);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+
+        overflow-wrap: anywhere;
+    }
+
+    .pp-acc-email {
+        margin: 4px 0 0;
+        color: #8f9baa;
+        font-size: 0.86rem;
+        line-height: 1.4;
+
+        overflow-wrap: anywhere;
+    }
+
+
+    /* ---------- Badges ---------- */
+
+    .pp-acc-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        margin-top: 10px;
+    }
+
+    .pp-acc-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+
+        padding: 4px 10px;
+
+        border-radius: 999px;
+
+        font-size: 0.66rem;
+        font-weight: 800;
+
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+
+        line-height: 1;
+        white-space: nowrap;
+    }
+
+    .pp-acc-badge svg {
+        width: 12px;
+        height: 12px;
+        display: block;
+    }
+
+    .pp-acc-badge-active {
+        background: rgba(34, 197, 94, 0.12);
+        border: 1px solid rgba(34, 197, 94, 0.32);
+        color: #86efac;
+    }
+
+    .pp-acc-badge-free {
+        background: rgba(148, 163, 184, 0.1);
+        border: 1px solid rgba(148, 163, 184, 0.28);
+        color: #cbd5e1;
+    }
+
+    .pp-acc-badge-admin {
+        background: rgba(245, 196, 81, 0.12);
+        border: 1px solid rgba(245, 196, 81, 0.32);
+        color: #f5c451;
+    }
+
+    .pp-acc-badge-warning {
+        background: rgba(239, 68, 68, 0.12);
+        border: 1px solid rgba(239, 68, 68, 0.32);
+        color: #fca5a5;
+    }
+
+
+    /* ---------- Grid ---------- */
+
+    .pp-acc-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        margin-bottom: 22px;
+    }
+
+
+    /* ---------- Section card ---------- */
+
+    .pp-acc-card {
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 16px;
+        background: #10151d;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    }
+
+    .pp-acc-card-head {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 16px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .pp-acc-card-icon {
+        flex: 0 0 34px;
+        width: 34px;
+        height: 34px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 10px;
+
+        background: rgba(34, 197, 94, 0.12);
+        color: #86efac;
+    }
+
+    .pp-acc-card-icon svg {
+        width: 18px;
+        height: 18px;
+        display: block;
+    }
+
+    .pp-acc-card-title {
+        margin: 0;
+        color: #f5f7fa;
+        font-size: 0.94rem;
+        font-weight: 800;
+        letter-spacing: -0.01em;
+    }
+
+    .pp-acc-card-body {
+        padding: 16px;
+    }
+
+
+    /* ---------- Definition list ---------- */
+
+    .pp-acc-list {
+        display: grid;
+        gap: 12px;
+        margin: 0;
+        padding: 0;
+    }
+
+    .pp-acc-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px;
+
+        padding-bottom: 12px;
+        border-bottom: 1px dashed rgba(255, 255, 255, 0.06);
+    }
+
+    .pp-acc-row:last-child {
+        padding-bottom: 0;
+        border-bottom: 0;
+    }
+
+    .pp-acc-row dt {
+        display: inline-flex;
+        align-items: center;
+        gap: 7px;
+
+        color: #8f9baa;
+        font-size: 0.78rem;
+        font-weight: 700;
+
+        letter-spacing: 0.02em;
+    }
+
+    .pp-acc-row dt svg {
+        width: 14px;
+        height: 14px;
+        display: block;
+        color: #86efac;
+    }
+
+    .pp-acc-row dd {
+        margin: 0;
+        max-width: 60%;
+        text-align: right;
+
+        color: #f5f7fa;
+        font-size: 0.86rem;
+        font-weight: 800;
+        line-height: 1.4;
+
+        overflow-wrap: anywhere;
+    }
+
+    .pp-acc-row dd.pp-acc-muted {
+        color: #8f9baa;
+        font-weight: 600;
+    }
+
+
+    /* ---------- Action links ---------- */
+
+    .pp-acc-actions {
+        display: grid;
+        gap: 10px;
+    }
+
+    .pp-acc-action {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+
+        min-height: 52px;
+        padding: 12px 14px;
+
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+
+        background: rgba(255, 255, 255, 0.02);
+
+        color: #f5f7fa;
+        text-decoration: none;
+
+        font-size: 0.86rem;
+        font-weight: 700;
+
+        transition:
+            background-color 180ms ease,
+            border-color 180ms ease,
+            transform 180ms ease;
+    }
+
+    .pp-acc-action:hover {
+        background: rgba(34, 197, 94, 0.06);
+        border-color: rgba(34, 197, 94, 0.35);
+        color: #ffffff;
+        transform: translateY(-1px);
+    }
+
+    .pp-acc-action:active {
+        transform: translateY(0);
+    }
+
+    .pp-acc-action-left {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        min-width: 0;
+    }
+
+    .pp-acc-action-icon {
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+
+        display: grid;
+        place-items: center;
+
+        border-radius: 9px;
+
+        background: rgba(34, 197, 94, 0.1);
+        color: #86efac;
+    }
+
+    .pp-acc-action-icon svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+    }
+
+    .pp-acc-action-chevron {
+        flex: 0 0 16px;
+        color: #6b7686;
+    }
+
+    .pp-acc-action-chevron svg {
+        width: 16px;
+        height: 16px;
+        display: block;
+    }
+
+    .pp-acc-action:hover .pp-acc-action-chevron {
+        color: #86efac;
+    }
+
+    .pp-acc-action-danger {
+        border-color: rgba(239, 68, 68, 0.28);
+        background: rgba(127, 29, 29, 0.16);
+    }
+
+    .pp-acc-action-danger .pp-acc-action-icon {
+        background: rgba(239, 68, 68, 0.14);
+        color: #fca5a5;
+    }
+
+    .pp-acc-action-danger:hover {
+        background: rgba(127, 29, 29, 0.3);
+        border-color: rgba(239, 68, 68, 0.55);
+        color: #ffffff;
+    }
+
+    .pp-acc-action-danger:hover .pp-acc-action-chevron {
+        color: #fca5a5;
+    }
+
+
+    /* ---------- Empty / warning strip ---------- */
+
+    .pp-acc-note {
+        margin-top: 12px;
+        padding: 12px 14px;
+
+        border: 1px solid rgba(245, 196, 81, 0.28);
+        border-radius: 10px;
+
+        background: rgba(245, 196, 81, 0.06);
+        color: #d8dee7;
+
+        font-size: 0.8rem;
+        line-height: 1.55;
+    }
+
+    .pp-acc-note strong {
+        color: #f5c451;
+        font-weight: 800;
+    }
+
+
+    /* ---------- Responsive ---------- */
+
+    @media (min-width: 640px) {
+
+        .pp-acc-page {
+            padding: 32px 20px 56px;
+        }
+
+        .pp-acc-header {
+            padding: 24px;
+        }
+
+        .pp-acc-avatar {
+            flex-basis: 72px;
+            width: 72px;
+            height: 72px;
+            font-size: 1.75rem;
+        }
+
+        .pp-acc-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .pp-acc-card-body {
+            padding: 20px;
+        }
+
+        .pp-acc-card-head {
+            padding: 16px 20px;
+        }
+    }
+
+    @media (max-width: 400px) {
+
+        .pp-acc-page {
+            padding: 16px 12px 36px;
+        }
+
+        .pp-acc-header {
+            padding: 16px;
+            gap: 12px;
+        }
+
+        .pp-acc-avatar {
+            flex-basis: 56px;
+            width: 56px;
+            height: 56px;
+            font-size: 1.35rem;
+        }
+
+        .pp-acc-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 6px;
+        }
+
+        .pp-acc-row dd {
+            max-width: 100%;
+            text-align: left;
+        }
+
+        .pp-acc-action {
+            padding: 12px;
+        }
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="pp-acc-page">
+
+    <!-- =========================================================
+         HEADER — avatar + name + badges
+    ========================================================== -->
+    <header class="pp-acc-header">
+
+        <div class="pp-acc-avatar" aria-hidden="true">
+            {{ (current_user.email or current_user.username or "?")[0]|upper }}
+        </div>
+
+        <div class="pp-acc-head-copy">
+
+            <h1 class="pp-acc-name">
+                {{ current_user.username or current_user.email.split("@")[0] }}
+            </h1>
+
+            <p class="pp-acc-email">
+                {{ current_user.email }}
+            </p>
+
+            <div class="pp-acc-badges">
+
+                {% if current_user.is_admin %}
+                    <span class="pp-acc-badge pp-acc-badge-admin">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <path d="M12 2 15.09 8.26 22 9.27l-5 4.87L18.18 21 12 17.77 5.82 21 7 14.14l-5-4.87 6.91-1.01z"/>
+                        </svg>
+                        Admin
+                    </span>
+                {% endif %}
+
+                {% if current_user.has_active_subscription %}
+                    <span class="pp-acc-badge pp-acc-badge-active">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <polyline points="20 6 9 17 4 12"/>
+                        </svg>
+                        {{ (current_user.subscription_tier or "Premium")|capitalize }}
+                    </span>
+                {% else %}
+                    <span class="pp-acc-badge pp-acc-badge-free">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <circle cx="12" cy="12" r="9"/>
+                        </svg>
+                        Free account
+                    </span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================================================
+         GRID — details + actions
+    ========================================================== -->
+    <div class="pp-acc-grid">
+
+        <!-- ---------- Account details ---------- -->
+        <section class="pp-acc-card">
+
+            <div class="pp-acc-card-head">
+                <div class="pp-acc-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <h2 class="pp-acc-card-title">Account details</h2>
+            </div>
+
+            <div class="pp-acc-card-body">
+                <dl class="pp-acc-list">
+
+                    <div class="pp-acc-row">
+                        <dt>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M4 4h16v16H4z"/>
+                                <polyline points="4,6 12,13 20,6"/>
+                            </svg>
+                            Email
+                        </dt>
+                        <dd>{{ current_user.email }}</dd>
+                    </div>
+
+                    <div class="pp-acc-row">
+                        <dt>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                <path d="M3 10h18"/>
+                            </svg>
+                            Subscription
+                        </dt>
+                        <dd>
+                            {% if current_user.has_active_subscription %}
+                                {{ (current_user.subscription_tier or "Premium")|capitalize }}
+                            {% else %}
+                                <span class="pp-acc-muted">Free</span>
+                            {% endif %}
+                        </dd>
+                    </div>
+
+                    <div class="pp-acc-row">
+                        <dt>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <circle cx="12" cy="12" r="9"/>
+                                <polyline points="12 7 12 12 15 14"/>
+                            </svg>
+                            Status
+                        </dt>
+                        <dd>
+                            {% if current_user.subscription_status == "active" %}
+                                Active
+                            {% elif current_user.subscription_status == "expired" %}
+                                <span class="pp-acc-muted">Expired</span>
+                            {% elif current_user.subscription_status %}
+                                {{ current_user.subscription_status|capitalize }}
+                            {% else %}
+                                <span class="pp-acc-muted">None</span>
+                            {% endif %}
+                        </dd>
+                    </div>
+
+                    {% if current_user.subscription_expires_at %}
+                        <div class="pp-acc-row">
+                            <dt>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="3" y="5" width="18" height="16" rx="2"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                    <line x1="8" y1="3" x2="8" y2="7"/>
+                                    <line x1="16" y1="3" x2="16" y2="7"/>
+                                </svg>
+                                Expires
+                            </dt>
+                            <dd>{{ current_user.subscription_expires_at.strftime("%d %b %Y") }}</dd>
+                        </div>
+                    {% endif %}
+
+                    {% if current_user.created_at %}
+                        <div class="pp-acc-row">
+                            <dt>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 2 2 7l10 5 10-5z"/>
+                                    <path d="M2 17l10 5 10-5"/>
+                                    <path d="M2 12l10 5 10-5"/>
+                                </svg>
+                                Member since
+                            </dt>
+                            <dd>{{ current_user.created_at.strftime("%d %b %Y") }}</dd>
+                        </div>
+                    {% endif %}
+
+                </dl>
+            </div>
+
+        </section>
+
+
+        <!-- ---------- Quick actions ---------- -->
+        <section class="pp-acc-card">
+
+            <div class="pp-acc-card-head">
+                <div class="pp-acc-card-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                    </svg>
+                </div>
+                <h2 class="pp-acc-card-title">Quick actions</h2>
+            </div>
+
+            <div class="pp-acc-card-body">
+
+                <div class="pp-acc-actions">
+
+                    <a
+                        href="{{ url_for('main.subscription_page') }}"
+                        class="pp-acc-action"
+                    >
+                        <span class="pp-acc-action-left">
+                            <span class="pp-acc-action-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="5" width="18" height="14" rx="2"/>
+                                    <path d="M3 10h18"/>
+                                </svg>
+                            </span>
+                            Manage subscription
+                        </span>
+                        <span class="pp-acc-action-chevron" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </span>
+                    </a>
+
+                    <a
+                        href="{{ url_for('main.index') }}#upcoming"
+                        class="pp-acc-action"
+                    >
+                        <span class="pp-acc-action-left">
+                            <span class="pp-acc-action-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <circle cx="11" cy="11" r="7"/>
+                                    <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                                </svg>
+                            </span>
+                            Browse free matches
+                        </span>
+                        <span class="pp-acc-action-chevron" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </span>
+                    </a>
+
+                    {% if current_user.is_admin %}
+                        <a
+                            href="{{ url_for('main.admin_dashboard') }}"
+                            class="pp-acc-action"
+                        >
+                            <span class="pp-acc-action-left">
+                                <span class="pp-acc-action-icon" aria-hidden="true">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="3" y="3" width="7" height="9"/>
+                                        <rect x="14" y="3" width="7" height="5"/>
+                                        <rect x="14" y="12" width="7" height="9"/>
+                                        <rect x="3" y="16" width="7" height="5"/>
+                                    </svg>
+                                </span>
+                                Admin dashboard
+                            </span>
+                            <span class="pp-acc-action-chevron" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polyline points="9 18 15 12 9 6"/>
+                                </svg>
+                            </span>
+                        </a>
+                    {% endif %}
+
+                    <a
+                        href="{{ url_for('auth.logout') }}"
+                        class="pp-acc-action pp-acc-action-danger"
+                    >
+                        <span class="pp-acc-action-left">
+                            <span class="pp-acc-action-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                                    <polyline points="16 17 21 12 16 7"/>
+                                    <line x1="21" y1="12" x2="9" y2="12"/>
+                                </svg>
+                            </span>
+                            Log out
+                        </span>
+                        <span class="pp-acc-action-chevron" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </span>
+                    </a>
+
+                </div>
+
+                {% if not current_user.has_active_subscription %}
+                    <div class="pp-acc-note">
+                        <strong>Upgrade to unlock premium combos</strong> —
+                        weekly and monthly plans give you full access to
+                        premium accumulator tickets and detailed match insights.
+                    </div>
+                {% endif %}
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{# Add account-specific JavaScript here if needed. #}
+{% endblock %}
