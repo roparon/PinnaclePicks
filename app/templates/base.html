@@ -660,6 +660,157 @@
 
 
         /* =========================================================
+           NAVBAR INTERACTION REFINEMENTS
+           Mobile overlay, animated menu, account state
+        ========================================================== */
+
+        .pp-nav-overlay {
+            position: fixed;
+            top: 62px;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1020;
+            border: 0;
+            padding: 0;
+            background: rgba(3, 13, 8, 0.28);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition:
+                opacity 0.22s ease,
+                visibility 0.22s ease;
+        }
+
+        .pp-navbar.nav-open .pp-nav-overlay {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .pp-acc-toggle .pp-acc-caret {
+            transition:
+                transform 0.22s ease,
+                opacity 0.22s ease;
+        }
+
+        .pp-acc-dropdown.open .pp-acc-caret {
+            transform: rotate(180deg);
+            opacity: 1;
+        }
+
+        .pp-acc-menu {
+            transform:
+                translateY(-7px)
+                scale(0.985);
+            transform-origin: top right;
+            transition:
+                opacity 0.2s ease,
+                transform 0.2s ease,
+                visibility 0.2s ease;
+        }
+
+        .pp-acc-dropdown:hover .pp-acc-menu,
+        .pp-acc-dropdown:focus-within .pp-acc-menu,
+        .pp-acc-dropdown.open .pp-acc-menu {
+            transform:
+                translateY(0)
+                scale(1);
+        }
+
+        .pp-acc-item {
+            position: relative;
+            transition:
+                background-color 0.18s ease,
+                color 0.18s ease,
+                transform 0.18s ease;
+        }
+
+        .pp-acc-item:hover {
+            transform: translateX(2px);
+        }
+
+        .pp-acc-item-active {
+            background: var(--pp-light-green);
+            color: var(--pp-dark-green);
+            font-weight: 750;
+        }
+
+        .pp-acc-item-active::after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--pp-green);
+        }
+
+        .pp-nav-toggle-icon {
+            position: relative;
+            width: 22px;
+            height: 18px;
+            display: inline-flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .pp-nav-toggle-icon span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            border-radius: 999px;
+            background: var(--pp-text);
+            transform-origin: center;
+            transition:
+                transform 0.22s ease,
+                opacity 0.18s ease;
+        }
+
+        .pp-navbar.nav-open .pp-nav-toggle-icon span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .pp-navbar.nav-open .pp-nav-toggle-icon span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .pp-navbar.nav-open .pp-nav-toggle-icon span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        @media (max-width: 991.98px) {
+
+            .pp-navbar.nav-open {
+                box-shadow:
+                    0 8px 24px rgba(23, 32, 27, 0.10);
+            }
+
+            .pp-navbar .pp-nav-overlay {
+                display: block;
+            }
+        }
+
+        @media (min-width: 992px) {
+
+            .pp-navbar .pp-nav-overlay {
+                display: none;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .pp-nav-overlay,
+            .pp-nav-toggle-icon span,
+            .pp-acc-toggle .pp-acc-caret,
+            .pp-acc-menu,
+            .pp-acc-item {
+                transition: none !important;
+            }
+        }
+
+
+        /* =========================================================
            FLASH MESSAGES
         ========================================================== */
 
@@ -1357,16 +1508,22 @@
 
             .pp-nav-links {
 
-                display: grid;
+                display: flex;
 
-                grid-template-columns: 1fr;
+                flex-direction: column;
 
-                gap: 7px;
+                gap: 2px;
 
                 padding:
-                    10px
+                    8px
                     0
-                    14px;
+                    10px;
+
+                max-height: calc(100vh - 62px);
+
+                overflow-y: auto;
+
+                overscroll-behavior: contain;
             }
 
 
@@ -1374,23 +1531,50 @@
 
                 width: 100%;
 
-                min-height: 46px;
+                min-height: 42px;
 
                 padding:
-                    10px
+                    8px
                     12px;
 
-                background: #f6f8f7;
+                background: transparent;
+
+                border-radius: 8px;
 
                 font-size: 13px;
 
                 justify-content: flex-start;
+
+                transition:
+                    background-color 0.18s ease,
+                    color 0.18s ease;
+            }
+
+
+            .pp-nav-link:hover,
+            .pp-nav-link:focus-visible {
+
+                background: var(--pp-light-green);
+
             }
 
 
             .pp-nav-link.pp-primary {
 
                 background: var(--pp-green);
+
+                color: var(--pp-white);
+
+            }
+
+
+            .pp-nav-link.pp-primary:hover,
+            .pp-nav-link.pp-primary:focus-visible {
+
+                background: var(--pp-dark-green);
+
+                color: var(--pp-white);
+
             }
 
 
@@ -1406,13 +1590,13 @@
 
                 width: 100%;
 
-                min-height: 46px;
+                min-height: 42px;
 
-                padding: 10px 12px;
+                padding: 8px 12px;
 
-                background: #f6f8f7;
+                background: transparent;
 
-                border-radius: var(--pp-radius-sm);
+                border-radius: 8px;
 
                 display: inline-flex;
 
@@ -1427,6 +1611,18 @@
                 font-size: 13px;
 
                 font-weight: 650;
+
+                transition:
+                    background-color 0.18s ease,
+                    color 0.18s ease;
+            }
+
+
+            .pp-acc-toggle:hover,
+            .pp-acc-toggle:focus-visible {
+
+                background: var(--pp-light-green);
+
             }
 
 
@@ -1772,7 +1968,14 @@
                     aria-label="Toggle navigation"
                 >
 
-                    <span class="navbar-toggler-icon"></span>
+                    <span
+                        class="pp-nav-toggle-icon"
+                        aria-hidden="true"
+                    >
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </span>
 
                 </button>
 
@@ -1996,6 +2199,13 @@
             </div>
 
         </div>
+
+        <button
+            type="button"
+            class="pp-nav-overlay"
+            aria-label="Close navigation menu"
+            tabindex="-1"
+        ></button>
 
     </nav>
 
@@ -2631,8 +2841,8 @@
 
                     <p>
                         To exercise these rights, contact us at
-                        <a href="mailto:correctscorefixed365@gmail.com">
-                            correctscorefixed365@gmail.com
+                        <a href="picckspinna@gmail.com">
+                            picckspinna@gmail.com
                         </a>.
                     </p>
 
@@ -2872,37 +3082,306 @@
 
 
     <!-- =========================================================
-         MOBILE ACCOUNT DROPDOWN TOGGLE
-         On desktop the dropdown opens on hover. On mobile it
-         needs an actual tap, so this tiny script adds that.
-         No Bootstrap dependency, no conflicts.
+         PINNACLEPICKS NAVIGATION CONTROLLER
+         Mobile menu + overlay + account dropdown + active state
     ========================================================== -->
     <script>
     (function () {
-        var dropdown = document.getElementById("ppAccountDropdown");
-        if (!dropdown) return;
 
-        var toggle = dropdown.querySelector(".pp-acc-toggle");
-        if (!toggle) return;
+        var navbar = document.querySelector(".pp-navbar");
+        var navToggle = document.querySelector(".pp-nav-toggle");
+        var navCollapse = document.getElementById("ppNavigation");
+        var navOverlay = document.querySelector(".pp-nav-overlay");
 
-        toggle.addEventListener("click", function (event) {
-            // Only intervene on mobile viewport
-            if (window.matchMedia("(min-width: 992px)").matches) return;
+        if (!navbar || !navToggle || !navCollapse) return;
 
-            event.preventDefault();
-            var isOpen = dropdown.classList.toggle("open");
-            toggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        });
 
-        // Close the menu when tapping outside
-        document.addEventListener("click", function (event) {
-            if (window.matchMedia("(min-width: 992px)").matches) return;
+        function isMobile() {
+            return window.matchMedia("(max-width: 991.98px)").matches;
+        }
 
-            if (!dropdown.contains(event.target)) {
-                dropdown.classList.remove("open");
-                toggle.setAttribute("aria-expanded", "false");
+
+        function setNavigationState(isOpen) {
+
+            navbar.classList.toggle("nav-open", isOpen);
+
+            navToggle.setAttribute(
+                "aria-expanded",
+                isOpen ? "true" : "false"
+            );
+        }
+
+
+        function closeNavigation() {
+
+            if (!isMobile()) return;
+
+            var collapse = bootstrap.Collapse.getOrCreateInstance(
+                navCollapse,
+                { toggle: false }
+            );
+
+            collapse.hide();
+
+            setNavigationState(false);
+
+            var account = document.getElementById(
+                "ppAccountDropdown"
+            );
+
+            if (account) {
+
+                account.classList.remove("open");
+
+                var accountToggle =
+                    account.querySelector(".pp-acc-toggle");
+
+                if (accountToggle) {
+
+                    accountToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                }
             }
-        });
+        }
+
+
+        navCollapse.addEventListener(
+            "show.bs.collapse",
+            function () {
+
+                if (isMobile()) {
+                    setNavigationState(true);
+                }
+            }
+        );
+
+
+        navCollapse.addEventListener(
+            "shown.bs.collapse",
+            function () {
+
+                if (isMobile()) {
+                    setNavigationState(true);
+                }
+            }
+        );
+
+
+        navCollapse.addEventListener(
+            "hide.bs.collapse",
+            function () {
+
+                setNavigationState(false);
+            }
+        );
+
+
+        navCollapse.addEventListener(
+            "hidden.bs.collapse",
+            function () {
+
+                setNavigationState(false);
+            }
+        );
+
+
+        /* ---------------------------------------------------------
+           Account dropdown
+        --------------------------------------------------------- */
+
+        var accountDropdown =
+            document.getElementById("ppAccountDropdown");
+
+        if (accountDropdown) {
+
+            var accountToggle =
+                accountDropdown.querySelector(".pp-acc-toggle");
+
+            if (accountToggle) {
+
+                accountToggle.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (!isMobile()) return;
+
+                        event.preventDefault();
+                        event.stopPropagation();
+
+                        var isOpen =
+                            accountDropdown.classList.toggle("open");
+
+                        accountToggle.setAttribute(
+                            "aria-expanded",
+                            isOpen ? "true" : "false"
+                        );
+                    }
+                );
+
+
+                document.addEventListener(
+                    "click",
+                    function (event) {
+
+                        if (!isMobile()) return;
+
+                        if (!accountDropdown.contains(event.target)) {
+
+                            accountDropdown.classList.remove("open");
+
+                            accountToggle.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+                        }
+                    }
+                );
+            }
+        }
+
+
+        /* ---------------------------------------------------------
+           Active Account item
+        --------------------------------------------------------- */
+
+        var currentPath =
+            window.location.pathname.replace(/\/+$/, "") || "/";
+
+        document.querySelectorAll(".pp-acc-item").forEach(
+            function (item) {
+
+                var href = item.getAttribute("href");
+
+                if (!href) return;
+
+                try {
+
+                    var itemPath =
+                        new URL(
+                            href,
+                            window.location.origin
+                        ).pathname.replace(/\/+$/, "") || "/";
+
+                    if (
+                        itemPath === currentPath &&
+                        !item.classList.contains(
+                            "pp-acc-item-danger"
+                        )
+                    ) {
+
+                        item.classList.add(
+                            "pp-acc-item-active"
+                        );
+
+                        item.setAttribute(
+                            "aria-current",
+                            "page"
+                        );
+                    }
+
+                } catch (error) {
+                    /* Ignore invalid URLs. */
+                }
+            }
+        );
+
+
+        /* ---------------------------------------------------------
+           Overlay
+        --------------------------------------------------------- */
+
+        if (navOverlay) {
+
+            navOverlay.addEventListener(
+                "click",
+                function () {
+                    closeNavigation();
+                }
+            );
+        }
+
+
+        /* ---------------------------------------------------------
+           Escape
+        --------------------------------------------------------- */
+
+        document.addEventListener(
+            "keydown",
+            function (event) {
+
+                if (
+                    event.key === "Escape" &&
+                    isMobile()
+                ) {
+                    closeNavigation();
+                }
+            }
+        );
+
+
+        /* ---------------------------------------------------------
+           Close after selecting a navigation link
+        --------------------------------------------------------- */
+
+        navCollapse
+            .querySelectorAll("a")
+            .forEach(function (link) {
+
+                link.addEventListener(
+                    "click",
+                    function () {
+
+                        if (!isMobile()) return;
+
+                        window.setTimeout(
+                            closeNavigation,
+                            80
+                        );
+                    }
+                );
+            });
+
+
+        /* ---------------------------------------------------------
+           Desktop/mobile transition cleanup
+        --------------------------------------------------------- */
+
+        window.addEventListener(
+            "resize",
+            function () {
+
+                if (!isMobile()) {
+
+                    navbar.classList.remove("nav-open");
+
+                    navToggle.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    if (accountDropdown) {
+
+                        accountDropdown.classList.remove("open");
+
+                        var toggle =
+                            accountDropdown.querySelector(
+                                ".pp-acc-toggle"
+                            );
+
+                        if (toggle) {
+
+                            toggle.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+                        }
+                    }
+                }
+            }
+        );
+
     })();
     </script>
 
