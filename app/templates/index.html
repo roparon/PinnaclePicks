@@ -159,6 +159,8 @@ PinnaclePicks | Sports Analytics & Match History
 
     /* =========================================================
        HOMEPAGE NOTIFICATION BANNER
+       — Centered on all screen sizes
+       — Professional on mobile (sm) & desktop (lg)
     ========================================================= */
 
     .pp-notice {
@@ -211,6 +213,12 @@ PinnaclePicks | Sports Analytics & Match History
         width: 100%;
         min-width: 0;
         padding: 18px 16px 16px;
+
+        /* Center everything inside the notice */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
 
     /* Header / eyebrow */
@@ -218,9 +226,11 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-notice-header {
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 9px;
         min-width: 0;
         margin-bottom: 10px;
+        text-align: center;
     }
 
     .pp-notice-icon {
@@ -259,7 +269,7 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-notice-headline {
         max-width: 100%;
-        margin: 0 0 9px;
+        margin: 0 auto 9px;
 
         color: var(--pp-gold);
 
@@ -269,6 +279,7 @@ PinnaclePicks | Sports Analytics & Match History
 
         letter-spacing: -0.025em;
 
+        text-align: center;
         overflow-wrap: anywhere;
     }
 
@@ -276,7 +287,7 @@ PinnaclePicks | Sports Analytics & Match History
 
     .pp-notice-body {
         max-width: 620px;
-        margin: 0;
+        margin: 0 auto;
 
         color: var(--pp-text);
 
@@ -284,6 +295,7 @@ PinnaclePicks | Sports Analytics & Match History
         font-weight: 500;
         line-height: 1.65;
 
+        text-align: center;
         overflow-wrap: anywhere;
         white-space: pre-line;
     }
@@ -308,13 +320,14 @@ PinnaclePicks | Sports Analytics & Match History
     .pp-notice-warning {
         display: flex;
         align-items: center;
+        justify-content: center;
 
         width: 100%;
         min-width: 0;
         min-height: 44px;
 
         margin: 0;
-        padding: 9px 11px;
+        padding: 10px 12px;
 
         color: #15191f;
         background: var(--pp-gold);
@@ -322,12 +335,13 @@ PinnaclePicks | Sports Analytics & Match History
         border: 1px solid rgba(245, 196, 81, 0.45);
         border-radius: 10px;
 
-        font-size: 10px;
+        font-size: 10.5px;
         font-weight: 800;
         line-height: 1.35;
 
         letter-spacing: 0.025em;
         text-transform: uppercase;
+        text-align: center;
     }
 
     .pp-notice-warning-icon {
@@ -446,7 +460,7 @@ PinnaclePicks | Sports Analytics & Match History
         }
     }
 
-    /* 768px+ */
+    /* 768px+ — constrain width, but no longer toggle centering */
 
     @media (min-width: 768px) {
         .pp-notice {
@@ -458,20 +472,6 @@ PinnaclePicks | Sports Analytics & Match History
 
         .pp-notice-content {
             padding: 22px 24px 20px;
-        }
-
-        .pp-notice-header {
-            justify-content: center;
-        }
-
-        .pp-notice-headline {
-            text-align: center;
-        }
-
-        .pp-notice-body {
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center;
         }
     }
 
@@ -491,11 +491,11 @@ PinnaclePicks | Sports Analytics & Match History
         }
 
         .pp-notice-content {
-            padding: 16px;
+            padding: 16px 14px;
         }
 
         .pp-notice-headline {
-            font-size: 20px;
+            font-size: 19px;
         }
 
         .pp-notice-body {
@@ -503,15 +503,24 @@ PinnaclePicks | Sports Analytics & Match History
         }
 
         .pp-notice-warning {
-            padding: 8px 9px;
-            font-size: 9px;
+            padding: 9px 10px;
+            font-size: 9.5px;
         }
 
         .pp-notice-warning-icon {
-            width: 25px;
-            height: 25px;
-            flex-basis: 25px;
+            width: 24px;
+            height: 24px;
+            flex-basis: 24px;
             margin-right: 7px;
+        }
+    }
+
+    /* Safe-area for notched devices */
+
+    @supports (padding: env(safe-area-inset-left)) {
+        .pp-notice-content {
+            padding-left: max(16px, env(safe-area-inset-left));
+            padding-right: max(16px, env(safe-area-inset-right));
         }
     }
 
